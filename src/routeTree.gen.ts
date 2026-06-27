@@ -10,33 +10,88 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TripNewRouteImport } from './routes/trip.new'
+import { Route as TripTokenRouteImport } from './routes/trip.$token'
+import { Route as TripConfirmationTokenRouteImport } from './routes/trip.confirmation.$token'
+import { Route as TripTokenFeedbackRouteImport } from './routes/trip.$token.feedback'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TripNewRoute = TripNewRouteImport.update({
+  id: '/trip/new',
+  path: '/trip/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TripTokenRoute = TripTokenRouteImport.update({
+  id: '/trip/$token',
+  path: '/trip/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TripConfirmationTokenRoute = TripConfirmationTokenRouteImport.update({
+  id: '/trip/confirmation/$token',
+  path: '/trip/confirmation/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TripTokenFeedbackRoute = TripTokenFeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
+  getParentRoute: () => TripTokenRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/trip/$token': typeof TripTokenRouteWithChildren
+  '/trip/new': typeof TripNewRoute
+  '/trip/$token/feedback': typeof TripTokenFeedbackRoute
+  '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/trip/$token': typeof TripTokenRouteWithChildren
+  '/trip/new': typeof TripNewRoute
+  '/trip/$token/feedback': typeof TripTokenFeedbackRoute
+  '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/trip/$token': typeof TripTokenRouteWithChildren
+  '/trip/new': typeof TripNewRoute
+  '/trip/$token/feedback': typeof TripTokenFeedbackRoute
+  '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/trip/$token'
+    | '/trip/new'
+    | '/trip/$token/feedback'
+    | '/trip/confirmation/$token'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/trip/$token'
+    | '/trip/new'
+    | '/trip/$token/feedback'
+    | '/trip/confirmation/$token'
+  id:
+    | '__root__'
+    | '/'
+    | '/trip/$token'
+    | '/trip/new'
+    | '/trip/$token/feedback'
+    | '/trip/confirmation/$token'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  TripTokenRoute: typeof TripTokenRouteWithChildren
+  TripNewRoute: typeof TripNewRoute
+  TripConfirmationTokenRoute: typeof TripConfirmationTokenRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +103,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/trip/new': {
+      id: '/trip/new'
+      path: '/trip/new'
+      fullPath: '/trip/new'
+      preLoaderRoute: typeof TripNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trip/$token': {
+      id: '/trip/$token'
+      path: '/trip/$token'
+      fullPath: '/trip/$token'
+      preLoaderRoute: typeof TripTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trip/confirmation/$token': {
+      id: '/trip/confirmation/$token'
+      path: '/trip/confirmation/$token'
+      fullPath: '/trip/confirmation/$token'
+      preLoaderRoute: typeof TripConfirmationTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trip/$token/feedback': {
+      id: '/trip/$token/feedback'
+      path: '/feedback'
+      fullPath: '/trip/$token/feedback'
+      preLoaderRoute: typeof TripTokenFeedbackRouteImport
+      parentRoute: typeof TripTokenRoute
+    }
   }
 }
 
+interface TripTokenRouteChildren {
+  TripTokenFeedbackRoute: typeof TripTokenFeedbackRoute
+}
+
+const TripTokenRouteChildren: TripTokenRouteChildren = {
+  TripTokenFeedbackRoute: TripTokenFeedbackRoute,
+}
+
+const TripTokenRouteWithChildren = TripTokenRoute._addFileChildren(
+  TripTokenRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  TripTokenRoute: TripTokenRouteWithChildren,
+  TripNewRoute: TripNewRoute,
+  TripConfirmationTokenRoute: TripConfirmationTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
