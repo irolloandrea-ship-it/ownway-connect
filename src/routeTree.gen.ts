@@ -9,15 +9,39 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as FeedRouteImport } from './routes/feed'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as WaymakerApplyRouteImport } from './routes/waymaker.apply'
+import { Route as WaymakerIdRouteImport } from './routes/waymaker.$id'
 import { Route as TripNewRouteImport } from './routes/trip.new'
 import { Route as TripTokenRouteImport } from './routes/trip.$token'
 import { Route as TripConfirmationTokenRouteImport } from './routes/trip.confirmation.$token'
 import { Route as TripTokenFeedbackRouteImport } from './routes/trip.$token.feedback'
 
+const FeedRoute = FeedRouteImport.update({
+  id: '/feed',
+  path: '/feed',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WaymakerApplyRoute = WaymakerApplyRouteImport.update({
+  id: '/waymaker/apply',
+  path: '/waymaker/apply',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WaymakerIdRoute = WaymakerIdRouteImport.update({
+  id: '/waymaker/$id',
+  path: '/waymaker/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TripNewRoute = TripNewRouteImport.update({
@@ -43,23 +67,35 @@ const TripTokenFeedbackRoute = TripTokenFeedbackRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/feed': typeof FeedRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
   '/trip/new': typeof TripNewRoute
+  '/waymaker/$id': typeof WaymakerIdRoute
+  '/waymaker/apply': typeof WaymakerApplyRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
   '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/feed': typeof FeedRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
   '/trip/new': typeof TripNewRoute
+  '/waymaker/$id': typeof WaymakerIdRoute
+  '/waymaker/apply': typeof WaymakerApplyRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
   '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/feed': typeof FeedRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
   '/trip/new': typeof TripNewRoute
+  '/waymaker/$id': typeof WaymakerIdRoute
+  '/waymaker/apply': typeof WaymakerApplyRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
   '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
 }
@@ -67,40 +103,84 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
+    | '/feed'
     | '/trip/$token'
     | '/trip/new'
+    | '/waymaker/$id'
+    | '/waymaker/apply'
     | '/trip/$token/feedback'
     | '/trip/confirmation/$token'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
+    | '/feed'
     | '/trip/$token'
     | '/trip/new'
+    | '/waymaker/$id'
+    | '/waymaker/apply'
     | '/trip/$token/feedback'
     | '/trip/confirmation/$token'
   id:
     | '__root__'
     | '/'
+    | '/auth'
+    | '/feed'
     | '/trip/$token'
     | '/trip/new'
+    | '/waymaker/$id'
+    | '/waymaker/apply'
     | '/trip/$token/feedback'
     | '/trip/confirmation/$token'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
+  FeedRoute: typeof FeedRoute
   TripTokenRoute: typeof TripTokenRouteWithChildren
   TripNewRoute: typeof TripNewRoute
+  WaymakerIdRoute: typeof WaymakerIdRoute
+  WaymakerApplyRoute: typeof WaymakerApplyRoute
   TripConfirmationTokenRoute: typeof TripConfirmationTokenRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/feed': {
+      id: '/feed'
+      path: '/feed'
+      fullPath: '/feed'
+      preLoaderRoute: typeof FeedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/waymaker/apply': {
+      id: '/waymaker/apply'
+      path: '/waymaker/apply'
+      fullPath: '/waymaker/apply'
+      preLoaderRoute: typeof WaymakerApplyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/waymaker/$id': {
+      id: '/waymaker/$id'
+      path: '/waymaker/$id'
+      fullPath: '/waymaker/$id'
+      preLoaderRoute: typeof WaymakerIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/trip/new': {
@@ -148,8 +228,12 @@ const TripTokenRouteWithChildren = TripTokenRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
+  FeedRoute: FeedRoute,
   TripTokenRoute: TripTokenRouteWithChildren,
   TripNewRoute: TripNewRoute,
+  WaymakerIdRoute: WaymakerIdRoute,
+  WaymakerApplyRoute: WaymakerApplyRoute,
   TripConfirmationTokenRoute: TripConfirmationTokenRoute,
 }
 export const routeTree = rootRouteImport
