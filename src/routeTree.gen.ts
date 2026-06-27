@@ -9,8 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as FeedRouteImport } from './routes/feed'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as WaymakerApplyRouteImport } from './routes/waymaker.apply'
 import { Route as WaymakerIdRouteImport } from './routes/waymaker.$id'
@@ -19,6 +21,11 @@ import { Route as TripTokenRouteImport } from './routes/trip.$token'
 import { Route as TripConfirmationTokenRouteImport } from './routes/trip.confirmation.$token'
 import { Route as TripTokenFeedbackRouteImport } from './routes/trip.$token.feedback'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FeedRoute = FeedRouteImport.update({
   id: '/feed',
   path: '/feed',
@@ -27,6 +34,11 @@ const FeedRoute = FeedRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -67,8 +79,10 @@ const TripTokenFeedbackRoute = TripTokenFeedbackRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/feed': typeof FeedRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
   '/trip/new': typeof TripNewRoute
   '/waymaker/$id': typeof WaymakerIdRoute
@@ -78,8 +92,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/feed': typeof FeedRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
   '/trip/new': typeof TripNewRoute
   '/waymaker/$id': typeof WaymakerIdRoute
@@ -90,8 +106,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/feed': typeof FeedRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
   '/trip/new': typeof TripNewRoute
   '/waymaker/$id': typeof WaymakerIdRoute
@@ -103,8 +121,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/auth'
     | '/feed'
+    | '/sitemap.xml'
     | '/trip/$token'
     | '/trip/new'
     | '/waymaker/$id'
@@ -114,8 +134,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/auth'
     | '/feed'
+    | '/sitemap.xml'
     | '/trip/$token'
     | '/trip/new'
     | '/waymaker/$id'
@@ -125,8 +147,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/auth'
     | '/feed'
+    | '/sitemap.xml'
     | '/trip/$token'
     | '/trip/new'
     | '/waymaker/$id'
@@ -137,8 +161,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   AuthRoute: typeof AuthRoute
   FeedRoute: typeof FeedRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TripTokenRoute: typeof TripTokenRouteWithChildren
   TripNewRoute: typeof TripNewRoute
   WaymakerIdRoute: typeof WaymakerIdRoute
@@ -148,6 +174,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/feed': {
       id: '/feed'
       path: '/feed'
@@ -160,6 +193,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -228,8 +268,10 @@ const TripTokenRouteWithChildren = TripTokenRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   AuthRoute: AuthRoute,
   FeedRoute: FeedRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TripTokenRoute: TripTokenRouteWithChildren,
   TripNewRoute: TripNewRoute,
   WaymakerIdRoute: WaymakerIdRoute,
