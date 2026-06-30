@@ -10,12 +10,11 @@ export function SiteHeader() {
           <Logo size={32} />
         </Link>
         <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
-          <Link to="/trip/new" className="hover:text-foreground">Find my WayMaker</Link>
-          <Link to="/moments" className="hover:text-foreground">OwnWay Moments</Link>
-          <Link to="/waymaker/apply" className="hover:text-foreground">Become a WayMaker</Link>
+          <Link to="/" hash="how-it-works" className="hover:text-foreground">How it works</Link>
+          <Link to="/" hash="join" className="hover:text-foreground">Join early access</Link>
         </nav>
-        <Link to="/trip/new">
-          <Button size="sm" className="rounded-full">Find my WayMaker</Button>
+        <Link to="/" hash="join">
+          <Button size="sm" className="rounded-full">Get early access</Button>
         </Link>
       </div>
     </header>

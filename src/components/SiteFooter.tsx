@@ -8,13 +8,12 @@ export function SiteFooter() {
         <div className="flex flex-col gap-3">
           <Logo size={28} tagline />
           <p className="max-w-sm text-sm text-muted-foreground">
-            Not the most famous local. The right person for your trip.
+            Travel your way. Early access opening city by city.
           </p>
         </div>
         <div className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted-foreground">
-          <Link to="/trip/new" className="hover:text-foreground">Find my WayMaker</Link>
-          <Link to="/moments" className="hover:text-foreground">OwnWay Moments</Link>
-          <Link to="/waymaker/apply" className="hover:text-foreground">Become a WayMaker</Link>
+          <Link to="/" hash="how-it-works" className="hover:text-foreground">How it works</Link>
+          <Link to="/" hash="join" className="hover:text-foreground">Join early access</Link>
           <Link to="/auth" className="hover:text-foreground">Admin</Link>
         </div>
       </div>
