@@ -35,12 +35,12 @@ export const Route = createFileRoute("/")({
 /* ---------------- Hero animation ---------------- */
 
 const SCENES = [
-  { kind: "noise" as const, label: "Too many tips. Not enough fit." },
+  { kind: "noise" as const, label: "Sara is planning a day trip to Capri. Too many tips. Not enough fit." },
   { kind: "question" as const, label: "What kind of experience do you want to live?" },
-  { kind: "match" as const, label: "OwnWay connects you with the right WayMaker." },
-  { kind: "tip" as const, label: "“Go at 11:45, not 13:00. You’ll avoid the queue.”" },
+  { kind: "match" as const, label: "OwnWay connects Sara with Marco, a local from Napoli." },
+  { kind: "tip" as const, label: "“There’s a transport strike tomorrow — the bus to the harbour won’t run. Take a taxi by 8:30 to catch the ferry to Capri.”" },
   { kind: "moment" as const, label: "That’s an OwnWay Moment." },
-  { kind: "final" as const, label: "One trip. One person. One tip that makes the difference." },
+  { kind: "final" as const, label: "One trip. One local. One tip that makes the difference." },
 ];
 
 function HeroAnimation() {
@@ -95,7 +95,7 @@ function HeroAnimation() {
               <div className="flex-1 rounded-2xl border border-border/60 bg-card p-4 text-left shadow-soft">
                 <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Explorer</p>
                 <p className="mt-1 font-display text-lg">Sara</p>
-                <p className="text-xs text-muted-foreground">3 days · Naples</p>
+                <p className="text-xs text-muted-foreground">Day trip to Capri</p>
               </div>
               <div className="flex flex-col items-center">
                 <div className="h-px w-8 bg-gold" />
@@ -105,7 +105,7 @@ function HeroAnimation() {
               <div className="flex-1 rounded-2xl border border-border/60 bg-card p-4 text-left shadow-soft">
                 <p className="text-[10px] uppercase tracking-widest text-gold">WayMaker</p>
                 <p className="mt-1 font-display text-lg">Marco</p>
-                <p className="text-xs text-muted-foreground">Lives in Vomero</p>
+                <p className="text-xs text-muted-foreground">Lives in Napoli</p>
               </div>
             </div>
           )}
@@ -113,7 +113,7 @@ function HeroAnimation() {
           {scene.kind === "tip" && (
             <div className="rounded-2xl border border-border/60 bg-card p-6 shadow-card">
               <MessageCircleHeart className="mx-auto size-6 text-gold" />
-              <p className="mt-4 font-display text-2xl italic">{scene.label}</p>
+              <p className="mt-4 font-display text-lg leading-snug italic">{scene.label}</p>
             </div>
           )}
 
@@ -340,7 +340,7 @@ function LandingPage() {
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {[
             { icon: Compass, n: "01", title: "Tell us how you travel", body: "Your destination, rhythm, budget, interests, and the kind of experience you want." },
-            { icon: Sparkles, n: "02", title: "Get matched with a WayMaker", body: "We connect you with someone who understands the destination and your way of traveling." },
+            { icon: Sparkles, n: "02", title: "Get matched with a WayMaker", body: "We connect you with a local who understands the destination and your way of traveling." },
             { icon: MessageCircleHeart, n: "03", title: "Find your OwnWay Moment", body: "Receive practical, personal advice that can change how you experience the trip." },
           ].map(({ icon: Icon, n, title, body }) => (
             <div key={n} className="rounded-2xl border border-border/60 bg-card p-7 shadow-soft">
