@@ -150,7 +150,7 @@ function SignupForm({
   role: Role;
   setRole: (r: Role) => void;
   referredBy?: string;
-  formRef: React.RefObject<HTMLDivElement>;
+  formRef: React.RefObject<HTMLDivElement | null>;
 }) {
   const submit = useServerFn(submitEarlyAccess);
   const [email, setEmail] = useState("");
