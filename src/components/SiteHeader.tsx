@@ -15,7 +15,7 @@ export function SiteHeader() {
           <Link to="/waymaker/apply" className="hover:text-foreground">Become a WayMaker</Link>
         </nav>
         <Link to="/trip/new">
-          <Button size="sm" className="rounded-full">Find my WayMaker</Button>
+          <Button size="sm" className="rounded-full bg-ink text-background hover:bg-ink/90">Find my WayMaker</Button>
         </Link>
       </div>
     </header>
