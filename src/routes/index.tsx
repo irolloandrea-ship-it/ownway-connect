@@ -340,7 +340,7 @@ function LandingPage() {
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {[
             { icon: Compass, n: "01", title: "Tell us how you travel", body: "Your destination, rhythm, budget, interests, and the kind of experience you want." },
-            { icon: Sparkles, n: "02", title: "Get matched with a WayMaker", body: "We connect you with someone who understands the destination and your way of traveling." },
+            { icon: Sparkles, n: "02", title: "Get matched with a WayMaker", body: "We connect you with a local who understands the destination and your way of traveling." },
             { icon: MessageCircleHeart, n: "03", title: "Find your OwnWay Moment", body: "Receive practical, personal advice that can change how you experience the trip." },
           ].map(({ icon: Icon, n, title, body }) => (
             <div key={n} className="rounded-2xl border border-border/60 bg-card p-7 shadow-soft">
