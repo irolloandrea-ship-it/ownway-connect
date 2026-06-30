@@ -35,12 +35,12 @@ export const Route = createFileRoute("/")({
 /* ---------------- Hero animation ---------------- */
 
 const SCENES = [
-  { kind: "noise" as const, label: "Too many tips. Not enough fit." },
+  { kind: "noise" as const, label: "Sara is planning a day trip to Capri. Too many tips. Not enough fit." },
   { kind: "question" as const, label: "What kind of experience do you want to live?" },
-  { kind: "match" as const, label: "OwnWay connects you with the right WayMaker." },
-  { kind: "tip" as const, label: "“Go at 11:45, not 13:00. You’ll avoid the queue.”" },
+  { kind: "match" as const, label: "OwnWay connects Sara with Marco, a local from Napoli." },
+  { kind: "tip" as const, label: "“There’s a transport strike tomorrow — the bus to the harbour won’t run. Take a taxi by 8:30 to catch the ferry to Capri.”" },
   { kind: "moment" as const, label: "That’s an OwnWay Moment." },
-  { kind: "final" as const, label: "One trip. One person. One tip that makes the difference." },
+  { kind: "final" as const, label: "One trip. One local. One tip that makes the difference." },
 ];
 
 function HeroAnimation() {
