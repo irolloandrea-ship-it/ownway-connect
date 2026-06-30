@@ -85,6 +85,7 @@ function WaymakerApply() {
 
   const steps: WizardStep[] = [
     {
+      label: "Basic Information",
       title: "About you",
       validate: () => !f.first_name ? "Add your first name" : !f.email ? "Add your email" : !f.main_location ? "Add your main location" : f.languages.length === 0 ? "Pick at least one language" : null,
       render: () => (
@@ -100,6 +101,7 @@ function WaymakerApply() {
       ),
     },
     {
+      label: "Destinations Known",
       title: "Which places can you help with?",
       validate: () => f.destinations.some((d) => !d.city) ? "Add a city for every destination" : null,
       render: () => (
@@ -138,6 +140,7 @@ function WaymakerApply() {
       ),
     },
     {
+      label: "Travel Style",
       title: "What kind of traveler do you understand best?",
       render: () => (
         <>
@@ -150,6 +153,7 @@ function WaymakerApply() {
       ),
     },
     {
+      label: "Availability",
       title: "How would you like to help?",
       render: () => (
         <>
@@ -175,6 +179,7 @@ function WaymakerApply() {
       ),
     },
     {
+      label: "Trust & Quality",
       title: "Trust & quality",
       validate: () => !f.motivation_text ? "Tell us why you want to help" : !f.useful_advice_text ? "Tell us what makes your advice useful" : !f.consent_to_profile_review ? "Please accept the consent" : null,
       render: () => (
