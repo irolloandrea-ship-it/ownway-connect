@@ -65,6 +65,39 @@ export type Database = {
         }
         Relationships: []
       }
+      early_access_signups: {
+        Row: {
+          created_at: string
+          destination: string | null
+          email: string
+          id: string
+          referral_code: string
+          referred_by: string | null
+          role: string
+          source: string | null
+        }
+        Insert: {
+          created_at?: string
+          destination?: string | null
+          email: string
+          id?: string
+          referral_code: string
+          referred_by?: string | null
+          role: string
+          source?: string | null
+        }
+        Update: {
+          created_at?: string
+          destination?: string | null
+          email?: string
+          id?: string
+          referral_code?: string
+          referred_by?: string | null
+          role?: string
+          source?: string | null
+        }
+        Relationships: []
+      }
       explorer_trip_requests: {
         Row: {
           accommodation_area: string | null
