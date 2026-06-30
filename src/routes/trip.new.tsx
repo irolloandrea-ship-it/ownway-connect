@@ -16,7 +16,7 @@ import { submitTripRequest } from "@/lib/trip.functions";
 export const Route = createFileRoute("/trip/new")({
   head: () => ({
     meta: [
-      { title: "Plan your trip — OwnWay" },
+      { title: "Find my WayMaker — OwnWay" },
       { name: "description", content: "Tell us what kind of experience you want to live. We'll match you with the right WayMaker." },
     ],
   }),
@@ -298,7 +298,7 @@ function TripNewPage() {
       <SiteHeader />
       <main className="container-page py-16 md:py-20">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-xs uppercase tracking-[0.25em] text-gold">Plan your trip</p>
+          <p className="text-xs uppercase tracking-[0.25em] text-gold">Find my WayMaker</p>
           <h1 className="mt-3 text-4xl md:text-5xl">Tell us the experience you want to live.</h1>
         </div>
         <div className="mt-12">
