@@ -67,34 +67,49 @@ export type Database = {
       }
       early_access_signups: {
         Row: {
+          base_position: number | null
+          consent_to_updates: boolean
           created_at: string
           destination: string | null
           email: string
           id: string
+          priority_score: number | null
           referral_code: string
+          referral_count: number
           referred_by: string | null
           role: string
           source: string | null
+          updated_at: string
         }
         Insert: {
+          base_position?: number | null
+          consent_to_updates?: boolean
           created_at?: string
           destination?: string | null
           email: string
           id?: string
+          priority_score?: number | null
           referral_code: string
+          referral_count?: number
           referred_by?: string | null
-          role: string
+          role?: string
           source?: string | null
+          updated_at?: string
         }
         Update: {
+          base_position?: number | null
+          consent_to_updates?: boolean
           created_at?: string
           destination?: string | null
           email?: string
           id?: string
+          priority_score?: number | null
           referral_code?: string
+          referral_count?: number
           referred_by?: string | null
           role?: string
           source?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
