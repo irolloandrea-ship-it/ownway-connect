@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as MomentsRouteImport } from './routes/moments'
 import { Route as FeedRouteImport } from './routes/feed'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -24,6 +25,11 @@ import { Route as TripTokenFeedbackRouteImport } from './routes/trip.$token.feed
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MomentsRoute = MomentsRouteImport.update({
+  id: '/moments',
+  path: '/moments',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FeedRoute = FeedRouteImport.update({
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/feed': typeof FeedRoute
+  '/moments': typeof MomentsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
   '/trip/new': typeof TripNewRoute
@@ -95,6 +102,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/feed': typeof FeedRoute
+  '/moments': typeof MomentsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
   '/trip/new': typeof TripNewRoute
@@ -109,6 +117,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/feed': typeof FeedRoute
+  '/moments': typeof MomentsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
   '/trip/new': typeof TripNewRoute
@@ -124,6 +133,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/feed'
+    | '/moments'
     | '/sitemap.xml'
     | '/trip/$token'
     | '/trip/new'
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/feed'
+    | '/moments'
     | '/sitemap.xml'
     | '/trip/$token'
     | '/trip/new'
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/feed'
+    | '/moments'
     | '/sitemap.xml'
     | '/trip/$token'
     | '/trip/new'
@@ -164,6 +176,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AuthRoute: typeof AuthRoute
   FeedRoute: typeof FeedRoute
+  MomentsRoute: typeof MomentsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TripTokenRoute: typeof TripTokenRouteWithChildren
   TripNewRoute: typeof TripNewRoute
@@ -179,6 +192,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/moments': {
+      id: '/moments'
+      path: '/moments'
+      fullPath: '/moments'
+      preLoaderRoute: typeof MomentsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/feed': {
@@ -271,6 +291,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   AuthRoute: AuthRoute,
   FeedRoute: FeedRoute,
+  MomentsRoute: MomentsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TripTokenRoute: TripTokenRouteWithChildren,
   TripNewRoute: TripNewRoute,

@@ -70,11 +70,9 @@ function LandingPage() {
           Travel your way.
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-          OwnWay matches you with the person who understands how you want to experience a destination.
+          OwnWay matches you with the local who understands how you want to experience a destination.
         </p>
-        <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground/80 italic">
-          Not the most famous local. Not another influencer. The person who would say: "If I were you, I'd do this."
-        </p>
+
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
           <Link to="/trip/new">
             <Button size="lg" className="rounded-full px-7">Find my WayMaker <ArrowRight className="ml-1.5 size-4" /></Button>
