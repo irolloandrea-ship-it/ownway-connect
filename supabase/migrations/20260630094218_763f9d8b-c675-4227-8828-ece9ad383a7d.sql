@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "anon can apply" ON public.waymaker_applications;
