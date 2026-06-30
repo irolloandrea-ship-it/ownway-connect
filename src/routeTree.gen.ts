@@ -15,6 +15,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as WaymakerApplyRouteImport } from './routes/waymaker.apply'
 import { Route as WaymakerIdRouteImport } from './routes/waymaker.$id'
+import { Route as WaitlistCodeRouteImport } from './routes/waitlist.$code'
 import { Route as TripNewRouteImport } from './routes/trip.new'
 import { Route as TripTokenRouteImport } from './routes/trip.$token'
 import { Route as TripConfirmationTokenRouteImport } from './routes/trip.confirmation.$token'
@@ -50,6 +51,11 @@ const WaymakerIdRoute = WaymakerIdRouteImport.update({
   path: '/waymaker/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WaitlistCodeRoute = WaitlistCodeRouteImport.update({
+  id: '/waitlist/$code',
+  path: '/waitlist/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TripNewRoute = TripNewRouteImport.update({
   id: '/trip/new',
   path: '/trip/new',
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
   '/trip/new': typeof TripNewRoute
+  '/waitlist/$code': typeof WaitlistCodeRoute
   '/waymaker/$id': typeof WaymakerIdRoute
   '/waymaker/apply': typeof WaymakerApplyRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
   '/trip/new': typeof TripNewRoute
+  '/waitlist/$code': typeof WaitlistCodeRoute
   '/waymaker/$id': typeof WaymakerIdRoute
   '/waymaker/apply': typeof WaymakerApplyRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
   '/trip/new': typeof TripNewRoute
+  '/waitlist/$code': typeof WaitlistCodeRoute
   '/waymaker/$id': typeof WaymakerIdRoute
   '/waymaker/apply': typeof WaymakerApplyRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/trip/$token'
     | '/trip/new'
+    | '/waitlist/$code'
     | '/waymaker/$id'
     | '/waymaker/apply'
     | '/trip/$token/feedback'
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/trip/$token'
     | '/trip/new'
+    | '/waitlist/$code'
     | '/waymaker/$id'
     | '/waymaker/apply'
     | '/trip/$token/feedback'
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/trip/$token'
     | '/trip/new'
+    | '/waitlist/$code'
     | '/waymaker/$id'
     | '/waymaker/apply'
     | '/trip/$token/feedback'
@@ -154,6 +166,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TripTokenRoute: typeof TripTokenRouteWithChildren
   TripNewRoute: typeof TripNewRoute
+  WaitlistCodeRoute: typeof WaitlistCodeRoute
   WaymakerIdRoute: typeof WaymakerIdRoute
   WaymakerApplyRoute: typeof WaymakerApplyRoute
   TripConfirmationTokenRoute: typeof TripConfirmationTokenRoute
@@ -201,6 +214,13 @@ declare module '@tanstack/react-router' {
       path: '/waymaker/$id'
       fullPath: '/waymaker/$id'
       preLoaderRoute: typeof WaymakerIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/waitlist/$code': {
+      id: '/waitlist/$code'
+      path: '/waitlist/$code'
+      fullPath: '/waitlist/$code'
+      preLoaderRoute: typeof WaitlistCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/trip/new': {
@@ -253,6 +273,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TripTokenRoute: TripTokenRouteWithChildren,
   TripNewRoute: TripNewRoute,
+  WaitlistCodeRoute: WaitlistCodeRoute,
   WaymakerIdRoute: WaymakerIdRoute,
   WaymakerApplyRoute: WaymakerApplyRoute,
   TripConfirmationTokenRoute: TripConfirmationTokenRoute,
