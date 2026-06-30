@@ -206,9 +206,6 @@ function EmailCapture({
           {submitting ? "Saving…" : cta} <ArrowRight className="ml-1.5 size-4" />
         </Button>
       </div>
-      <p className="mt-3 text-xs text-muted-foreground">
-        Early access is opening city by city. No spam.
-      </p>
     </form>
   );
 }
