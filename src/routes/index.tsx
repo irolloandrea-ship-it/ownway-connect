@@ -98,12 +98,10 @@ function LandingPage() {
       </Section>
 
       <Section className="bg-secondary/40 -mx-5 px-5 rounded-none">
-        <div className="container-page grid gap-10 md:grid-cols-2 md:gap-16">
-          <div>
-            <p className="text-xs uppercase tracking-[0.25em] text-gold">The insight</p>
-            <h2 className="mt-4 text-4xl md:text-5xl">Sometimes one conversation is worth hours of research.</h2>
-          </div>
-          <div className="space-y-4 text-muted-foreground">
+        <div className="container-page mx-auto max-w-3xl text-center">
+          <p className="text-xs uppercase tracking-[0.25em] text-gold">The insight</p>
+          <h2 className="mt-4 text-4xl md:text-5xl">Sometimes one conversation is worth hours of research.</h2>
+          <div className="mt-6 space-y-4 text-muted-foreground">
             <p>A two-minute conversation with the right person can change an entire trip.</p>
             <p>Not because that person knows every place — but because they understand where you're staying, how much time you have, what you care about, and what kind of traveler you are.</p>
             <p className="text-foreground">OwnWay makes that conversation possible anywhere.</p>
