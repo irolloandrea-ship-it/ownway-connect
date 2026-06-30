@@ -11,6 +11,7 @@ export function SiteHeader() {
         </Link>
         <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
           <Link to="/feed" className="hover:text-foreground">City Feed</Link>
+          <Link to="/moments" className="hover:text-foreground">OwnWay Moments</Link>
           <Link to="/waymaker/apply" className="hover:text-foreground">Become a WayMaker</Link>
         </nav>
         <Link to="/trip/new">
