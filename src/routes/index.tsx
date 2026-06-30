@@ -136,24 +136,9 @@ function LandingPage() {
 
 
   <Section className="bg-secondary/40 -mx-5 px-5">
-        <div className="container-page">
+        <div className="container-page text-center">
           <p className="text-xs uppercase tracking-[0.25em] text-gold">Who it's for</p>
           <h2 className="mt-3 text-4xl md:text-5xl">For travelers who want more than a list.</h2>
-          <div className="mt-10 grid gap-4 md:grid-cols-3">
-            {[
-              "First-time visitors to a city",
-              "Travelers tired of generic recommendations",
-              "People planning short city breaks",
-              "Solo travelers",
-              "Friend groups & couples",
-              "Food-focused travelers",
-              "Culture-focused travelers",
-              "People who want authentic but safe experiences",
-              "Anyone planning a trip that actually fits them",
-            ].map((t) => (
-              <div key={t} className="rounded-xl border border-border/60 bg-card px-5 py-4 text-sm text-foreground/90 shadow-soft">{t}</div>
-            ))}
-          </div>
         </div>
       </Section>
 

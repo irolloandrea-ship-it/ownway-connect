@@ -16,7 +16,7 @@ import { submitTripRequest } from "@/lib/trip.functions";
 export const Route = createFileRoute("/trip/new")({
   head: () => ({
     meta: [
-      { title: "Create your trip profile — OwnWay" },
+      { title: "Plan your trip — OwnWay" },
       { name: "description", content: "Tell us what kind of experience you want to live. We'll match you with the right WayMaker." },
     ],
   }),
