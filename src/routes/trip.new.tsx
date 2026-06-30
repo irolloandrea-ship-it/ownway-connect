@@ -292,7 +292,7 @@ function TripNewPage() {
       <SiteHeader />
       <main className="container-page py-16 md:py-20">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-xs uppercase tracking-[0.25em] text-gold">Create your trip profile</p>
+          <p className="text-xs uppercase tracking-[0.25em] text-gold">Plan your trip</p>
           <h1 className="mt-3 text-4xl md:text-5xl">Tell us the experience you want to live.</h1>
         </div>
         <div className="mt-12">
