@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 export type WizardStep = {
+  label?: string;
   title: string;
   subtitle?: string;
   render: () => ReactNode;
@@ -40,14 +41,36 @@ export function StepWizard({ steps, onComplete, finalLabel = "Submit", submittin
 
   return (
     <div className="mx-auto w-full max-w-2xl">
-      <div className="mb-6 flex items-center justify-between text-xs uppercase tracking-[0.2em] text-muted-foreground">
-        <span>Step {index + 1} of {steps.length}</span>
-        <div className="flex gap-1.5">
-          {steps.map((_, i) => (
+      <div className="mb-6">
+        <div className="flex items-center justify-between text-xs uppercase tracking-[0.2em] text-muted-foreground">
+          <span>Step {index + 1} of {steps.length}</span>
+          {step.label && <span className="text-gold">{step.label}</span>}
+        </div>
+        <div className="mt-3 flex gap-1.5">
+          {steps.map((s, i) => (
+            <div key={i} className="group flex-1" title={s.label ?? s.title}>
+              <span
+                className={`block h-1 rounded-full transition-colors ${
+                  i < index ? "bg-gold/60" : i === index ? "bg-gold" : "bg-border"
+                }`}
+              />
+            </div>
+          ))}
+        </div>
+        <div className="mt-2 hidden flex-wrap gap-x-3 gap-y-1 text-[11px] text-muted-foreground md:flex">
+          {steps.map((s, i) => (
             <span
               key={i}
-              className={`h-1 w-8 rounded-full transition-colors ${i <= index ? "bg-gold" : "bg-border"}`}
-            />
+              className={
+                i === index
+                  ? "text-foreground font-medium"
+                  : i < index
+                    ? "text-muted-foreground/80"
+                    : "text-muted-foreground/50"
+              }
+            >
+              {i + 1}. {s.label ?? s.title}
+            </span>
           ))}
         </div>
       </div>
