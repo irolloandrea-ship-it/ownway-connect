@@ -3,7 +3,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/Logo";
-import { ArrowRight, Sparkles, Users, Compass, MessageCircleHeart, Star } from "lucide-react";
+import { ArrowRight, Sparkles, Users, Compass, MessageCircleHeart } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -70,10 +70,7 @@ function LandingPage() {
           Travel your way.
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-          OwnWay matches you with the person who understands how you want to experience a destination.
-        </p>
-        <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground/80 italic">
-          Not the most famous local. Not another influencer. The person who would say: "If I were you, I'd do this."
+          OwnWay matches you with the local who understands how you want to experience a destination.
         </p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
           <Link to="/trip/new">
@@ -90,7 +87,7 @@ function LandingPage() {
         <div className="grid gap-10 md:grid-cols-2 md:gap-16">
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-gold">The problem</p>
-            <h2 className="mt-4 text-4xl md:text-5xl">Travel research is broken.</h2>
+            <h2 className="mt-4 text-4xl md:text-5xl">Planning a trip has become overwhelming.</h2>
           </div>
           <div className="space-y-4 text-muted-foreground">
             <p>Today, planning a trip means jumping between TikTok, Instagram, YouTube, blogs, Google Maps, Reddit, guides, and articles.</p>
