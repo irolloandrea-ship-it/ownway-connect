@@ -32,8 +32,7 @@ function MomentsPage() {
           </p>
         </div>
 
-        <p className="mt-12 text-center text-xs uppercase tracking-[0.2em] text-muted-foreground">Examples, not real testimonials</p>
-        <div className="mt-5 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {[
             { title: "Beat the crowd", tip: "Take the 8:40 ferry instead of the 10:00 one. You’ll arrive before the organized tours.", reaction: "This helped us experience Capri before the crowds arrived. It completely changed the day." },
             { title: "Better timing", tip: "Go at sunset, not in the morning. The light, atmosphere, and crowd level are completely different.", reaction: "It turned a normal visit into the most memorable moment of the trip." },

@@ -12,14 +12,14 @@ export function SiteFooter() {
           </p>
         </div>
         <div className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted-foreground">
-          <Link to="/trip/new" className="hover:text-foreground">Create trip profile</Link>
+          <Link to="/trip/new" className="hover:text-foreground">Plan your trip</Link>
           <Link to="/waymaker/apply" className="hover:text-foreground">Apply as WayMaker</Link>
-          <Link to="/feed" className="hover:text-foreground">City Feed</Link>
+          <Link to="/moments" className="hover:text-foreground">OwnWay Moments</Link>
           <Link to="/auth" className="hover:text-foreground">Admin</Link>
         </div>
       </div>
       <div className="container-page pb-8 text-xs text-muted-foreground/70">
-        © {new Date().getFullYear()} OwnWay · Concierge MVP
+        © {new Date().getFullYear()} OwnWay
       </div>
     </footer>
   );
