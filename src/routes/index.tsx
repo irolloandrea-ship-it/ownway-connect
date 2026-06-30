@@ -88,7 +88,7 @@ function LandingPage() {
         <div className="grid gap-10 md:grid-cols-2 md:gap-16">
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-gold">The problem</p>
-            <h2 className="mt-4 text-4xl md:text-5xl">Travel research is broken.</h2>
+            <h2 className="mt-4 text-4xl md:text-5xl">Travel planning has become overwhelming.</h2>
           </div>
           <div className="space-y-4 text-muted-foreground">
             <p>Today, planning a trip means jumping between TikTok, Instagram, YouTube, blogs, Google Maps, Reddit, guides, and articles.</p>
