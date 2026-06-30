@@ -113,7 +113,7 @@ function HeroAnimation() {
           {scene.kind === "tip" && (
             <div className="rounded-2xl border border-border/60 bg-card p-6 shadow-card">
               <MessageCircleHeart className="mx-auto size-6 text-gold" />
-              <p className="mt-4 font-display text-2xl italic">{scene.label}</p>
+              <p className="mt-4 font-display text-lg leading-snug italic">{scene.label}</p>
             </div>
           )}
 
