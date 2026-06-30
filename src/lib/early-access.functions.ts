@@ -100,7 +100,7 @@ export const updateSignup = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => updateSchema.parse(data))
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const patch: Record<string, unknown> = {};
+    const patch: { role?: string; destination?: string | null; consent_to_updates?: boolean } = {};
     if (data.role !== undefined) patch.role = data.role;
     if (data.destination !== undefined) patch.destination = data.destination;
     if (data.consent_to_updates !== undefined) patch.consent_to_updates = data.consent_to_updates;
