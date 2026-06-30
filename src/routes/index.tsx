@@ -315,16 +315,6 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="container-page py-20 text-center md:py-28">
-        <h2 className="mx-auto max-w-2xl text-4xl md:text-5xl">Be first to find your OwnWay.</h2>
-        <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-          Early access is opening soon. Join the waitlist and move up by inviting friends.
-        </p>
-        <div className="mx-auto mt-8 max-w-xl">
-          <EmailCapture referredBy={search.ref} intendedRole={intendedRole} />
-        </div>
-      </section>
 
       <SiteFooter />
     </div>
