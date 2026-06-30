@@ -12,7 +12,7 @@ export function SiteFooter() {
           </p>
         </div>
         <div className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted-foreground">
-          <Link to="/trip/new" className="hover:text-foreground">Plan your trip</Link>
+          <Link to="/trip/new" className="hover:text-foreground">Find my WayMaker</Link>
           <Link to="/moments" className="hover:text-foreground">OwnWay Moments</Link>
           <Link to="/waymaker/apply" className="hover:text-foreground">Become a WayMaker</Link>
           <Link to="/auth" className="hover:text-foreground">Admin</Link>
