@@ -3,7 +3,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/Logo";
-import { ArrowRight, Sparkles, Users, Compass, MessageCircleHeart, Star } from "lucide-react";
+import { ArrowRight, Sparkles, Users, Compass, MessageCircleHeart } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
