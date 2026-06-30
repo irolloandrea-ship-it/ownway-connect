@@ -95,7 +95,7 @@ function HeroAnimation() {
               <div className="flex-1 rounded-2xl border border-border/60 bg-card p-4 text-left shadow-soft">
                 <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Explorer</p>
                 <p className="mt-1 font-display text-lg">Sara</p>
-                <p className="text-xs text-muted-foreground">3 days · Naples</p>
+                <p className="text-xs text-muted-foreground">Day trip to Capri</p>
               </div>
               <div className="flex flex-col items-center">
                 <div className="h-px w-8 bg-gold" />
@@ -105,7 +105,7 @@ function HeroAnimation() {
               <div className="flex-1 rounded-2xl border border-border/60 bg-card p-4 text-left shadow-soft">
                 <p className="text-[10px] uppercase tracking-widest text-gold">WayMaker</p>
                 <p className="mt-1 font-display text-lg">Marco</p>
-                <p className="text-xs text-muted-foreground">Lives in Vomero</p>
+                <p className="text-xs text-muted-foreground">Lives in Napoli</p>
               </div>
             </div>
           )}
