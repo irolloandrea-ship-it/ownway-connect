@@ -78,7 +78,7 @@ function LandingPage() {
             <Button size="lg" className="rounded-full px-7">Find my WayMaker <ArrowRight className="ml-1.5 size-4" /></Button>
           </Link>
           <Link to="/waymaker/apply">
-            <Button size="lg" variant="ghost" className="rounded-full">Become a WayMaker</Button>
+            <Button size="lg" className="rounded-full px-7 bg-ink text-background hover:bg-ink/90">Become a WayMaker</Button>
           </Link>
         </div>
         <MatchingVisual />
@@ -88,7 +88,7 @@ function LandingPage() {
         <div className="grid gap-10 md:grid-cols-2 md:gap-16">
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-gold">The problem</p>
-            <h2 className="mt-4 text-4xl md:text-5xl">Travel research is broken.</h2>
+            <h2 className="mt-4 text-4xl md:text-5xl">Travel planning has become overwhelming.</h2>
           </div>
           <div className="space-y-4 text-muted-foreground">
             <p>Today, planning a trip means jumping between TikTok, Instagram, YouTube, blogs, Google Maps, Reddit, guides, and articles.</p>
@@ -149,7 +149,7 @@ function LandingPage() {
             <Button size="lg" className="rounded-full px-7">Find my WayMaker</Button>
           </Link>
           <Link to="/waymaker/apply">
-            <Button size="lg" variant="outline" className="rounded-full">Apply as WayMaker</Button>
+            <Button size="lg" className="rounded-full px-7 bg-ink text-background hover:bg-ink/90">Become a WayMaker</Button>
           </Link>
         </div>
       </Section>
