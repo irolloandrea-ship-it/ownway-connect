@@ -110,6 +110,7 @@ function TripNewPage() {
 
   const steps: WizardStep[] = [
     {
+      label: "Destination",
       title: "Where are you going?",
       subtitle: "Every trip is different. Tell us the basics.",
       validate: () => !f.destination_city ? "Please add a destination city" : !f.trip_duration ? "Please choose a duration" : null,
@@ -144,6 +145,7 @@ function TripNewPage() {
       ),
     },
     {
+      label: "Travel Context",
       title: "What kind of trip is this?",
       render: () => (
         <>
@@ -171,6 +173,7 @@ function TripNewPage() {
       ),
     },
     {
+      label: "Desired Experience",
       title: "What experience do you want to live?",
       subtitle: "This is the most important step.",
       render: () => (
@@ -191,6 +194,7 @@ function TripNewPage() {
       ),
     },
     {
+      label: "Interests",
       title: "What matters most for this trip?",
       render: () => (
         <>
@@ -205,6 +209,7 @@ function TripNewPage() {
       ),
     },
     {
+      label: "Practical Needs",
       title: "What should your WayMaker know?",
       render: () => (
         <>
@@ -236,6 +241,7 @@ function TripNewPage() {
       ),
     },
     {
+      label: "Contact Details",
       title: "Where should we send your match?",
       validate: () => !f.email ? "Please enter your email" : !f.consent_to_match ? "Please accept the consent to continue" : null,
       render: () => (
