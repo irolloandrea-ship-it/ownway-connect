@@ -1,4 +1,4 @@
-import { createFileRoute, useSearch } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -6,158 +6,166 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/Logo";
-import { ArrowRight, Sparkles, Compass, MessageCircleHeart, Check, Copy, Share2 } from "lucide-react";
+import { ArrowRight, Compass, Sparkles, MessageCircleHeart } from "lucide-react";
 import { submitEarlyAccess } from "@/lib/early-access.functions";
 import { motion, AnimatePresence } from "framer-motion";
 
-type Role = "explorer" | "waymaker" | "curious";
-
-type Search = { role?: Role; ref?: string };
+type Search = { ref?: string; role?: "explorer" | "waymaker" };
 
 export const Route = createFileRoute("/")({
   validateSearch: (s: Record<string, unknown>): Search => ({
-    role: s.role === "explorer" || s.role === "waymaker" || s.role === "curious" ? s.role : undefined,
     ref: typeof s.ref === "string" ? s.ref : undefined,
+    role: s.role === "explorer" || s.role === "waymaker" ? s.role : undefined,
   }),
   head: () => ({
     meta: [
-      { title: "OwnWay — The right tip can change the whole trip" },
-      { name: "description", content: "OwnWay matches travelers with people who know a destination deeply. Join early access." },
+      { title: "OwnWay — One right tip can change the whole trip" },
+      { name: "description", content: "Join the OwnWay waitlist. Get matched with locals who know a destination deeply and can help you experience it your way." },
       { property: "og:title", content: "OwnWay — Travel your way" },
-      { property: "og:description", content: "Not another generic guide. Not another influencer list. A real person who can say: \"If I were you, I'd do this.\"" },
+      { property: "og:description", content: "Get matched with locals who know a destination deeply. Join the early access waitlist." },
     ],
   }),
   component: LandingPage,
 });
 
-/* ---------------- Hero animation ---------------- */
+/* ---------------- iPhone mockup animation ---------------- */
 
-const SCENES = [
-  { kind: "noise" as const, label: "Sara is planning a day trip to Capri. Too many tips. Not enough fit." },
-  { kind: "question" as const, label: "What kind of experience do you want to live?" },
-  { kind: "match" as const, label: "OwnWay connects Sara with Marco, a local from Napoli." },
-  { kind: "tip" as const, label: "“There’s a transport strike tomorrow — the bus to the harbour won’t run. Take a taxi by 8:30 to catch the ferry to Capri.”" },
-  { kind: "moment" as const, label: "That’s an OwnWay Moment." },
-  { kind: "final" as const, label: "One trip. One local. One tip that makes the difference." },
-];
+const PHONE_SCENES = [
+  {
+    kind: "ask",
+    title: "Anna is planning Capri",
+    body: "3 days. Wants calm mornings, slow food, no tourist traps.",
+  },
+  {
+    kind: "match",
+    title: "Matched with Marco",
+    body: "Lives in Napoli. Goes to Capri every other weekend.",
+  },
+  {
+    kind: "tip",
+    title: "Marco’s tip",
+    body: "“Skip the 9am ferry — full of tour groups. Take the 11:15 from Mergellina. Lunch at Da Gelsomina, ask for the rabbit.”",
+  },
+  {
+    kind: "moment",
+    title: "OwnWay Moment",
+    body: "One trip. One local. One tip that makes the difference.",
+  },
+] as const;
 
-function HeroAnimation() {
+function PhoneMockup() {
   const [i, setI] = useState(0);
   useEffect(() => {
-    const t = setInterval(() => setI((p) => (p + 1) % SCENES.length), 3400);
+    const t = setInterval(() => setI((p) => (p + 1) % PHONE_SCENES.length), 3600);
     return () => clearInterval(t);
   }, []);
-  const scene = SCENES[i];
+  const s = PHONE_SCENES[i];
 
   return (
-    <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-secondary/60 via-background to-accent/40 shadow-card md:aspect-square">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={i}
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -12 }}
-          transition={{ duration: 0.55, ease: "easeInOut" }}
-          className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center"
-        >
-          {scene.kind === "noise" && (
-            <div className="relative h-full w-full">
-              {["TikTok", "Google Maps", "Blogs", "Reddit", "Instagram", "YouTube"].map((b, idx) => (
-                <motion.div
-                  key={b}
-                  initial={{ opacity: 0, scale: 0.6 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: idx * 0.08 }}
-                  className="absolute rounded-full bg-card px-3 py-1.5 text-xs shadow-soft"
-                  style={{
-                    top: `${15 + (idx % 3) * 28}%`,
-                    left: `${10 + (idx * 17) % 70}%`,
-                  }}
-                >
-                  {b}
-                </motion.div>
-              ))}
-              <div className="absolute inset-x-6 bottom-6 text-sm text-muted-foreground">{scene.label}</div>
-            </div>
-          )}
+    <div className="relative mx-auto w-full max-w-[300px]">
+      <div className="relative rounded-[2.6rem] border-[10px] border-ink/90 bg-ink/90 shadow-card">
+        <div className="absolute left-1/2 top-1.5 z-10 h-5 w-24 -translate-x-1/2 rounded-full bg-ink/90" />
+        <div className="relative aspect-[9/19] overflow-hidden rounded-[2rem] bg-gradient-to-b from-secondary/80 via-background to-accent/40">
+          {/* status bar */}
+          <div className="flex items-center justify-between px-5 pt-3 text-[10px] uppercase tracking-widest text-muted-foreground">
+            <span>OwnWay</span>
+            <span>9:41</span>
+          </div>
 
-          {scene.kind === "question" && (
-            <>
-              <Sparkles className="size-8 text-gold" />
-              <p className="mt-6 max-w-xs font-display text-3xl leading-tight">{scene.label}</p>
-            </>
-          )}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: 24 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -24 }}
+              transition={{ duration: 0.45, ease: "easeInOut" }}
+              className="absolute inset-x-0 top-12 bottom-10 flex flex-col items-center px-5 text-center"
+            >
+              {s.kind === "ask" && (
+                <>
+                  <div className="rounded-full bg-gold/20 px-3 py-1 text-[10px] uppercase tracking-widest text-gold">
+                    Explorer
+                  </div>
+                  <p className="mt-4 font-display text-xl leading-tight">{s.title}</p>
+                  <p className="mt-3 text-xs text-muted-foreground">{s.body}</p>
+                  <div className="mt-5 w-full rounded-2xl border border-border/60 bg-card p-3 text-left text-xs shadow-soft">
+                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Experience</p>
+                    <p className="mt-1">Calm · Local food · Slow rhythm</p>
+                  </div>
+                </>
+              )}
+              {s.kind === "match" && (
+                <>
+                  <div className="mt-2 flex w-full items-center justify-between gap-2">
+                    <div className="flex-1 rounded-xl border border-border/60 bg-card p-2.5 text-left shadow-soft">
+                      <p className="text-[9px] uppercase tracking-widest text-muted-foreground">Explorer</p>
+                      <p className="mt-0.5 font-display text-sm">Anna</p>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <Sparkles className="size-4 text-gold" />
+                    </div>
+                    <div className="flex-1 rounded-xl border border-border/60 bg-card p-2.5 text-left shadow-soft">
+                      <p className="text-[9px] uppercase tracking-widest text-gold">WayMaker</p>
+                      <p className="mt-0.5 font-display text-sm">Marco</p>
+                    </div>
+                  </div>
+                  <p className="mt-5 font-display text-lg leading-tight">{s.title}</p>
+                  <p className="mt-2 text-xs text-muted-foreground">{s.body}</p>
+                </>
+              )}
+              {s.kind === "tip" && (
+                <div className="mt-2 w-full rounded-2xl border border-border/60 bg-card p-4 text-left shadow-card">
+                  <div className="flex items-center gap-2">
+                    <div className="flex size-7 items-center justify-center rounded-full bg-gold/20 text-[10px] font-semibold text-gold">M</div>
+                    <p className="font-display text-sm">Marco</p>
+                  </div>
+                  <p className="mt-3 text-[13px] leading-snug italic">{s.body}</p>
+                </div>
+              )}
+              {s.kind === "moment" && (
+                <>
+                  <div className="rounded-full bg-gold/20 px-3 py-1 text-[10px] uppercase tracking-widest text-gold">
+                    OwnWay Moment
+                  </div>
+                  <p className="mt-5 font-display text-xl leading-tight">{s.body}</p>
+                  <MessageCircleHeart className="mt-5 size-7 text-gold" />
+                </>
+              )}
+            </motion.div>
+          </AnimatePresence>
 
-          {scene.kind === "match" && (
-            <div className="flex w-full items-center justify-between gap-3">
-              <div className="flex-1 rounded-2xl border border-border/60 bg-card p-4 text-left shadow-soft">
-                <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Explorer</p>
-                <p className="mt-1 font-display text-lg">Sara</p>
-                <p className="text-xs text-muted-foreground">Day trip to Capri</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="h-px w-8 bg-gold" />
-                <Sparkles className="my-1 size-4 text-gold" />
-                <div className="h-px w-8 bg-gold" />
-              </div>
-              <div className="flex-1 rounded-2xl border border-border/60 bg-card p-4 text-left shadow-soft">
-                <p className="text-[10px] uppercase tracking-widest text-gold">WayMaker</p>
-                <p className="mt-1 font-display text-lg">Marco</p>
-                <p className="text-xs text-muted-foreground">Lives in Napoli</p>
-              </div>
-            </div>
-          )}
-
-          {scene.kind === "tip" && (
-            <div className="rounded-2xl border border-border/60 bg-card p-6 shadow-card">
-              <MessageCircleHeart className="mx-auto size-6 text-gold" />
-              <p className="mt-4 font-display text-lg leading-snug italic">{scene.label}</p>
-            </div>
-          )}
-
-          {scene.kind === "moment" && (
-            <>
-              <div className="rounded-full bg-gold/20 px-4 py-1 text-xs uppercase tracking-widest text-gold">OwnWay Moment</div>
-              <p className="mt-4 font-display text-3xl">{scene.label}</p>
-            </>
-          )}
-
-          {scene.kind === "final" && (
-            <p className="font-display text-2xl leading-snug text-foreground">{scene.label}</p>
-          )}
-        </motion.div>
-      </AnimatePresence>
-
-      <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1.5">
-        {SCENES.map((_, idx) => (
-          <span key={idx} className={`h-1 rounded-full transition-all ${idx === i ? "w-6 bg-gold" : "w-1.5 bg-border"}`} />
-        ))}
+          <div className="absolute inset-x-0 bottom-3 flex justify-center gap-1.5">
+            {PHONE_SCENES.map((_, idx) => (
+              <span
+                key={idx}
+                className={`h-1 rounded-full transition-all ${idx === i ? "w-5 bg-gold" : "w-1.5 bg-border"}`}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
-/* ---------------- Signup form ---------------- */
+/* ---------------- Email-only form ---------------- */
 
-function SignupForm({
-  role,
-  setRole,
+function EmailCapture({
   referredBy,
-  formRef,
+  intendedRole,
+  id,
+  cta = "Get Early Access",
 }: {
-  role: Role;
-  setRole: (r: Role) => void;
   referredBy?: string;
-  formRef: React.RefObject<HTMLDivElement | null>;
+  intendedRole?: "explorer" | "waymaker";
+  id?: string;
+  cta?: string;
 }) {
   const submit = useServerFn(submitEarlyAccess);
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [destination, setDestination] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [done, setDone] = useState<{ code: string } | null>(null);
-  const [copied, setCopied] = useState(false);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -167,13 +175,15 @@ function SignupForm({
       const res = await submit({
         data: {
           email,
-          role,
-          destination: destination || null,
           source: typeof window !== "undefined" ? document.referrer || "direct" : "direct",
           referred_by: referredBy || null,
         },
       });
-      setDone({ code: res.referral_code });
+      navigate({
+        to: "/waitlist/$code",
+        params: { code: res.referral_code },
+        search: intendedRole ? { role: intendedRole } : {},
+      });
     } catch (err: any) {
       toast.error(err?.message ?? "Could not sign you up");
     } finally {
@@ -181,125 +191,45 @@ function SignupForm({
     }
   };
 
-  const shareUrl = done && typeof window !== "undefined" ? `${window.location.origin}/?ref=${done.code}` : "";
-
   return (
-    <div ref={formRef} id="join" className="rounded-3xl border border-border/60 bg-card p-6 shadow-card md:p-8">
-      {done ? (
-        <div className="text-center">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gold/20">
-            <Check className="size-6 text-gold" />
-          </div>
-          <h2 className="mt-5 font-display text-3xl">You’re on the OwnWay early access list.</h2>
-          <p className="mt-3 text-muted-foreground">
-            We’re building OwnWay city by city. You’ll hear from us when your destination opens.
-          </p>
-          <div className="mt-6 rounded-2xl bg-secondary/60 p-4 text-left">
-            <p className="flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
-              <Share2 className="size-3.5" /> Your invite link
-            </p>
-            <div className="mt-2 flex items-center gap-2">
-              <Input readOnly value={shareUrl} className="font-mono text-sm" />
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  navigator.clipboard.writeText(shareUrl);
-                  setCopied(true);
-                  setTimeout(() => setCopied(false), 1800);
-                }}
-              >
-                <Copy className="mr-1.5 size-3.5" />
-                {copied ? "Copied" : "Copy"}
-              </Button>
-            </div>
-            <p className="mt-2 text-xs text-muted-foreground">
-              Share it with anyone you’d travel with — or anyone who knows a place deeply.
-            </p>
-          </div>
-        </div>
-      ) : (
-        <form onSubmit={onSubmit} className="space-y-5">
-          <div>
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              className="mt-2"
-            />
-          </div>
-          <div>
-            <Label>I am a…</Label>
-            <div className="mt-2 grid grid-cols-3 gap-2">
-              {(["explorer", "waymaker", "curious"] as Role[]).map((r) => (
-                <button
-                  key={r}
-                  type="button"
-                  onClick={() => setRole(r)}
-                  className={`rounded-full border px-3 py-2 text-sm capitalize transition ${
-                    role === r
-                      ? "border-foreground bg-foreground text-background"
-                      : "border-border bg-background hover:border-foreground/40"
-                  }`}
-                >
-                  {r}
-                </button>
-              ))}
-            </div>
-          </div>
-          {role !== "curious" && (
-            <div>
-              <Label htmlFor="dest">
-                {role === "explorer" ? "Destination you’re dreaming about" : "City you know deeply"}{" "}
-                <span className="text-muted-foreground">(optional)</span>
-              </Label>
-              <Input
-                id="dest"
-                value={destination}
-                onChange={(e) => setDestination(e.target.value)}
-                placeholder={role === "explorer" ? "Naples, Lisbon, Tokyo…" : "Where do you live?"}
-                className="mt-2"
-              />
-            </div>
-          )}
-          <Button type="submit" size="lg" className="w-full rounded-full" disabled={submitting}>
-            {submitting ? "Saving…" : "Get Early Access"} <ArrowRight className="ml-1.5 size-4" />
-          </Button>
-          <p className="text-center text-xs text-muted-foreground">
-            Early access only. No spam. We’re building the first OwnWay community city by city.
-          </p>
-        </form>
-      )}
-    </div>
+    <form id={id} onSubmit={onSubmit} className="w-full">
+      <div className="flex flex-col gap-2 sm:flex-row">
+        <Input
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Enter your email address"
+          className="h-12 flex-1 rounded-full px-5 text-base"
+        />
+        <Button type="submit" size="lg" className="h-12 rounded-full px-6" disabled={submitting}>
+          {submitting ? "Saving…" : cta} <ArrowRight className="ml-1.5 size-4" />
+        </Button>
+      </div>
+      <p className="mt-3 text-xs text-muted-foreground">
+        Early access is opening city by city. No spam.
+      </p>
+    </form>
   );
 }
 
 /* ---------------- Page ---------------- */
 
-function Section({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) {
-  return <section id={id} className={`container-page py-20 md:py-28 ${className}`}>{children}</section>;
-}
-
 function LandingPage() {
   const search = useSearch({ from: "/" });
-  const [role, setRole] = useState<Role>(search.role ?? "explorer");
-  const formRef = useRef<HTMLDivElement>(null);
+  const heroFormRef = useRef<HTMLDivElement>(null);
+  const [intendedRole, setIntendedRole] = useState<"explorer" | "waymaker" | undefined>(search.role);
 
   useEffect(() => {
     if (search.role) {
-      setRole(search.role);
-      setTimeout(() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
+      setIntendedRole(search.role);
+      setTimeout(() => heroFormRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
     }
   }, [search.role]);
 
-  const scrollToForm = (r: Role) => {
-    setRole(r);
-    formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  const scrollToHero = (role: "explorer" | "waymaker") => {
+    setIntendedRole(role);
+    heroFormRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
   return (
@@ -307,64 +237,68 @@ function LandingPage() {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="container-page pt-14 pb-16 md:pt-20 md:pb-24">
+      <section className="container-page pt-14 pb-20 md:pt-20 md:pb-28">
         <div className="grid items-center gap-12 md:grid-cols-2 md:gap-16">
-          <div>
+          <div ref={heroFormRef}>
             <div className="flex items-center gap-3">
               <Logo size={36} withWordmark={false} />
-              <p className="text-xs uppercase tracking-[0.25em] text-gold">OwnWay — Travel your way</p>
+              <p className="text-xs uppercase tracking-[0.25em] text-gold">OwnWay</p>
             </div>
             <h1 className="mt-6 text-5xl leading-[1.05] md:text-6xl">
-              The right tip can change the whole trip.
+              One right tip can change the whole trip.
             </h1>
             <p className="mt-5 text-lg text-muted-foreground">
-              OwnWay matches travelers with people who know a destination deeply and can give advice that actually fits the way they want to travel.
-            </p>
-            <p className="mt-3 text-sm text-muted-foreground">
-              Not another generic guide. Not another influencer list. A real person who can say: <span className="italic text-foreground">“If I were you, I’d do this.”</span>
+              Get matched with people who know a destination deeply and can help you experience it your way.
             </p>
             <div className="mt-8">
-              <SignupForm role={role} setRole={setRole} referredBy={search.ref} formRef={formRef} />
+              <EmailCapture referredBy={search.ref} intendedRole={intendedRole} id="join" />
             </div>
           </div>
           <div className="md:pl-4">
-            <HeroAnimation />
+            <PhoneMockup />
           </div>
         </div>
       </section>
 
       {/* How it works */}
-      <Section id="how-it-works" className="border-t border-border/60">
-        <p className="text-center text-xs uppercase tracking-[0.25em] text-gold">How OwnWay will work</p>
-        <h2 className="mx-auto mt-3 max-w-2xl text-center text-4xl md:text-5xl">Three steps. One real conversation.</h2>
+      <section id="how-it-works" className="container-page border-t border-border/60 py-20 md:py-28">
+        <p className="text-center text-xs uppercase tracking-[0.25em] text-gold">How OwnWay works</p>
+        <h2 className="mx-auto mt-3 max-w-2xl text-center text-4xl md:text-5xl">
+          Travel planning is full of content. We help you find the person.
+        </h2>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {[
-            { icon: Compass, n: "01", title: "Tell us how you travel", body: "Your destination, rhythm, budget, interests, and the kind of experience you want." },
-            { icon: Sparkles, n: "02", title: "Get matched with a WayMaker", body: "We connect you with a local who understands the destination and your way of traveling." },
+            { icon: Compass, n: "01", title: "Tell us how you travel", body: "When early access opens, you’ll share your destination, rhythm, interests, budget, and travel style." },
+            { icon: Sparkles, n: "02", title: "Get matched with a WayMaker", body: "We connect you with a local who knows the destination and understands the kind of experience you want." },
             { icon: MessageCircleHeart, n: "03", title: "Find your OwnWay Moment", body: "Receive practical, personal advice that can change how you experience the trip." },
           ].map(({ icon: Icon, n, title, body }) => (
-            <div key={n} className="rounded-2xl border border-border/60 bg-card p-7 shadow-soft">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent">
+            <motion.div
+              key={n}
+              whileHover={{ y: -6 }}
+              transition={{ type: "spring", stiffness: 200, damping: 18 }}
+              className="rounded-2xl border border-border/60 bg-card p-7 shadow-card"
+            >
+              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-accent">
                 <Icon className="size-5 text-gold" />
               </div>
               <p className="mt-5 text-xs uppercase tracking-[0.2em] text-muted-foreground">Step {n}</p>
               <h3 className="mt-1 text-xl">{title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{body}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </Section>
+      </section>
 
-      {/* Two role cards */}
-      <Section className="bg-secondary/40 -mx-5 px-5">
+      {/* Explorer / WayMaker */}
+      <section className="bg-secondary/40 py-20 md:py-28">
         <div className="container-page grid gap-6 md:grid-cols-2">
           <div className="flex flex-col rounded-3xl border border-border/60 bg-card p-8 shadow-card">
             <p className="text-xs uppercase tracking-[0.25em] text-gold">For Explorers</p>
             <h3 className="mt-3 font-display text-3xl">Planning a trip?</h3>
             <p className="mt-3 text-muted-foreground">
-              Join early access if you want advice that fits your travel style, not generic recommendations made for everyone.
+              Join the waitlist if you want advice that fits your way of traveling, not generic recommendations made for everyone.
             </p>
-            <Button onClick={() => scrollToForm("explorer")} className="mt-6 self-start rounded-full">
+            <Button onClick={() => scrollToHero("explorer")} className="mt-6 self-start rounded-full">
               Join as Explorer <ArrowRight className="ml-1.5 size-4" />
             </Button>
           </div>
@@ -372,27 +306,28 @@ function LandingPage() {
             <p className="text-xs uppercase tracking-[0.25em] text-gold">For WayMakers</p>
             <h3 className="mt-3 font-display text-3xl">Know a place deeply?</h3>
             <p className="mt-3 text-muted-foreground">
-              Apply to become a founding WayMaker if you can give thoughtful, practical tips that help travelers experience a destination better.
+              Join the waitlist if you want to become one of the first WayMakers and help travelers experience places better.
             </p>
             <Button
-              onClick={() => scrollToForm("waymaker")}
+              onClick={() => scrollToHero("waymaker")}
               className="mt-6 self-start rounded-full bg-gold text-ink hover:bg-gold/80"
             >
               Become a WayMaker <ArrowRight className="ml-1.5 size-4" />
             </Button>
           </div>
         </div>
-      </Section>
+      </section>
 
-      {/* Closing */}
-      <Section className="text-center">
-        <h2 className="mx-auto max-w-2xl text-4xl md:text-5xl">You don’t need more content. You need the right person.</h2>
-        <div className="mt-8">
-          <Button size="lg" className="rounded-full px-7" onClick={() => scrollToForm(role)}>
-            Get Early Access
-          </Button>
+      {/* Final CTA */}
+      <section className="container-page py-20 text-center md:py-28">
+        <h2 className="mx-auto max-w-2xl text-4xl md:text-5xl">Be first to find your OwnWay.</h2>
+        <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
+          Early access is opening soon. Join the waitlist and move up by inviting friends.
+        </p>
+        <div className="mx-auto mt-8 max-w-xl">
+          <EmailCapture referredBy={search.ref} intendedRole={intendedRole} />
         </div>
-      </Section>
+      </section>
 
       <SiteFooter />
     </div>
