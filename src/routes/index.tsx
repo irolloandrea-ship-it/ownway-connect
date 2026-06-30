@@ -149,7 +149,7 @@ function LandingPage() {
             <Button size="lg" className="rounded-full px-7">Find my WayMaker</Button>
           </Link>
           <Link to="/waymaker/apply">
-            <Button size="lg" className="rounded-full px-7 bg-ink text-background hover:bg-ink/90">Become a WayMaker</Button>
+            <Button size="lg" className="rounded-full px-7 bg-gold text-ink hover:bg-gold/80">Become a WayMaker</Button>
           </Link>
         </div>
       </Section>
