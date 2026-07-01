@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { getWaitlistStatus, updateSignup } from "@/lib/early-access.functions";
-import { Check, Copy, Twitter, Facebook, Linkedin, Mail, Link as LinkIcon, MessageCircle } from "lucide-react";
+import { Check, Copy, Link as LinkIcon } from "lucide-react";
 
 type Search = { role?: "explorer" | "waymaker" };
 
@@ -129,48 +129,7 @@ function WaitlistPage() {
                   {status.referral_count === 1 ? "person" : "people"} so far.
                 </p>
 
-                <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-                  <a
-                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm text-background hover:opacity-90"
-                  >
-                    <Twitter className="size-4" /> Tweet
-                  </a>
-                  <a
-                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm text-background hover:opacity-90"
-                  >
-                    <Facebook className="size-4" /> Share
-                  </a>
-                  <a
-                    href={`https://wa.me/?text=${encodeURIComponent(shareText + " " + shareUrl)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm text-background hover:opacity-90"
-                  >
-                    <MessageCircle className="size-4" /> WhatsApp
-                  </a>
-                  <a
-                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm text-background hover:opacity-90"
-                  >
-                    <Linkedin className="size-4" /> Share
-                  </a>
-                  <a
-                    href={`mailto:?subject=${encodeURIComponent("Join me on the OwnWay waitlist")}&body=${encodeURIComponent(shareText + "\n\n" + shareUrl)}`}
-                    className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm text-background hover:opacity-90"
-                  >
-                    <Mail className="size-4" /> Email
-                  </a>
-                </div>
-
-                <div className="mx-auto mt-6 max-w-md rounded-2xl border border-border/60 bg-card p-4 text-left">
+                <div className="mx-auto mt-8 max-w-md rounded-2xl border border-border/60 bg-card p-4 text-left">
                   <p className="flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
                     <LinkIcon className="size-3.5" /> Or share this unique link
                   </p>
