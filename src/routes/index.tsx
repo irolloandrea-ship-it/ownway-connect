@@ -220,6 +220,7 @@ function EmailCapture({
         <Input
           type="email"
           required
+          aria-label="Email address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email address"
