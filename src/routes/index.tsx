@@ -85,7 +85,7 @@ function PhoneMockup() {
               {s.kind === "ask" && (
                 <>
                   <div className="rounded-full bg-gold/20 px-3 py-1 text-[10px] uppercase tracking-widest text-gold">
-                    Explorer
+                    Traveler
                   </div>
                   <p className="mt-4 font-display text-xl leading-tight">{s.title}</p>
                   <p className="mt-3 text-xs text-muted-foreground">{s.body}</p>
@@ -99,7 +99,7 @@ function PhoneMockup() {
                 <>
                   <div className="mt-2 flex w-full items-center justify-between gap-2">
                     <div className="flex-1 rounded-xl border border-border/60 bg-card p-2.5 text-left shadow-soft">
-                      <p className="text-[9px] uppercase tracking-widest text-muted-foreground">Explorer</p>
+                      <p className="text-[9px] uppercase tracking-widest text-muted-foreground">Traveler</p>
                       <p className="mt-0.5 font-display text-sm">Anna</p>
                     </div>
                     <div className="flex flex-col items-center">
