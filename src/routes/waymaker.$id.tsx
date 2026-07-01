@@ -17,6 +17,26 @@ function WaymakerPage() {
   const fn = useServerFn(getWaymakerProfile);
   const { data, isLoading } = useQuery({ queryKey: ["waymaker", id], queryFn: () => fn({ data: { id } }) });
 
+  const p = data?.profile;
+  const title = p ? `${p.public_name} — WayMaker in ${p.main_location} · OwnWay` : "Meet your WayMaker — OwnWay";
+  const description = p
+    ? (p.bio?.slice(0, 155) ?? `${p.public_name} is a local WayMaker in ${p.main_location} on OwnWay.`)
+    : "Meet a local WayMaker on OwnWay.";
+  const url = `https://ownway-connect.lovable.app/waymaker/${id}`;
+  const jsonLd = p ? {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    mainEntity: {
+      "@type": "Person",
+      name: p.public_name,
+      description: p.bio ?? undefined,
+      homeLocation: p.main_location,
+      knowsLanguage: p.languages ?? undefined,
+    },
+    url,
+  } : null;
+
+
   if (isLoading || !data) return <div className="min-h-screen bg-background"><SiteHeader /><div className="container-page py-20 text-center text-muted-foreground">Loading…</div></div>;
   const p = data.profile;
 
