@@ -78,6 +78,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "google-site-verification", content: "9javSE9ACLVJV2Isd6XsCxwSJ0k4fHbWHJfz-90KtDQ" },
       { title: "OwnWay — Travel your way" },
       { name: "description", content: "OwnWay matches you with the person who understands how you want to experience a destination." },
       { property: "og:title", content: "OwnWay — Travel your way" },
