@@ -139,7 +139,7 @@ function WaitlistPage() {
                     <LinkIcon className="size-3.5" /> Share this unique link
                   </p>
                   <div className="mt-2 flex items-center gap-2">
-                    <Input readOnly value={shareUrl} className="font-mono text-sm" />
+                    <Input readOnly value={shareUrl} aria-label="Your unique referral link" className="font-mono text-sm" />
                     <Button type="button" variant="outline" size="sm" onClick={copy}>
                       <Copy className="mr-1.5 size-3.5" />
                       {copied ? "Copied" : "Copy"}
