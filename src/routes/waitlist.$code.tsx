@@ -11,11 +11,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { getWaitlistStatus, updateSignup } from "@/lib/early-access.functions";
 import { Check, Copy, Link as LinkIcon } from "lucide-react";
 
-type Search = { role?: "explorer" | "waymaker" };
+type Search = { role?: "explorer" | "waymaker"; already?: boolean };
 
 export const Route = createFileRoute("/waitlist/$code")({
   validateSearch: (s: Record<string, unknown>): Search => ({
     role: s.role === "explorer" || s.role === "waymaker" ? s.role : undefined,
+    already: s.already === true || s.already === "true" ? true : undefined,
   }),
   head: () => ({
     meta: [
@@ -103,9 +104,13 @@ function WaitlistPage() {
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gold/20">
                   <Check className="size-6 text-gold" />
                 </div>
-                <h1 className="mt-6 font-display text-4xl md:text-5xl">Thank you!</h1>
+                <h1 className="mt-6 font-display text-4xl md:text-5xl">
+                  {search.already ? "You're already in!" : "Thank you!"}
+                </h1>
                 <p className="mt-3 text-muted-foreground">
-                  We have added your email address to the OwnWay early access queue.
+                  {search.already
+                    ? "This email is already on the OwnWay early access queue. Here's your spot and referral link — share it to move up."
+                    : "We have added your email address to the OwnWay early access queue."}
                 </p>
               </div>
 
@@ -131,7 +136,7 @@ function WaitlistPage() {
 
                 <div className="mx-auto mt-8 max-w-md rounded-2xl border border-border/60 bg-card p-4 text-left">
                   <p className="flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
-                    <LinkIcon className="size-3.5" /> Or share this unique link
+                    <LinkIcon className="size-3.5" /> Share this unique link
                   </p>
                   <div className="mt-2 flex items-center gap-2">
                     <Input readOnly value={shareUrl} className="font-mono text-sm" />
