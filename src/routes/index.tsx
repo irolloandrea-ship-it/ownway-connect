@@ -22,8 +22,9 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "OwnWay — One right tip can change the whole trip" },
       { name: "description", content: "Join the OwnWay waitlist. Get matched with locals who know a destination deeply and can help you experience it your way." },
-      { property: "og:title", content: "OwnWay — Travel your way" },
-      { property: "og:description", content: "Get matched with locals who know a destination deeply. Join the early access waitlist." },
+      { property: "og:title", content: "OwnWay — One right tip can change the whole trip" },
+      { property: "og:description", content: "Get matched with a local WayMaker who knows your destination deeply. Join the OwnWay early-access waitlist." },
+      { property: "og:url", content: "https://ownway-connect.lovable.app/" },
     ],
   }),
   component: LandingPage,
@@ -219,6 +220,7 @@ function EmailCapture({
         <Input
           type="email"
           required
+          aria-label="Email address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email address"

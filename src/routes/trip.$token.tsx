@@ -8,7 +8,16 @@ import { Button } from "@/components/ui/button";
 import { getTripByToken, selectWaymaker } from "@/lib/trip.functions";
 
 export const Route = createFileRoute("/trip/$token")({
-  head: () => ({ meta: [{ title: "My OwnWay Trip Space" }, { name: "robots", content: "noindex, nofollow" }] }),
+  head: ({ params }) => ({
+    meta: [
+      { title: "My OwnWay Trip Space" },
+      { name: "description", content: "Your private OwnWay trip space — review your match and coordinate with your WayMaker." },
+      { property: "og:title", content: "My OwnWay Trip Space" },
+      { property: "og:description", content: "Your private OwnWay trip space — review your match and coordinate with your WayMaker." },
+      { property: "og:url", content: `https://ownway-connect.lovable.app/trip/${params.token}` },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
+  }),
   component: TripSpace,
 });
 

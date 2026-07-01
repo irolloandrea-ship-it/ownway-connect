@@ -8,7 +8,20 @@ import { getWaymakerProfile } from "@/lib/waymaker.functions";
 import { Logo } from "@/components/Logo";
 
 export const Route = createFileRoute("/waymaker/$id")({
-  head: () => ({ meta: [{ title: "Meet your WayMaker — OwnWay" }] }),
+  head: ({ params }) => {
+    const url = `https://ownway-connect.lovable.app/waymaker/${params.id}`;
+    return {
+      meta: [
+        { title: "Meet your WayMaker — OwnWay" },
+        { name: "description", content: "Meet a local WayMaker on OwnWay — someone who knows a destination deeply and can help you experience it your way." },
+        { property: "og:title", content: "Meet your WayMaker — OwnWay" },
+        { property: "og:description", content: "Meet a local WayMaker on OwnWay — someone who knows a destination deeply and can help you experience it your way." },
+        { property: "og:type", content: "profile" },
+        { property: "og:url", content: url },
+      ],
+      links: [{ rel: "canonical", href: url }],
+    };
+  },
   component: WaymakerPage,
 });
 
@@ -20,9 +33,23 @@ function WaymakerPage() {
   if (isLoading || !data) return <div className="min-h-screen bg-background"><SiteHeader /><div className="container-page py-20 text-center text-muted-foreground">Loading…</div></div>;
   const p = data.profile;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    mainEntity: {
+      "@type": "Person",
+      name: p.public_name,
+      description: p.bio ?? undefined,
+      homeLocation: p.main_location,
+      knowsLanguage: p.languages ?? undefined,
+    },
+    url: `https://ownway-connect.lovable.app/waymaker/${id}`,
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <main className="container-page py-12">
         <div className="mx-auto max-w-3xl">
           <div className="rounded-2xl border border-border/60 bg-card p-8 shadow-card">
