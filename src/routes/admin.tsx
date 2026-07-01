@@ -428,3 +428,43 @@ function ListCard({ title, items }: { title: string; items: [string, number][] }
     </div>
   );
 }
+
+function WaitlistTab() {
+  const fn = useServerFn(adminExportWaitlistCsv);
+  const [busy, setBusy] = useState(false);
+  const download = async () => {
+    setBusy(true);
+    try {
+      const { csv, count } = await fn();
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const date = new Date().toISOString().slice(0, 10);
+      a.href = url;
+      a.download = `ownway-waitlist-${date}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      toast.success(`Downloaded ${count} signup${count === 1 ? "" : "s"}`);
+    } catch (e: any) {
+      toast.error(e?.message ?? "Failed to export");
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <div className="mt-6 rounded-2xl border border-border/60 bg-card p-6 shadow-soft">
+      <h2 className="font-display text-2xl">Early access waitlist</h2>
+      <p className="mt-2 text-sm text-muted-foreground">
+        Download every signup collected from the homepage as a CSV. Rows are sorted by current waitlist position
+        (referrals move people up). Includes email, role, destination, referral code, referrer, referral count,
+        consent, source, and signup date.
+      </p>
+      <Button onClick={download} disabled={busy} className="mt-5 rounded-full">
+        {busy ? "Preparing…" : "Download waitlist as CSV"}
+      </Button>
+    </div>
+  );
+}
+
