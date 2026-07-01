@@ -3,6 +3,7 @@ import { z } from "zod";
 
 const emailSchema = z.object({
   email: z.string().trim().email().max(255),
+  role: z.enum(["explorer", "waymaker"]),
   source: z.string().trim().max(120).optional().nullable(),
   referred_by: z.string().trim().max(64).optional().nullable(),
 });
