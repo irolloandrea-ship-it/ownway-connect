@@ -84,6 +84,7 @@ function AdminPage() {
             <TabsTrigger value="feed">City Feed</TabsTrigger>
             <TabsTrigger value="feedback">Feedback & Scores</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="waitlist">Waitlist</TabsTrigger>
           </TabsList>
           <TabsContent value="trips"><TripsTab /></TabsContent>
           <TabsContent value="apps"><AppsTab /></TabsContent>
@@ -91,6 +92,8 @@ function AdminPage() {
           <TabsContent value="feed"><FeedTab /></TabsContent>
           <TabsContent value="feedback"><FeedbackTab /></TabsContent>
           <TabsContent value="analytics"><AnalyticsTab /></TabsContent>
+          <TabsContent value="waitlist"><WaitlistTab /></TabsContent>
+
         </Tabs>
       </main>
       <SiteFooter />
