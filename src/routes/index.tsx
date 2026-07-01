@@ -31,36 +31,60 @@ export const Route = createFileRoute("/")({
 
 /* ---------------- iPhone mockup animation ---------------- */
 
-const PHONE_SCENES = [
+type ChatMsg = { from: "anna" | "marco"; text: string };
+type ChatScene = { title: string; subtitle: string; messages: ChatMsg[] };
+
+const CHAT_SCENES: ChatScene[] = [
   {
-    kind: "ask",
-    title: "Anna is planning Capri",
-    body: "3 days. Wants calm mornings, slow food, no tourist traps.",
+    title: "Before the trip",
+    subtitle: "Anna plans smarter",
+    messages: [
+      { from: "anna", text: "Hi Marco! I'm going to Capri for 3 days next month. I want it to feel authentic — not crowded and touristy. How should I organize it?" },
+      { from: "marco", text: "Change your arrival time. Take the 8:40 ferry instead of the 10:00 — you'll arrive before the organized tours. The first part of the day feels completely different." },
+      { from: "anna", text: "That's exactly the advice I need. What should I do first?" },
+      { from: "marco", text: "Start with Anacapri, not Capri town. Most people do the opposite. Visit Villa San Michele, then the chairlift to Monte Solaro if the weather is clear." },
+      { from: "anna", text: "And lunch? I don't want an overpriced tourist trap." },
+      { from: "marco", text: "Avoid the Piazzetta for lunch — nice for a coffee, not a meal. Stay around Anacapri and book for 12:15, not 13:30. Saves you a long wait." },
+      { from: "anna", text: "Amazing. Thanks a lot!" },
+    ],
   },
   {
-    kind: "match",
-    title: "Matched with Marco",
-    body: "Lives in Napoli. Goes to Capri every other weekend.",
+    title: "During the trip",
+    subtitle: "Anna gets help in the moment",
+    messages: [
+      { from: "anna", text: "Marco, I'm in Capri now. The Piazzetta is packed and the street to Marina Grande is really crowded. What should we do?" },
+      { from: "marco", text: "That area gets chaotic at this hour. Don't go back toward Marina Grande — move away from the main flow, into the quieter side streets behind the Piazzetta." },
+      { from: "anna", text: "Good to know. We were about to follow everyone down." },
+      { from: "marco", text: "Avoid that for now. For a calmer walk, head toward Via Tragara. Much more pleasant, and beautiful views without the crowd." },
+      { from: "anna", text: "Perfect. Thank you!" },
+    ],
   },
-  {
-    kind: "tip",
-    title: "Marco’s tip",
-    body: "“Skip the 9am ferry — full of tour groups. Take the 11:15 from Mergellina. Lunch at Da Gelsomina, ask for the rabbit.”",
-  },
-  {
-    kind: "moment",
-    title: "OwnWay Moment",
-    body: "One trip. One local. One tip that makes the difference.",
-  },
-] as const;
+];
 
 function PhoneMockup() {
-  const [i, setI] = useState(0);
+  const [sceneIdx, setSceneIdx] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(1);
+  const scene = CHAT_SCENES[sceneIdx];
+
   useEffect(() => {
-    const t = setInterval(() => setI((p) => (p + 1) % PHONE_SCENES.length), 3600);
-    return () => clearInterval(t);
-  }, []);
-  const s = PHONE_SCENES[i];
+    if (visibleCount < scene.messages.length) {
+      const t = setTimeout(() => setVisibleCount((c) => c + 1), 2200);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(() => {
+      setSceneIdx((i) => (i + 1) % CHAT_SCENES.length);
+      setVisibleCount(1);
+    }, 3200);
+    return () => clearTimeout(t);
+  }, [visibleCount, sceneIdx, scene.messages.length]);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (el) el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+  }, [visibleCount, sceneIdx]);
+
+  const shown = scene.messages.slice(0, visibleCount);
 
   return (
     <div className="relative mx-auto w-full max-w-[300px]">
@@ -73,73 +97,64 @@ function PhoneMockup() {
             <span>9:41</span>
           </div>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: 24 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -24 }}
-              transition={{ duration: 0.45, ease: "easeInOut" }}
-              className="absolute inset-x-0 top-12 bottom-10 flex flex-col items-center px-5 text-center"
-            >
-              {s.kind === "ask" && (
-                <>
-                  <div className="rounded-full bg-gold/20 px-3 py-1 text-[10px] uppercase tracking-widest text-gold">
-                    Traveler
-                  </div>
-                  <p className="mt-4 font-display text-xl leading-tight">{s.title}</p>
-                  <p className="mt-3 text-xs text-muted-foreground">{s.body}</p>
-                  <div className="mt-5 w-full rounded-2xl border border-border/60 bg-card p-3 text-left text-xs shadow-soft">
-                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Experience</p>
-                    <p className="mt-1">Calm · Local food · Slow rhythm</p>
-                  </div>
-                </>
-              )}
-              {s.kind === "match" && (
-                <>
-                  <div className="mt-2 flex w-full items-center justify-between gap-2">
-                    <div className="flex-1 rounded-xl border border-border/60 bg-card p-2.5 text-left shadow-soft">
-                      <p className="text-[9px] uppercase tracking-widest text-muted-foreground">Traveler</p>
-                      <p className="mt-0.5 font-display text-sm">Anna</p>
-                    </div>
-                    <div className="flex flex-col items-center">
-                      <Sparkles className="size-4 text-gold" />
-                    </div>
-                    <div className="flex-1 rounded-xl border border-border/60 bg-card p-2.5 text-left shadow-soft">
-                      <p className="text-[9px] uppercase tracking-widest text-gold">WayMaker</p>
-                      <p className="mt-0.5 font-display text-sm">Marco</p>
-                    </div>
-                  </div>
-                  <p className="mt-5 font-display text-lg leading-tight">{s.title}</p>
-                  <p className="mt-2 text-xs text-muted-foreground">{s.body}</p>
-                </>
-              )}
-              {s.kind === "tip" && (
-                <div className="mt-2 w-full rounded-2xl border border-border/60 bg-card p-4 text-left shadow-card">
-                  <div className="flex items-center gap-2">
-                    <div className="flex size-7 items-center justify-center rounded-full bg-gold/20 text-[10px] font-semibold text-gold">M</div>
-                    <p className="font-display text-sm">Marco</p>
-                  </div>
-                  <p className="mt-3 text-[13px] leading-snug italic">{s.body}</p>
-                </div>
-              )}
-              {s.kind === "moment" && (
-                <>
-                  <div className="rounded-full bg-gold/20 px-3 py-1 text-[10px] uppercase tracking-widest text-gold">
-                    OwnWay Moment
-                  </div>
-                  <p className="mt-5 font-display text-xl leading-tight">{s.body}</p>
-                  <MessageCircleHeart className="mt-5 size-7 text-gold" />
-                </>
-              )}
-            </motion.div>
-          </AnimatePresence>
+          {/* chat header */}
+          <div className="mt-2 border-b border-border/50 px-4 pb-2">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={sceneIdx}
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.35 }}
+              >
+                <p className="text-[9px] uppercase tracking-widest text-gold">{scene.title}</p>
+                <p className="font-display text-sm leading-tight">{scene.subtitle}</p>
+                <p className="mt-0.5 text-[10px] text-muted-foreground">Anna · Marco (WayMaker)</p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
-          <div className="absolute inset-x-0 bottom-3 flex justify-center gap-1.5">
-            {PHONE_SCENES.map((_, idx) => (
+          {/* chat body */}
+          <div
+            ref={scrollRef}
+            className="absolute inset-x-0 bottom-6 top-[6.5rem] overflow-hidden px-3 py-2"
+          >
+            <div className="flex flex-col gap-2">
+              <AnimatePresence initial={false} mode="popLayout">
+                {shown.map((m, idx) => (
+                  <motion.div
+                    key={`${sceneIdx}-${idx}`}
+                    layout
+                    initial={{ opacity: 0, y: 10, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
+                    className={`flex ${m.from === "anna" ? "justify-end" : "justify-start"}`}
+                  >
+                    <div
+                      className={`max-w-[85%] rounded-2xl px-2.5 py-1.5 text-[11px] leading-snug shadow-soft ${
+                        m.from === "anna"
+                          ? "rounded-br-sm bg-gold/90 text-ink"
+                          : "rounded-bl-sm bg-card text-foreground"
+                      }`}
+                    >
+                      <p className="mb-0.5 text-[8px] font-semibold uppercase tracking-widest opacity-70">
+                        {m.from === "anna" ? "Anna" : "Marco"}
+                      </p>
+                      {m.text}
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          </div>
+
+          {/* scene dots */}
+          <div className="absolute inset-x-0 bottom-2 flex justify-center gap-1.5">
+            {CHAT_SCENES.map((_, idx) => (
               <span
                 key={idx}
-                className={`h-1 rounded-full transition-all ${idx === i ? "w-5 bg-gold" : "w-1.5 bg-border"}`}
+                className={`h-1 rounded-full transition-all ${idx === sceneIdx ? "w-5 bg-gold" : "w-1.5 bg-border"}`}
               />
             ))}
           </div>
