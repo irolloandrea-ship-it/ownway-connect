@@ -20,6 +20,7 @@ import { Route as TripNewRouteImport } from './routes/trip.new'
 import { Route as TripTokenRouteImport } from './routes/trip.$token'
 import { Route as TripConfirmationTokenRouteImport } from './routes/trip.confirmation.$token'
 import { Route as TripTokenFeedbackRouteImport } from './routes/trip.$token.feedback'
+import { Route as ApiPublicBootstrapAdminRouteImport } from './routes/api/public/bootstrap-admin'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -76,6 +77,11 @@ const TripTokenFeedbackRoute = TripTokenFeedbackRouteImport.update({
   path: '/feedback',
   getParentRoute: () => TripTokenRoute,
 } as any)
+const ApiPublicBootstrapAdminRoute = ApiPublicBootstrapAdminRouteImport.update({
+  id: '/api/public/bootstrap-admin',
+  path: '/api/public/bootstrap-admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/waitlist/$code': typeof WaitlistCodeRoute
   '/waymaker/$id': typeof WaymakerIdRoute
   '/waymaker/apply': typeof WaymakerApplyRoute
+  '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
   '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
 }
@@ -100,6 +107,7 @@ export interface FileRoutesByTo {
   '/waitlist/$code': typeof WaitlistCodeRoute
   '/waymaker/$id': typeof WaymakerIdRoute
   '/waymaker/apply': typeof WaymakerApplyRoute
+  '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
   '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
 }
@@ -114,6 +122,7 @@ export interface FileRoutesById {
   '/waitlist/$code': typeof WaitlistCodeRoute
   '/waymaker/$id': typeof WaymakerIdRoute
   '/waymaker/apply': typeof WaymakerApplyRoute
+  '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
   '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
 }
@@ -129,6 +138,7 @@ export interface FileRouteTypes {
     | '/waitlist/$code'
     | '/waymaker/$id'
     | '/waymaker/apply'
+    | '/api/public/bootstrap-admin'
     | '/trip/$token/feedback'
     | '/trip/confirmation/$token'
   fileRoutesByTo: FileRoutesByTo
@@ -142,6 +152,7 @@ export interface FileRouteTypes {
     | '/waitlist/$code'
     | '/waymaker/$id'
     | '/waymaker/apply'
+    | '/api/public/bootstrap-admin'
     | '/trip/$token/feedback'
     | '/trip/confirmation/$token'
   id:
@@ -155,6 +166,7 @@ export interface FileRouteTypes {
     | '/waitlist/$code'
     | '/waymaker/$id'
     | '/waymaker/apply'
+    | '/api/public/bootstrap-admin'
     | '/trip/$token/feedback'
     | '/trip/confirmation/$token'
   fileRoutesById: FileRoutesById
@@ -169,6 +181,7 @@ export interface RootRouteChildren {
   WaitlistCodeRoute: typeof WaitlistCodeRoute
   WaymakerIdRoute: typeof WaymakerIdRoute
   WaymakerApplyRoute: typeof WaymakerApplyRoute
+  ApiPublicBootstrapAdminRoute: typeof ApiPublicBootstrapAdminRoute
   TripConfirmationTokenRoute: typeof TripConfirmationTokenRoute
 }
 
@@ -251,6 +264,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TripTokenFeedbackRouteImport
       parentRoute: typeof TripTokenRoute
     }
+    '/api/public/bootstrap-admin': {
+      id: '/api/public/bootstrap-admin'
+      path: '/api/public/bootstrap-admin'
+      fullPath: '/api/public/bootstrap-admin'
+      preLoaderRoute: typeof ApiPublicBootstrapAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -276,6 +296,7 @@ const rootRouteChildren: RootRouteChildren = {
   WaitlistCodeRoute: WaitlistCodeRoute,
   WaymakerIdRoute: WaymakerIdRoute,
   WaymakerApplyRoute: WaymakerApplyRoute,
+  ApiPublicBootstrapAdminRoute: ApiPublicBootstrapAdminRoute,
   TripConfirmationTokenRoute: TripConfirmationTokenRoute,
 }
 export const routeTree = rootRouteImport
