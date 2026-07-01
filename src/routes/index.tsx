@@ -318,17 +318,17 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* Explorer / WayMaker */}
+      {/* Traveler / WayMaker */}
       <section className="bg-secondary/40 py-20 md:py-28">
         <div className="container-page grid gap-6 md:grid-cols-2">
           <div className="flex flex-col rounded-3xl border border-border/60 bg-card p-8 shadow-card">
-            <p className="text-xs uppercase tracking-[0.25em] text-gold">For Explorers</p>
+            <p className="text-xs uppercase tracking-[0.25em] text-gold">For Travelers</p>
             <h3 className="mt-3 font-display text-3xl">Planning a trip?</h3>
             <p className="mt-3 text-muted-foreground">
               Join the waitlist if you want advice that fits your way of traveling, not generic recommendations made for everyone.
             </p>
             <Button onClick={() => scrollToHero("explorer")} className="mt-6 self-start rounded-full">
-              Join as Explorer <ArrowRight className="ml-1.5 size-4" />
+              Join as Traveler <ArrowRight className="ml-1.5 size-4" />
             </Button>
           </div>
           <div className="flex flex-col rounded-3xl border border-border/60 bg-card p-8 shadow-card">
