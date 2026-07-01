@@ -204,7 +204,7 @@ function EmailCapture({
       navigate({
         to: "/waitlist/$code",
         params: { code: res.referral_code },
-        search: { role },
+        search: { role, ...(res.already ? { already: true as const } : {}) },
       });
     } catch (err: any) {
       toast.error(err?.message ?? "Could not sign you up");
