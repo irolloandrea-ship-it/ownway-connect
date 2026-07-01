@@ -293,3 +293,18 @@ export const adminExportWaitlistCsv = createServerFn({ method: "GET" })
     return { csv: lines.join("\n"), count: rows.length };
   });
 
+export const adminListWaitlist = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    await assertAdmin(context.supabase, context.userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data, error } = await supabaseAdmin
+      .from("early_access_signups")
+      .select("email, role, destination, referral_code, referred_by, referral_count, priority_score, base_position, consent_to_updates, source, created_at")
+      .order("priority_score", { ascending: true })
+      .order("id", { ascending: true });
+    if (error) throw new Error(error.message);
+    return data ?? [];
+  });
+
+
