@@ -280,6 +280,7 @@ function LandingPage() {
     <div className="min-h-screen bg-background">
       <SiteHeader />
 
+      <main>
       {/* Hero */}
       <section className="container-page pt-14 pb-20 md:pt-20 md:pb-28">
         <div className="grid items-center gap-12 md:grid-cols-2 md:gap-16">
@@ -361,6 +362,7 @@ function LandingPage() {
           </div>
         </div>
       </section>
+      </main>
 
 
       <SiteFooter />

@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/auth")({
-  head: () => ({ meta: [{ title: "Admin sign in — OwnWay" }] }),
+  head: () => ({ meta: [{ title: "Admin sign in — OwnWay" }, { name: "robots", content: "noindex, nofollow" }] }),
   component: AuthPage,
 });
 

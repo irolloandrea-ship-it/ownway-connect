@@ -16,7 +16,7 @@ import { LogOut, Download, RefreshCw } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
   ssr: false,
-  head: () => ({ meta: [{ title: "OwnWay Admin Panel" }] }),
+  head: () => ({ meta: [{ title: "OwnWay Admin Panel" }, { name: "robots", content: "noindex, nofollow" }] }),
   component: AdminPage,
 });
 
