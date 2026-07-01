@@ -143,60 +143,8 @@ function WaitlistPage() {
                 </div>
               </div>
 
-              {/* Optional details */}
-              <div className="mt-12 rounded-3xl border border-border/60 bg-card p-7 shadow-soft">
-                <h3 className="font-display text-xl">Help us understand who you are.</h3>
-                <p className="mt-1 text-sm text-muted-foreground">Optional — but it helps us open the right city first.</p>
-
-                <div className="mt-5 space-y-5">
-                  <div>
-                    <Label>I am…</Label>
-                    <div className="mt-2 grid grid-cols-3 gap-2">
-                      {(["explorer", "waymaker", "curious"] as const).map((r) => (
-                        <button
-                          key={r}
-                          type="button"
-                          onClick={() => setRole(r)}
-                          className={`rounded-full border px-3 py-2 text-sm capitalize transition ${
-                            role === r
-                              ? "border-foreground bg-foreground text-background"
-                              : "border-border bg-background hover:border-foreground/40"
-                          }`}
-                        >
-                          {r === "curious" ? "Just curious" : r === "explorer" ? "An Explorer" : "A WayMaker"}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {role !== "curious" && role !== "unknown" && (
-                    <div>
-                      <Label htmlFor="dest">
-                        {role === "explorer" ? "Where are you planning to travel next?" : "Which destination do you know best?"}
-                      </Label>
-                      <Input
-                        id="dest"
-                        value={destination}
-                        onChange={(e) => setDestination(e.target.value)}
-                        placeholder={role === "explorer" ? "Naples, Lisbon, Tokyo…" : "Where do you live?"}
-                        className="mt-2"
-                      />
-                    </div>
-                  )}
-
-                  <div className="flex items-start gap-2">
-                    <Checkbox id="consent" checked={consent} onCheckedChange={(v) => setConsent(v === true)} />
-                    <Label htmlFor="consent" className="text-sm font-normal text-muted-foreground">
-                      I agree to receive updates about OwnWay early access.
-                    </Label>
-                  </div>
-
-                  <Button onClick={save} disabled={saving} className="rounded-full">
-                    {saving ? "Saving…" : "Save"}
-                  </Button>
-                </div>
-              </div>
             </>
+
           )}
         </div>
       </section>
