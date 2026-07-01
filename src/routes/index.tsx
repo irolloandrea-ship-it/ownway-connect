@@ -265,9 +265,9 @@ function LandingPage() {
         </h2>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {[
-            { icon: Compass, n: "01", title: "Tell us how you travel", body: "When early access opens, you’ll share your destination, rhythm, interests, budget, and travel style." },
+            { icon: Compass, n: "01", title: "Plan your trip", body: "Share your destination, rhythm, interests, budget, and travel style." },
             { icon: Sparkles, n: "02", title: "Get matched with a WayMaker", body: "We connect you with a local who knows the destination and understands the kind of experience you want." },
-            { icon: MessageCircleHeart, n: "03", title: "Find your OwnWay Moment", body: "Receive practical, personal advice that can change how you experience the trip." },
+            { icon: MessageCircleHeart, n: "03", title: "Find your OwnWay", body: "Receive practical, personal advice that can change how you experience the trip." },
           ].map(({ icon: Icon, n, title, body }) => (
             <motion.div
               key={n}
