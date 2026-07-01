@@ -1,0 +1,9 @@
+# OwnWay
+
+> OwnWay matches travelers with local WayMakers who give the one tip that changes the trip. Currently in pre-launch — join the early-access waitlist.
+
+OwnWay is a travel-matching service. Travelers ("Explorers") describe how they want to experience a destination, and OwnWay pairs them with a WayMaker — a trusted local who gives concrete, personalized advice before and during the trip. Advice is rewarded when it demonstrably improves the trip, not by popularity.
+
+## Pages
+
+- [Home & early-access waitlist](/): What OwnWay is, how the traveler↔WayMaker match works, and the email form to join the waitlist as a Traveler or a WayMaker.

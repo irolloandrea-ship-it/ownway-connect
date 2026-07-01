@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { getTripByToken, selectWaymaker } from "@/lib/trip.functions";
 
 export const Route = createFileRoute("/trip/$token")({
-  head: () => ({ meta: [{ title: "My OwnWay Trip Space" }] }),
+  head: () => ({ meta: [{ title: "My OwnWay Trip Space" }, { name: "robots", content: "noindex, nofollow" }] }),
   component: TripSpace,
 });
 
