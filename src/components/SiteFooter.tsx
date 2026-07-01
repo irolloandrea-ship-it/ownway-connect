@@ -12,11 +12,10 @@ export function SiteFooter() {
         <div className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted-foreground">
           <a href="mailto:hello@ownway.travel" className="hover:text-foreground">Contact</a>
           <Link to="/" hash="how-it-works" className="hover:text-foreground">How it works</Link>
-          <Link to="/auth" className="hover:text-foreground">Admin</Link>
         </div>
       </div>
       <div className="container-page pb-8 text-xs text-muted-foreground/70">
-        OwnWay is currently in pre-launch. We are building the first community of Explorers and WayMakers city by city. © {new Date().getFullYear()} OwnWay
+        OwnWay is currently in pre-launch. We are building the first community of Travelers and WayMakers city by city. © {new Date().getFullYear()} OwnWay
       </div>
     </footer>
   );

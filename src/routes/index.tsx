@@ -85,7 +85,7 @@ function PhoneMockup() {
               {s.kind === "ask" && (
                 <>
                   <div className="rounded-full bg-gold/20 px-3 py-1 text-[10px] uppercase tracking-widest text-gold">
-                    Explorer
+                    Traveler
                   </div>
                   <p className="mt-4 font-display text-xl leading-tight">{s.title}</p>
                   <p className="mt-3 text-xs text-muted-foreground">{s.body}</p>
@@ -99,7 +99,7 @@ function PhoneMockup() {
                 <>
                   <div className="mt-2 flex w-full items-center justify-between gap-2">
                     <div className="flex-1 rounded-xl border border-border/60 bg-card p-2.5 text-left shadow-soft">
-                      <p className="text-[9px] uppercase tracking-widest text-muted-foreground">Explorer</p>
+                      <p className="text-[9px] uppercase tracking-widest text-muted-foreground">Traveler</p>
                       <p className="mt-0.5 font-display text-sm">Anna</p>
                     </div>
                     <div className="flex flex-col items-center">
@@ -165,16 +165,23 @@ function EmailCapture({
   const submit = useServerFn(submitEarlyAccess);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState<"explorer" | "waymaker" | null>(intendedRole ?? null);
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (intendedRole) setRole(intendedRole);
+  }, [intendedRole]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return toast.error("Please enter your email");
+    if (!role) return toast.error("Please choose Traveler or WayMaker");
     setSubmitting(true);
     try {
       const res = await submit({
         data: {
           email,
+          role,
           source: typeof window !== "undefined" ? document.referrer || "direct" : "direct",
           referred_by: referredBy || null,
         },
@@ -182,7 +189,7 @@ function EmailCapture({
       navigate({
         to: "/waitlist/$code",
         params: { code: res.referral_code },
-        search: intendedRole ? { role: intendedRole } : {},
+        search: { role },
       });
     } catch (err: any) {
       toast.error(err?.message ?? "Could not sign you up");
@@ -192,7 +199,7 @@ function EmailCapture({
   };
 
   return (
-    <form id={id} onSubmit={onSubmit} className="w-full">
+    <form id={id} onSubmit={onSubmit} className="w-full space-y-3">
       <div className="flex flex-col gap-2 sm:flex-row">
         <Input
           type="email"
@@ -205,6 +212,31 @@ function EmailCapture({
         <Button type="submit" size="lg" className="h-12 rounded-full px-6" disabled={submitting}>
           {submitting ? "Saving…" : cta} <ArrowRight className="ml-1.5 size-4" />
         </Button>
+      </div>
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground sm:mr-2">I want to join as</p>
+        <div className="inline-flex rounded-full border border-border/70 bg-card p-1 shadow-soft">
+          <button
+            type="button"
+            onClick={() => setRole("explorer")}
+            className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
+              role === "explorer" ? "bg-ink text-background" : "text-foreground/70 hover:text-foreground"
+            }`}
+            aria-pressed={role === "explorer"}
+          >
+            Traveler
+          </button>
+          <button
+            type="button"
+            onClick={() => setRole("waymaker")}
+            className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
+              role === "waymaker" ? "bg-gold text-ink" : "text-foreground/70 hover:text-foreground"
+            }`}
+            aria-pressed={role === "waymaker"}
+          >
+            WayMaker
+          </button>
+        </div>
       </div>
     </form>
   );
@@ -286,17 +318,17 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* Explorer / WayMaker */}
+      {/* Traveler / WayMaker */}
       <section className="bg-secondary/40 py-20 md:py-28">
         <div className="container-page grid gap-6 md:grid-cols-2">
           <div className="flex flex-col rounded-3xl border border-border/60 bg-card p-8 shadow-card">
-            <p className="text-xs uppercase tracking-[0.25em] text-gold">For Explorers</p>
+            <p className="text-xs uppercase tracking-[0.25em] text-gold">For Travelers</p>
             <h3 className="mt-3 font-display text-3xl">Planning a trip?</h3>
             <p className="mt-3 text-muted-foreground">
               Join the waitlist if you want advice that fits your way of traveling, not generic recommendations made for everyone.
             </p>
             <Button onClick={() => scrollToHero("explorer")} className="mt-6 self-start rounded-full">
-              Join as Explorer <ArrowRight className="ml-1.5 size-4" />
+              Join as Traveler <ArrowRight className="ml-1.5 size-4" />
             </Button>
           </div>
           <div className="flex flex-col rounded-3xl border border-border/60 bg-card p-8 shadow-card">
