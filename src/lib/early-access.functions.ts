@@ -68,7 +68,7 @@ export const submitEarlyAccess = createServerFn({ method: "POST" })
       .from("early_access_signups")
       .insert({
         email: data.email,
-        role: "unknown",
+        role: data.role,
         referral_code,
         referred_by: data.referred_by ?? null,
         source: data.source ?? null,
