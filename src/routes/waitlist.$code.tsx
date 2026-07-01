@@ -136,7 +136,7 @@ function WaitlistPage() {
 
                 <div className="mx-auto mt-8 max-w-md rounded-2xl border border-border/60 bg-card p-4 text-left">
                   <p className="flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
-                    <LinkIcon className="size-3.5" /> Or share this unique link
+                    <LinkIcon className="size-3.5" /> Share this unique link
                   </p>
                   <div className="mt-2 flex items-center gap-2">
                     <Input readOnly value={shareUrl} className="font-mono text-sm" />
