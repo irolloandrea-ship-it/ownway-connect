@@ -15,9 +15,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { supabase } from "@/integrations/supabase/client";
 import {
   adminAnalytics, adminApproveWaymaker, adminAssignMatches, adminDeleteFeedPost,
+  adminExportWaitlistCsv,
   adminGrantSelfAdmin, adminListApplications, adminListFeed, adminListFeedback,
   adminListProfiles, adminListTrips, adminUpdateApplicationStatus, adminUpsertFeedPost,
 } from "@/lib/admin.functions";
+
 import { Copy, LogOut, Trash2 } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
