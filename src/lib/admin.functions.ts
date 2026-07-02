@@ -307,4 +307,35 @@ export const adminListWaitlist = createServerFn({ method: "GET" })
     return data ?? [];
   });
 
+export const adminPrelaunchAnalytics = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    await assertAdmin(context.supabase, context.userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data, error } = await supabaseAdmin
+      .from("prelaunch_analytics_events")
+      .select("event_name, source, utm_campaign, button_text, button_location, email_normalized, created_at")
+      .order("created_at", { ascending: false })
+      .limit(2000);
+    if (error) throw new Error(error.message);
+    const rows = data ?? [];
+    const pageViews = rows.filter((r: any) => r.event_name === "page_view").length;
+    const ctaClicks = rows.filter((r: any) => r.event_name === "cta_click").length;
+    const signups = rows.filter((r: any) => r.event_name === "email_signup").length;
+    const perSource: Record<string, { source: string; page_views: number; cta_clicks: number; email_signups: number }> = {};
+    rows.forEach((r: any) => {
+      const key = r.source || "direct";
+      if (!perSource[key]) perSource[key] = { source: key, page_views: 0, cta_clicks: 0, email_signups: 0 };
+      if (r.event_name === "page_view") perSource[key].page_views++;
+      else if (r.event_name === "cta_click") perSource[key].cta_clicks++;
+      else if (r.event_name === "email_signup") perSource[key].email_signups++;
+    });
+    return {
+      totals: { pageViews, ctaClicks, signups },
+      sources: Object.values(perSource).sort((a, b) => b.page_views - a.page_views),
+      recent: rows.slice(0, 50),
+    };
+  });
+
+
 
