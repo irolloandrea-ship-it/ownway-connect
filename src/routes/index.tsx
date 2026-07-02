@@ -203,6 +203,7 @@ function EmailCapture({
           referred_by: referredBy || null,
         },
       });
+      void trackPrelaunchEvent("email_signup", { email, metadata: { role, already: res.already ?? false } });
       navigate({
         to: "/waitlist/$code",
         params: { code: res.referral_code },
