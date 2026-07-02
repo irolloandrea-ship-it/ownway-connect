@@ -22,6 +22,7 @@ import { Route as AdminPrelaunchAnalyticsRouteImport } from './routes/admin.prel
 import { Route as TripConfirmationTokenRouteImport } from './routes/trip.confirmation.$token'
 import { Route as TripTokenFeedbackRouteImport } from './routes/trip.$token.feedback'
 import { Route as ApiPublicBootstrapAdminRouteImport } from './routes/api/public/bootstrap-admin'
+import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -88,6 +89,12 @@ const ApiPublicBootstrapAdminRoute = ApiPublicBootstrapAdminRouteImport.update({
   path: '/api/public/bootstrap-admin',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LovableEmailQueueProcessRoute =
+  LovableEmailQueueProcessRouteImport.update({
+    id: '/lovable/email/queue/process',
+    path: '/lovable/email/queue/process',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -103,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
   '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
+  '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -118,6 +126,7 @@ export interface FileRoutesByTo {
   '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
   '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
+  '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -134,6 +143,7 @@ export interface FileRoutesById {
   '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
   '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
+  '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -151,6 +161,7 @@ export interface FileRouteTypes {
     | '/api/public/bootstrap-admin'
     | '/trip/$token/feedback'
     | '/trip/confirmation/$token'
+    | '/lovable/email/queue/process'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -166,6 +177,7 @@ export interface FileRouteTypes {
     | '/api/public/bootstrap-admin'
     | '/trip/$token/feedback'
     | '/trip/confirmation/$token'
+    | '/lovable/email/queue/process'
   id:
     | '__root__'
     | '/'
@@ -181,6 +193,7 @@ export interface FileRouteTypes {
     | '/api/public/bootstrap-admin'
     | '/trip/$token/feedback'
     | '/trip/confirmation/$token'
+    | '/lovable/email/queue/process'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -195,6 +208,7 @@ export interface RootRouteChildren {
   WaymakerApplyRoute: typeof WaymakerApplyRoute
   ApiPublicBootstrapAdminRoute: typeof ApiPublicBootstrapAdminRoute
   TripConfirmationTokenRoute: typeof TripConfirmationTokenRoute
+  LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -290,6 +304,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicBootstrapAdminRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lovable/email/queue/process': {
+      id: '/lovable/email/queue/process'
+      path: '/lovable/email/queue/process'
+      fullPath: '/lovable/email/queue/process'
+      preLoaderRoute: typeof LovableEmailQueueProcessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -327,17 +348,8 @@ const rootRouteChildren: RootRouteChildren = {
   WaymakerApplyRoute: WaymakerApplyRoute,
   ApiPublicBootstrapAdminRoute: ApiPublicBootstrapAdminRoute,
   TripConfirmationTokenRoute: TripConfirmationTokenRoute,
+  LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
