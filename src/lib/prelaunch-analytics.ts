@@ -111,7 +111,7 @@ export async function trackPrelaunchEvent(
       source: src.source,
       metadata: payload.metadata ?? null,
     };
-    const { error } = await supabase.from("prelaunch_analytics_events").insert(row);
+    const { error } = await supabase.from("prelaunch_analytics_events").insert(row as any);
     if (error) console.error("[prelaunch analytics]", error);
   } catch (err) {
     console.error("[prelaunch analytics]", err);
