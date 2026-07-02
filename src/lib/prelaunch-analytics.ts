@@ -84,7 +84,7 @@ type ExtraPayload = {
   button_text?: string;
   button_location?: string;
   email?: string;
-  metadata?: Record<string, unknown>;
+  metadata?: Record<string, any>;
 };
 
 export async function trackPrelaunchEvent(
