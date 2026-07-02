@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UnsubscribeRouteImport } from './routes/unsubscribe'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -18,14 +19,23 @@ import { Route as WaymakerIdRouteImport } from './routes/waymaker.$id'
 import { Route as WaitlistCodeRouteImport } from './routes/waitlist.$code'
 import { Route as TripNewRouteImport } from './routes/trip.new'
 import { Route as TripTokenRouteImport } from './routes/trip.$token'
+import { Route as EmailUnsubscribeRouteImport } from './routes/email/unsubscribe'
 import { Route as AdminPrelaunchAnalyticsRouteImport } from './routes/admin.prelaunch-analytics'
 import { Route as TripConfirmationTokenRouteImport } from './routes/trip.confirmation.$token'
 import { Route as TripTokenFeedbackRouteImport } from './routes/trip.$token.feedback'
+import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
 import { Route as ApiPublicBootstrapAdminRouteImport } from './routes/api/public/bootstrap-admin'
+import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
+import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 
+const UnsubscribeRoute = UnsubscribeRouteImport.update({
+  id: '/unsubscribe',
+  path: '/unsubscribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -71,6 +81,11 @@ const TripTokenRoute = TripTokenRouteImport.update({
   path: '/trip/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EmailUnsubscribeRoute = EmailUnsubscribeRouteImport.update({
+  id: '/email/unsubscribe',
+  path: '/email/unsubscribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminPrelaunchAnalyticsRoute = AdminPrelaunchAnalyticsRouteImport.update({
   id: '/prelaunch-analytics',
   path: '/prelaunch-analytics',
@@ -86,11 +101,28 @@ const TripTokenFeedbackRoute = TripTokenFeedbackRouteImport.update({
   path: '/feedback',
   getParentRoute: () => TripTokenRoute,
 } as any)
+const LovableEmailSuppressionRoute = LovableEmailSuppressionRouteImport.update({
+  id: '/lovable/email/suppression',
+  path: '/lovable/email/suppression',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicBootstrapAdminRoute = ApiPublicBootstrapAdminRouteImport.update({
   id: '/api/public/bootstrap-admin',
   path: '/api/public/bootstrap-admin',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LovableEmailTransactionalSendRoute =
+  LovableEmailTransactionalSendRouteImport.update({
+    id: '/lovable/email/transactional/send',
+    path: '/lovable/email/transactional/send',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const LovableEmailTransactionalPreviewRoute =
+  LovableEmailTransactionalPreviewRouteImport.update({
+    id: '/lovable/email/transactional/preview',
+    path: '/lovable/email/transactional/preview',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const LovableEmailQueueProcessRoute =
   LovableEmailQueueProcessRouteImport.update({
     id: '/lovable/email/queue/process',
@@ -113,36 +145,46 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/unsubscribe': typeof UnsubscribeRoute
   '/admin/prelaunch-analytics': typeof AdminPrelaunchAnalyticsRoute
+  '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
   '/trip/new': typeof TripNewRoute
   '/waitlist/$code': typeof WaitlistCodeRoute
   '/waymaker/$id': typeof WaymakerIdRoute
   '/waymaker/apply': typeof WaymakerApplyRoute
   '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
+  '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
   '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
+  '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
+  '/lovable/email/transactional/send': typeof LovableEmailTransactionalSendRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/unsubscribe': typeof UnsubscribeRoute
   '/admin/prelaunch-analytics': typeof AdminPrelaunchAnalyticsRoute
+  '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
   '/trip/new': typeof TripNewRoute
   '/waitlist/$code': typeof WaitlistCodeRoute
   '/waymaker/$id': typeof WaymakerIdRoute
   '/waymaker/apply': typeof WaymakerApplyRoute
   '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
+  '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
   '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
+  '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
+  '/lovable/email/transactional/send': typeof LovableEmailTransactionalSendRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -150,18 +192,23 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/unsubscribe': typeof UnsubscribeRoute
   '/admin/prelaunch-analytics': typeof AdminPrelaunchAnalyticsRoute
+  '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
   '/trip/new': typeof TripNewRoute
   '/waitlist/$code': typeof WaitlistCodeRoute
   '/waymaker/$id': typeof WaymakerIdRoute
   '/waymaker/apply': typeof WaymakerApplyRoute
   '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
+  '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
   '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
+  '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
+  '/lovable/email/transactional/send': typeof LovableEmailTransactionalSendRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -170,54 +217,69 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/sitemap.xml'
+    | '/unsubscribe'
     | '/admin/prelaunch-analytics'
+    | '/email/unsubscribe'
     | '/trip/$token'
     | '/trip/new'
     | '/waitlist/$code'
     | '/waymaker/$id'
     | '/waymaker/apply'
     | '/api/public/bootstrap-admin'
+    | '/lovable/email/suppression'
     | '/trip/$token/feedback'
     | '/trip/confirmation/$token'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/queue/process'
+    | '/lovable/email/transactional/preview'
+    | '/lovable/email/transactional/send'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/admin'
     | '/auth'
     | '/sitemap.xml'
+    | '/unsubscribe'
     | '/admin/prelaunch-analytics'
+    | '/email/unsubscribe'
     | '/trip/$token'
     | '/trip/new'
     | '/waitlist/$code'
     | '/waymaker/$id'
     | '/waymaker/apply'
     | '/api/public/bootstrap-admin'
+    | '/lovable/email/suppression'
     | '/trip/$token/feedback'
     | '/trip/confirmation/$token'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/queue/process'
+    | '/lovable/email/transactional/preview'
+    | '/lovable/email/transactional/send'
   id:
     | '__root__'
     | '/'
     | '/admin'
     | '/auth'
     | '/sitemap.xml'
+    | '/unsubscribe'
     | '/admin/prelaunch-analytics'
+    | '/email/unsubscribe'
     | '/trip/$token'
     | '/trip/new'
     | '/waitlist/$code'
     | '/waymaker/$id'
     | '/waymaker/apply'
     | '/api/public/bootstrap-admin'
+    | '/lovable/email/suppression'
     | '/trip/$token/feedback'
     | '/trip/confirmation/$token'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/queue/process'
+    | '/lovable/email/transactional/preview'
+    | '/lovable/email/transactional/send'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -225,20 +287,32 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   AuthRoute: typeof AuthRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  UnsubscribeRoute: typeof UnsubscribeRoute
+  EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
   TripTokenRoute: typeof TripTokenRouteWithChildren
   TripNewRoute: typeof TripNewRoute
   WaitlistCodeRoute: typeof WaitlistCodeRoute
   WaymakerIdRoute: typeof WaymakerIdRoute
   WaymakerApplyRoute: typeof WaymakerApplyRoute
   ApiPublicBootstrapAdminRoute: typeof ApiPublicBootstrapAdminRoute
+  LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
   TripConfirmationTokenRoute: typeof TripConfirmationTokenRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
+  LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
+  LovableEmailTransactionalSendRoute: typeof LovableEmailTransactionalSendRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/unsubscribe': {
+      id: '/unsubscribe'
+      path: '/unsubscribe'
+      fullPath: '/unsubscribe'
+      preLoaderRoute: typeof UnsubscribeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -302,6 +376,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TripTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/email/unsubscribe': {
+      id: '/email/unsubscribe'
+      path: '/email/unsubscribe'
+      fullPath: '/email/unsubscribe'
+      preLoaderRoute: typeof EmailUnsubscribeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/prelaunch-analytics': {
       id: '/admin/prelaunch-analytics'
       path: '/prelaunch-analytics'
@@ -323,11 +404,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TripTokenFeedbackRouteImport
       parentRoute: typeof TripTokenRoute
     }
+    '/lovable/email/suppression': {
+      id: '/lovable/email/suppression'
+      path: '/lovable/email/suppression'
+      fullPath: '/lovable/email/suppression'
+      preLoaderRoute: typeof LovableEmailSuppressionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/bootstrap-admin': {
       id: '/api/public/bootstrap-admin'
       path: '/api/public/bootstrap-admin'
       fullPath: '/api/public/bootstrap-admin'
       preLoaderRoute: typeof ApiPublicBootstrapAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lovable/email/transactional/send': {
+      id: '/lovable/email/transactional/send'
+      path: '/lovable/email/transactional/send'
+      fullPath: '/lovable/email/transactional/send'
+      preLoaderRoute: typeof LovableEmailTransactionalSendRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lovable/email/transactional/preview': {
+      id: '/lovable/email/transactional/preview'
+      path: '/lovable/email/transactional/preview'
+      fullPath: '/lovable/email/transactional/preview'
+      preLoaderRoute: typeof LovableEmailTransactionalPreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lovable/email/queue/process': {
@@ -381,16 +483,21 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   AuthRoute: AuthRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  UnsubscribeRoute: UnsubscribeRoute,
+  EmailUnsubscribeRoute: EmailUnsubscribeRoute,
   TripTokenRoute: TripTokenRouteWithChildren,
   TripNewRoute: TripNewRoute,
   WaitlistCodeRoute: WaitlistCodeRoute,
   WaymakerIdRoute: WaymakerIdRoute,
   WaymakerApplyRoute: WaymakerApplyRoute,
   ApiPublicBootstrapAdminRoute: ApiPublicBootstrapAdminRoute,
+  LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
   TripConfirmationTokenRoute: TripConfirmationTokenRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
+  LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
+  LovableEmailTransactionalSendRoute: LovableEmailTransactionalSendRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
