@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Logo } from "./Logo";
 import { Button } from "@/components/ui/button";
+import { trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
 
 export function SiteHeader() {
   return (
@@ -13,7 +14,16 @@ export function SiteHeader() {
           <Link to="/" hash="how-it-works" className="hover:text-foreground">How it works</Link>
           <Link to="/" hash="join" className="hover:text-foreground">Join early access</Link>
         </nav>
-        <Link to="/" hash="join">
+        <Link
+          to="/"
+          hash="join"
+          onClick={() =>
+            trackPrelaunchEvent("cta_click", {
+              button_text: "Get early access",
+              button_location: "navbar",
+            })
+          }
+        >
           <Button size="sm" className="rounded-full">Get early access</Button>
         </Link>
       </div>
