@@ -18,6 +18,7 @@ import { Route as WaymakerIdRouteImport } from './routes/waymaker.$id'
 import { Route as WaitlistCodeRouteImport } from './routes/waitlist.$code'
 import { Route as TripNewRouteImport } from './routes/trip.new'
 import { Route as TripTokenRouteImport } from './routes/trip.$token'
+import { Route as AdminPrelaunchAnalyticsRouteImport } from './routes/admin.prelaunch-analytics'
 import { Route as TripConfirmationTokenRouteImport } from './routes/trip.confirmation.$token'
 import { Route as TripTokenFeedbackRouteImport } from './routes/trip.$token.feedback'
 import { Route as ApiPublicBootstrapAdminRouteImport } from './routes/api/public/bootstrap-admin'
@@ -67,6 +68,11 @@ const TripTokenRoute = TripTokenRouteImport.update({
   path: '/trip/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminPrelaunchAnalyticsRoute = AdminPrelaunchAnalyticsRouteImport.update({
+  id: '/prelaunch-analytics',
+  path: '/prelaunch-analytics',
+  getParentRoute: () => AdminRoute,
+} as any)
 const TripConfirmationTokenRoute = TripConfirmationTokenRouteImport.update({
   id: '/trip/confirmation/$token',
   path: '/trip/confirmation/$token',
@@ -85,9 +91,10 @@ const ApiPublicBootstrapAdminRoute = ApiPublicBootstrapAdminRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/prelaunch-analytics': typeof AdminPrelaunchAnalyticsRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
   '/trip/new': typeof TripNewRoute
   '/waitlist/$code': typeof WaitlistCodeRoute
@@ -99,9 +106,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/prelaunch-analytics': typeof AdminPrelaunchAnalyticsRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
   '/trip/new': typeof TripNewRoute
   '/waitlist/$code': typeof WaitlistCodeRoute
@@ -114,9 +122,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/prelaunch-analytics': typeof AdminPrelaunchAnalyticsRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
   '/trip/new': typeof TripNewRoute
   '/waitlist/$code': typeof WaitlistCodeRoute
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/sitemap.xml'
+    | '/admin/prelaunch-analytics'
     | '/trip/$token'
     | '/trip/new'
     | '/waitlist/$code'
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/sitemap.xml'
+    | '/admin/prelaunch-analytics'
     | '/trip/$token'
     | '/trip/new'
     | '/waitlist/$code'
@@ -161,6 +172,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/sitemap.xml'
+    | '/admin/prelaunch-analytics'
     | '/trip/$token'
     | '/trip/new'
     | '/waitlist/$code'
@@ -173,7 +185,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRoute
+  AdminRoute: typeof AdminRouteWithChildren
   AuthRoute: typeof AuthRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TripTokenRoute: typeof TripTokenRouteWithChildren
@@ -250,6 +262,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TripTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/prelaunch-analytics': {
+      id: '/admin/prelaunch-analytics'
+      path: '/prelaunch-analytics'
+      fullPath: '/admin/prelaunch-analytics'
+      preLoaderRoute: typeof AdminPrelaunchAnalyticsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/trip/confirmation/$token': {
       id: '/trip/confirmation/$token'
       path: '/trip/confirmation/$token'
@@ -274,6 +293,16 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteChildren {
+  AdminPrelaunchAnalyticsRoute: typeof AdminPrelaunchAnalyticsRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminPrelaunchAnalyticsRoute: AdminPrelaunchAnalyticsRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 interface TripTokenRouteChildren {
   TripTokenFeedbackRoute: typeof TripTokenFeedbackRoute
 }
@@ -288,7 +317,7 @@ const TripTokenRouteWithChildren = TripTokenRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminRoute: AdminRoute,
+  AdminRoute: AdminRouteWithChildren,
   AuthRoute: AuthRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TripTokenRoute: TripTokenRouteWithChildren,

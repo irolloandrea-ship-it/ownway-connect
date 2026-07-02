@@ -272,6 +272,66 @@ export type Database = {
           },
         ]
       }
+      prelaunch_analytics_events: {
+        Row: {
+          button_location: string | null
+          button_text: string | null
+          created_at: string
+          email: string | null
+          email_normalized: string | null
+          event_name: string
+          id: string
+          metadata: Json | null
+          page_path: string | null
+          page_url: string | null
+          referrer: string | null
+          source: string | null
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_term: string | null
+        }
+        Insert: {
+          button_location?: string | null
+          button_text?: string | null
+          created_at?: string
+          email?: string | null
+          email_normalized?: string | null
+          event_name: string
+          id?: string
+          metadata?: Json | null
+          page_path?: string | null
+          page_url?: string | null
+          referrer?: string | null
+          source?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Update: {
+          button_location?: string | null
+          button_text?: string | null
+          created_at?: string
+          email?: string | null
+          email_normalized?: string | null
+          event_name?: string
+          id?: string
+          metadata?: Json | null
+          page_path?: string | null
+          page_url?: string | null
+          referrer?: string | null
+          source?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Relationships: []
+      }
       trip_feedback: {
         Row: {
           accuracy_score: number | null

@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Logo } from "@/components/Logo";
 import { ArrowRight, Compass, Sparkles, MessageCircleHeart } from "lucide-react";
 import { submitEarlyAccess } from "@/lib/early-access.functions";
+import { captureSourceOnce, trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
 import { motion, AnimatePresence } from "framer-motion";
 
 type Search = { ref?: string; role?: "explorer" | "waymaker" };
@@ -202,6 +203,7 @@ function EmailCapture({
           referred_by: referredBy || null,
         },
       });
+      void trackPrelaunchEvent("email_signup", { email, metadata: { role, already: res.already ?? false } });
       navigate({
         to: "/waitlist/$code",
         params: { code: res.referral_code },
@@ -226,7 +228,18 @@ function EmailCapture({
           placeholder="Enter your email address"
           className="h-12 flex-1 rounded-full px-5 text-base"
         />
-        <Button type="submit" size="lg" className="h-12 rounded-full px-6" disabled={submitting}>
+        <Button
+          type="submit"
+          size="lg"
+          className="h-12 rounded-full px-6"
+          disabled={submitting}
+          onClick={() =>
+            trackPrelaunchEvent("cta_click", {
+              button_text: cta,
+              button_location: id === "join" ? "hero_section" : "waitlist_section",
+            })
+          }
+        >
           {submitting ? "Saving…" : cta} <ArrowRight className="ml-1.5 size-4" />
         </Button>
       </div>
@@ -267,6 +280,11 @@ function LandingPage() {
   const [intendedRole, setIntendedRole] = useState<"explorer" | "waymaker" | undefined>(search.role);
 
   useEffect(() => {
+    captureSourceOnce();
+    void trackPrelaunchEvent("page_view");
+  }, []);
+
+  useEffect(() => {
     if (search.role) {
       setIntendedRole(search.role);
       setTimeout(() => heroFormRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
@@ -274,6 +292,10 @@ function LandingPage() {
   }, [search.role]);
 
   const scrollToHero = (role: "explorer" | "waymaker") => {
+    trackPrelaunchEvent("cta_click", {
+      button_text: role === "explorer" ? "Join as Traveler" : "Become a WayMaker",
+      button_location: "role_section",
+    });
     setIntendedRole(role);
     heroFormRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
