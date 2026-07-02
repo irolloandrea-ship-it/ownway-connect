@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Logo } from "@/components/Logo";
 import { ArrowRight, Compass, Sparkles, MessageCircleHeart } from "lucide-react";
 import { submitEarlyAccess } from "@/lib/early-access.functions";
+import { captureSourceOnce, trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
 import { motion, AnimatePresence } from "framer-motion";
 
 type Search = { ref?: string; role?: "explorer" | "waymaker" };
