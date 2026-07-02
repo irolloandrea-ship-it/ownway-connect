@@ -228,7 +228,18 @@ function EmailCapture({
           placeholder="Enter your email address"
           className="h-12 flex-1 rounded-full px-5 text-base"
         />
-        <Button type="submit" size="lg" className="h-12 rounded-full px-6" disabled={submitting}>
+        <Button
+          type="submit"
+          size="lg"
+          className="h-12 rounded-full px-6"
+          disabled={submitting}
+          onClick={() =>
+            trackPrelaunchEvent("cta_click", {
+              button_text: cta,
+              button_location: id === "join" ? "hero_section" : "waitlist_section",
+            })
+          }
+        >
           {submitting ? "Saving…" : cta} <ArrowRight className="ml-1.5 size-4" />
         </Button>
       </div>
