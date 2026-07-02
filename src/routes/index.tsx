@@ -280,6 +280,11 @@ function LandingPage() {
   const [intendedRole, setIntendedRole] = useState<"explorer" | "waymaker" | undefined>(search.role);
 
   useEffect(() => {
+    captureSourceOnce();
+    void trackPrelaunchEvent("page_view");
+  }, []);
+
+  useEffect(() => {
     if (search.role) {
       setIntendedRole(search.role);
       setTimeout(() => heroFormRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
@@ -287,6 +292,10 @@ function LandingPage() {
   }, [search.role]);
 
   const scrollToHero = (role: "explorer" | "waymaker") => {
+    trackPrelaunchEvent("cta_click", {
+      button_text: role === "explorer" ? "Join as Traveler" : "Become a WayMaker",
+      button_location: "role_section",
+    });
     setIntendedRole(role);
     heroFormRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
