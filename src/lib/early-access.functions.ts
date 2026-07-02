@@ -39,6 +39,36 @@ export const submitEarlyAccess = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => emailSchema.parse(data))
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { sendTransactionalEmailInternal } = await import("@/lib/email/send-internal.server");
+
+    const SITE_URL = "https://ownway.app";
+
+    async function sendConfirmationEmail(args: {
+      email: string;
+      position: number;
+      referral_code: string;
+      alreadyIn: boolean;
+    }) {
+      try {
+        await sendTransactionalEmailInternal({
+          templateName: "waitlist-confirmation",
+          recipientEmail: args.email,
+          idempotencyKey: `waitlist-confirm-${args.referral_code}-${args.alreadyIn ? "already" : "new"}`,
+          templateData: {
+            siteUrl: SITE_URL,
+            email: args.email,
+            position: args.position,
+            referralCode: args.referral_code,
+            referralUrl: `${SITE_URL}/?ref=${args.referral_code}`,
+            waitlistUrl: `${SITE_URL}/waitlist/${args.referral_code}`,
+            alreadyIn: args.alreadyIn,
+          },
+        });
+      } catch (err) {
+        // Never break signup on email failure
+        console.error("Waitlist confirmation email failed", err);
+      }
+    }
 
     // Existing email?
     const { data: existing } = await supabaseAdmin
@@ -49,6 +79,12 @@ export const submitEarlyAccess = createServerFn({ method: "POST" })
 
     if (existing?.referral_code) {
       const position = await computePosition(supabaseAdmin, existing.priority_score ?? 0, existing.id);
+      await sendConfirmationEmail({
+        email: data.email,
+        position,
+        referral_code: existing.referral_code,
+        alreadyIn: true,
+      });
       return { referral_code: existing.referral_code, position, already: true as const };
     }
 
@@ -94,8 +130,15 @@ export const submitEarlyAccess = createServerFn({ method: "POST" })
     }
 
     const position = await computePosition(supabaseAdmin, inserted.priority_score ?? 0, inserted.id);
+    await sendConfirmationEmail({
+      email: data.email,
+      position,
+      referral_code: inserted.referral_code,
+      alreadyIn: false,
+    });
     return { referral_code: inserted.referral_code, position, already: false as const };
   });
+
 
 export const updateSignup = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => updateSchema.parse(data))

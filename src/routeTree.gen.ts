@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UnsubscribeRouteImport } from './routes/unsubscribe'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -30,6 +31,11 @@ import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/e
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 
+const UnsubscribeRoute = UnsubscribeRouteImport.update({
+  id: '/unsubscribe',
+  path: '/unsubscribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -139,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/unsubscribe': typeof UnsubscribeRoute
   '/admin/prelaunch-analytics': typeof AdminPrelaunchAnalyticsRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
@@ -161,6 +168,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/unsubscribe': typeof UnsubscribeRoute
   '/admin/prelaunch-analytics': typeof AdminPrelaunchAnalyticsRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
@@ -184,6 +192,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/unsubscribe': typeof UnsubscribeRoute
   '/admin/prelaunch-analytics': typeof AdminPrelaunchAnalyticsRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
@@ -208,6 +217,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/sitemap.xml'
+    | '/unsubscribe'
     | '/admin/prelaunch-analytics'
     | '/email/unsubscribe'
     | '/trip/$token'
@@ -230,6 +240,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/sitemap.xml'
+    | '/unsubscribe'
     | '/admin/prelaunch-analytics'
     | '/email/unsubscribe'
     | '/trip/$token'
@@ -252,6 +263,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/sitemap.xml'
+    | '/unsubscribe'
     | '/admin/prelaunch-analytics'
     | '/email/unsubscribe'
     | '/trip/$token'
@@ -275,6 +287,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   AuthRoute: typeof AuthRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  UnsubscribeRoute: typeof UnsubscribeRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
   TripTokenRoute: typeof TripTokenRouteWithChildren
   TripNewRoute: typeof TripNewRoute
@@ -293,6 +306,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/unsubscribe': {
+      id: '/unsubscribe'
+      path: '/unsubscribe'
+      fullPath: '/unsubscribe'
+      preLoaderRoute: typeof UnsubscribeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -463,6 +483,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   AuthRoute: AuthRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  UnsubscribeRoute: UnsubscribeRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
   TripTokenRoute: TripTokenRouteWithChildren,
   TripNewRoute: TripNewRoute,
