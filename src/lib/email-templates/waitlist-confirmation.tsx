@@ -64,6 +64,45 @@ const WaitlistConfirmationEmail = ({
                 : 'We have added your email address to the OwnWay early access queue.'}
             </Text>
 
+            {/* iPhone mockup — a taste of what OwnWay feels like */}
+            <Section style={phoneWrap}>
+              <div style={phoneFrame}>
+                <div style={phoneNotch} />
+                <div style={phoneScreen}>
+                  <div style={statusBar}>
+                    <span>OwnWay</span>
+                    <span>9:41</span>
+                  </div>
+                  <div style={chatHeader}>
+                    <p style={chatEyebrow}>Before the trip</p>
+                    <p style={chatTitle}>Anna plans smarter</p>
+                    <p style={chatMeta}>Anna · Marco (WayMaker)</p>
+                  </div>
+                  <div style={chatBody}>
+                    <div style={rowRight}>
+                      <div style={bubbleAnna}>
+                        <p style={bubbleName}>Anna</p>
+                        Going to Capri for 3 days — I want it to feel authentic, not touristy. How should I plan it?
+                      </div>
+                    </div>
+                    <div style={rowLeft}>
+                      <div style={bubbleMarco}>
+                        <p style={bubbleName}>Marco</p>
+                        Take the 8:40 ferry, not the 10:00. You'll arrive before the tours — the island feels completely different.
+                      </div>
+                    </div>
+                    <div style={rowRight}>
+                      <div style={bubbleAnna}>
+                        <p style={bubbleName}>Anna</p>
+                        That's exactly the kind of tip I need.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <Text style={phoneCaption}>Your travel person — a real local, just for you.</Text>
+            </Section>
+
             <Section style={positionCard}>
               <Text style={positionNumber}>#{position}</Text>
               <Text style={positionLabel}>on the waitlist</Text>
@@ -71,6 +110,7 @@ const WaitlistConfirmationEmail = ({
                 Reservation held for <span style={emailStrong}>{email}</span>
               </Text>
             </Section>
+
 
             <Hr style={hr} />
 
