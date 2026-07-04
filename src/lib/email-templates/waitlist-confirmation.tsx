@@ -302,3 +302,107 @@ const footer = {
   fontStyle: 'italic' as const,
   margin: '24px 0 0',
 }
+
+/* ---- iPhone mockup styles (email-safe) ---- */
+const phoneWrap = { textAlign: 'center' as const, margin: '4px 0 28px' }
+const phoneFrame = {
+  position: 'relative' as const,
+  width: '260px',
+  margin: '0 auto',
+  padding: '10px',
+  backgroundColor: ink,
+  borderRadius: '38px',
+  boxShadow: '0 20px 40px -20px rgba(42,35,29,0.35)',
+}
+const phoneNotch = {
+  position: 'absolute' as const,
+  top: '16px',
+  left: '50%',
+  transform: 'translateX(-50%)',
+  width: '84px',
+  height: '18px',
+  backgroundColor: ink,
+  borderRadius: '999px',
+  zIndex: 2,
+}
+const phoneScreen = {
+  position: 'relative' as const,
+  height: '420px',
+  borderRadius: '30px',
+  overflow: 'hidden' as const,
+  background: `linear-gradient(180deg, ${cream} 0%, #ffffff 55%, #f1e7d3 100%)`,
+  padding: '14px 12px 12px',
+}
+const statusBar = {
+  display: 'flex',
+  justifyContent: 'space-between' as const,
+  padding: '0 8px',
+  fontSize: '9px',
+  letterSpacing: '0.2em',
+  textTransform: 'uppercase' as const,
+  color: muted,
+}
+const chatHeader = {
+  borderBottom: `1px solid ${border}`,
+  padding: '10px 4px 8px',
+  margin: '6px 0 8px',
+  textAlign: 'left' as const,
+}
+const chatEyebrow = {
+  fontSize: '9px',
+  letterSpacing: '0.24em',
+  textTransform: 'uppercase' as const,
+  color: gold,
+  margin: 0,
+}
+const chatTitle = {
+  fontFamily: '"Cormorant Garamond", Georgia, serif',
+  fontSize: '15px',
+  color: ink,
+  margin: '2px 0 0',
+}
+const chatMeta = {
+  fontSize: '10px',
+  color: muted,
+  margin: '2px 0 0',
+}
+const chatBody = { padding: '4px 2px' }
+const rowRight = { textAlign: 'right' as const, margin: '0 0 6px' }
+const rowLeft = { textAlign: 'left' as const, margin: '0 0 6px' }
+const bubbleBase = {
+  display: 'inline-block',
+  maxWidth: '80%',
+  padding: '7px 10px',
+  fontSize: '11px',
+  lineHeight: 1.35,
+  textAlign: 'left' as const,
+  boxShadow: '0 2px 6px -3px rgba(42,35,29,0.15)',
+}
+const bubbleAnna = {
+  ...bubbleBase,
+  backgroundColor: gold,
+  color: ink,
+  borderRadius: '14px 14px 4px 14px',
+}
+const bubbleMarco = {
+  ...bubbleBase,
+  backgroundColor: '#ffffff',
+  color: ink,
+  border: `1px solid ${border}`,
+  borderRadius: '14px 14px 14px 4px',
+}
+const bubbleName = {
+  fontSize: '8px',
+  fontWeight: 600 as const,
+  letterSpacing: '0.18em',
+  textTransform: 'uppercase' as const,
+  margin: '0 0 3px',
+  opacity: 0.7,
+}
+const phoneCaption = {
+  fontSize: '12px',
+  color: muted,
+  fontStyle: 'italic' as const,
+  margin: '16px 0 0',
+}
+
