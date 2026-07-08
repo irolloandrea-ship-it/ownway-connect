@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Search, MapPin, Route, ShieldCheck } from "lucide-react";
+import { Search, MapPin, Route as RouteIcon, ShieldCheck } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { EmailCapture } from "@/components/EmailCapture";
@@ -55,7 +55,7 @@ const CARDS: ExpandingCardItem[] = [
       "Solo, couple, family, or group trips",
       "Slow travel or intense itinerary",
     ],
-    icon: <Route className="h-5 w-5" />,
+    icon: <RouteIcon className="h-5 w-5" />,
   },
   {
     id: "confidence",
