@@ -11,8 +11,28 @@ export function SiteHeader() {
           <Logo size={32} />
         </Link>
         <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
-          <Link to="/" hash="how-it-works" className="hover:text-foreground">How it works</Link>
-          <Link to="/" hash="join" className="hover:text-foreground">Join early access</Link>
+          <Link
+            to="/"
+            className="hover:text-foreground"
+            activeOptions={{ exact: true }}
+            activeProps={{ className: "text-foreground font-medium" }}
+          >
+            Home
+          </Link>
+          <Link
+            to="/plan-a-trip"
+            className="hover:text-foreground"
+            activeProps={{ className: "text-foreground font-medium" }}
+          >
+            Plan a Trip
+          </Link>
+          <Link
+            to="/become-a-waymaker"
+            className="hover:text-foreground"
+            activeProps={{ className: "text-foreground font-medium" }}
+          >
+            Become a WayMaker
+          </Link>
         </nav>
         <Link
           to="/"

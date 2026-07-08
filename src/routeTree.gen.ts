@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UnsubscribeRouteImport } from './routes/unsubscribe'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as PlanATripRouteImport } from './routes/plan-a-trip'
+import { Route as BecomeAWaymakerRouteImport } from './routes/become-a-waymaker'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -39,6 +41,16 @@ const UnsubscribeRoute = UnsubscribeRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanATripRoute = PlanATripRouteImport.update({
+  id: '/plan-a-trip',
+  path: '/plan-a-trip',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BecomeAWaymakerRoute = BecomeAWaymakerRouteImport.update({
+  id: '/become-a-waymaker',
+  path: '/become-a-waymaker',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -144,6 +156,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
+  '/become-a-waymaker': typeof BecomeAWaymakerRoute
+  '/plan-a-trip': typeof PlanATripRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/unsubscribe': typeof UnsubscribeRoute
   '/admin/prelaunch-analytics': typeof AdminPrelaunchAnalyticsRoute
@@ -167,6 +181,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
+  '/become-a-waymaker': typeof BecomeAWaymakerRoute
+  '/plan-a-trip': typeof PlanATripRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/unsubscribe': typeof UnsubscribeRoute
   '/admin/prelaunch-analytics': typeof AdminPrelaunchAnalyticsRoute
@@ -191,6 +207,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
+  '/become-a-waymaker': typeof BecomeAWaymakerRoute
+  '/plan-a-trip': typeof PlanATripRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/unsubscribe': typeof UnsubscribeRoute
   '/admin/prelaunch-analytics': typeof AdminPrelaunchAnalyticsRoute
@@ -216,6 +234,8 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/auth'
+    | '/become-a-waymaker'
+    | '/plan-a-trip'
     | '/sitemap.xml'
     | '/unsubscribe'
     | '/admin/prelaunch-analytics'
@@ -239,6 +259,8 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/auth'
+    | '/become-a-waymaker'
+    | '/plan-a-trip'
     | '/sitemap.xml'
     | '/unsubscribe'
     | '/admin/prelaunch-analytics'
@@ -262,6 +284,8 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/auth'
+    | '/become-a-waymaker'
+    | '/plan-a-trip'
     | '/sitemap.xml'
     | '/unsubscribe'
     | '/admin/prelaunch-analytics'
@@ -286,6 +310,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   AuthRoute: typeof AuthRoute
+  BecomeAWaymakerRoute: typeof BecomeAWaymakerRoute
+  PlanATripRoute: typeof PlanATripRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   UnsubscribeRoute: typeof UnsubscribeRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
@@ -318,6 +344,20 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plan-a-trip': {
+      id: '/plan-a-trip'
+      path: '/plan-a-trip'
+      fullPath: '/plan-a-trip'
+      preLoaderRoute: typeof PlanATripRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/become-a-waymaker': {
+      id: '/become-a-waymaker'
+      path: '/become-a-waymaker'
+      fullPath: '/become-a-waymaker'
+      preLoaderRoute: typeof BecomeAWaymakerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -482,6 +522,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   AuthRoute: AuthRoute,
+  BecomeAWaymakerRoute: BecomeAWaymakerRoute,
+  PlanATripRoute: PlanATripRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   UnsubscribeRoute: UnsubscribeRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
@@ -502,3 +544,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
