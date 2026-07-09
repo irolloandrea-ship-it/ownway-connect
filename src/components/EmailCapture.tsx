@@ -115,6 +115,14 @@ export function EmailCapture({
           </button>
         </div>
       </div>
+      </div>
+      <p className="text-xs leading-relaxed text-muted-foreground">
+        We'll only use your email to send OwnWay launch updates. You can unsubscribe anytime.{" "}
+        <Link to="/privacy" className="text-accent underline-offset-2 hover:underline">
+          Read our Privacy Policy
+        </Link>
+        .
+      </p>
     </form>
   );
 }
