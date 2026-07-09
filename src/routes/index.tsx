@@ -132,10 +132,8 @@ function LandingPage() {
         <section className="container-page pt-14 pb-20 md:pt-20 md:pb-28">
           <div className="grid items-center gap-12 md:grid-cols-2 md:gap-16">
             <div ref={heroFormRef}>
-              <div className="flex items-center gap-3">
-                <Logo size={36} withWordmark={false} />
-                <p className="text-xs uppercase tracking-[0.25em] text-accent">OwnWay</p>
-              </div>
+              <Logo size={36} withWordmark />
+
               <h1 className="mt-6 text-5xl leading-[1.05] md:text-6xl">
                 One right tip can change the whole trip.
               </h1>
