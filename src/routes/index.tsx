@@ -155,8 +155,8 @@ function LandingPage() {
         {/* How it works */}
         <section id="how-it-works" className="container-page border-t border-border/60 py-20 md:py-28">
           <p className="text-center text-xs uppercase tracking-[0.25em] text-accent">How OwnWay works</p>
-          <h2 className="mx-auto mt-3 max-w-2xl text-center text-4xl md:text-5xl">
-            Travel planning is full of content. We help you find the person.
+        <h2 className="mx-auto mt-3 max-w-3xl text-center text-4xl md:text-5xl">
+            AI can give you answers. OwnWay connects you with people who have lived them.
           </h2>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {[
