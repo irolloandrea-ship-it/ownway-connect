@@ -8,17 +8,23 @@ import { ArrowRight, Compass, Sparkles, MessageCircleHeart, Plus, Minus } from "
 import { captureSourceOnce, trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
 import { motion, AnimatePresence } from "framer-motion";
 import { OwnWayPhoneCarousel } from "@/components/ui/ownway-phone-carousel";
-import screen1 from "@/assets/screen-1.png.asset.json";
-import screen2 from "@/assets/screen-2.png.asset.json";
-import screen3 from "@/assets/screen-3.png.asset.json";
-import screen4 from "@/assets/screen-4.png.asset.json";
+import screen9 from "@/assets/screen-9.png.asset.json";
+import screen10 from "@/assets/screen-10.png.asset.json";
+import screen11 from "@/assets/screen-11.png.asset.json";
+import screen12 from "@/assets/screen-12.png.asset.json";
+import screen13 from "@/assets/screen-13.png.asset.json";
+import screen14 from "@/assets/screen-14.png.asset.json";
+import screen15 from "@/assets/screen-15.png.asset.json";
 import { EmailCapture } from "@/components/EmailCapture";
 
 const APP_SCREENS = [
-  { src: screen1.url, alt: "OwnWay — Tokyo destination with WayMakers" },
-  { src: screen4.url, alt: "OwnWay — Elara Vance WayMaker profile" },
-  { src: screen3.url, alt: "OwnWay — Send a note to a WayMaker" },
-  { src: screen2.url, alt: "OwnWay — Traveler home with active connections" },
+  { src: screen13.url, alt: "OwnWay — Discover curated journeys" },
+  { src: screen10.url, alt: "OwnWay — Choose your destination" },
+  { src: screen9.url, alt: "OwnWay — Pick your travel dates" },
+  { src: screen11.url, alt: "OwnWay — Select your travel style" },
+  { src: screen12.url, alt: "OwnWay — Finding WayMakers for your trip" },
+  { src: screen15.url, alt: "OwnWay — Suggested WayMakers for Florence" },
+  { src: screen14.url, alt: "OwnWay — My Journeys dashboard" },
 ];
 
 type Search = { ref?: string; role?: "explorer" | "waymaker" };
