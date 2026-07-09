@@ -7,8 +7,19 @@ import { Logo } from "@/components/Logo";
 import { ArrowRight, Compass, Sparkles, MessageCircleHeart, Plus, Minus } from "lucide-react";
 import { captureSourceOnce, trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
 import { motion, AnimatePresence } from "framer-motion";
-import { JourneyMockup } from "@/components/JourneyMockup";
+import { OwnWayPhoneCarousel } from "@/components/ui/ownway-phone-carousel";
+import screen1 from "@/assets/screen-1.png.asset.json";
+import screen2 from "@/assets/screen-2.png.asset.json";
+import screen3 from "@/assets/screen-3.png.asset.json";
+import screen4 from "@/assets/screen-4.png.asset.json";
 import { EmailCapture } from "@/components/EmailCapture";
+
+const APP_SCREENS = [
+  { src: screen1.url, alt: "OwnWay — Tokyo destination with WayMakers" },
+  { src: screen4.url, alt: "OwnWay — Elara Vance WayMaker profile" },
+  { src: screen3.url, alt: "OwnWay — Send a note to a WayMaker" },
+  { src: screen2.url, alt: "OwnWay — Traveler home with active connections" },
+];
 
 type Search = { ref?: string; role?: "explorer" | "waymaker" };
 
@@ -145,7 +156,7 @@ function LandingPage() {
               </div>
             </div>
             <div className="md:pl-4">
-              <JourneyMockup />
+              <OwnWayPhoneCarousel screens={APP_SCREENS} />
             </div>
           </div>
         </section>
