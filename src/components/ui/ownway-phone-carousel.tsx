@@ -109,24 +109,6 @@ export function OwnWayPhoneCarousel({ screens, className }: OwnWayPhoneCarouselP
                   loading="eager"
                 />
               </AnimatePresence>
-
-              {/* Desktop arrows (inside screen edges, subtle) */}
-              <button
-                type="button"
-                onClick={goToPrevious}
-                aria-label="Previous app screen"
-                className="absolute left-2 top-1/2 hidden -translate-y-1/2 items-center justify-center rounded-full bg-black/40 p-1.5 text-white opacity-0 backdrop-blur-sm transition hover:bg-black/60 md:flex group-hover:opacity-100"
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </button>
-              <button
-                type="button"
-                onClick={goToNext}
-                aria-label="Next app screen"
-                className="absolute right-2 top-1/2 hidden -translate-y-1/2 items-center justify-center rounded-full bg-black/40 p-1.5 text-white opacity-0 backdrop-blur-sm transition hover:bg-black/60 md:flex group-hover:opacity-100"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </button>
             </div>
           </div>
         </div>
