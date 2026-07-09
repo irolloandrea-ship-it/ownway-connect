@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Plus, Minus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface ExpandingCardItem {
@@ -19,32 +21,13 @@ interface ExpandingCardsProps extends React.HTMLAttributes<HTMLUListElement> {
 
 export const ExpandingCards = React.forwardRef<HTMLUListElement, ExpandingCardsProps>(
   ({ className, items, defaultActiveIndex = 0, ...props }, ref) => {
-    const [activeIndex, setActiveIndex] = React.useState(defaultActiveIndex);
-    const [isDesktop, setIsDesktop] = React.useState(false);
-
-    React.useEffect(() => {
-      const handle = () => setIsDesktop(window.innerWidth >= 768);
-      handle();
-      window.addEventListener("resize", handle);
-      return () => window.removeEventListener("resize", handle);
-    }, []);
-
-    const gridStyle = React.useMemo<React.CSSProperties>(() => {
-      const template = items
-        .map((_, i) => (i === activeIndex ? "5fr" : "1fr"))
-        .join(" ");
-      return isDesktop
-        ? { gridTemplateColumns: template }
-        : { gridTemplateRows: template };
-    }, [activeIndex, items, isDesktop]);
+    const [activeIndex, setActiveIndex] = React.useState<number | null>(defaultActiveIndex);
 
     return (
       <ul
         ref={ref}
-        style={gridStyle}
         className={cn(
-          "grid gap-3 transition-[grid-template-columns,grid-template-rows] duration-500 ease-out",
-          "grid-flow-row md:grid-flow-col",
+          "divide-y divide-border/70 overflow-hidden rounded-3xl border border-border bg-card shadow-card",
           className,
         )}
         {...props}
@@ -52,73 +35,63 @@ export const ExpandingCards = React.forwardRef<HTMLUListElement, ExpandingCardsP
         {items.map((item, i) => {
           const active = i === activeIndex;
           return (
-            <li
-              key={item.id}
-              tabIndex={0}
-              data-active={active}
-              onMouseEnter={() => setActiveIndex(i)}
-              onFocus={() => setActiveIndex(i)}
-              onClick={() => setActiveIndex(i)}
-              className={cn(
-                "group relative overflow-hidden rounded-3xl border border-border bg-card shadow-card",
-                "cursor-pointer outline-none transition-all duration-500 ease-out",
-                "min-h-[220px] md:min-h-[420px]",
-                active ? "ring-1 ring-accent/40" : "hover:border-accent/30",
-              )}
-            >
-              {/* Collapsed rail (visible when not active) */}
-              <div
+            <li key={item.id}>
+              <button
+                type="button"
+                onClick={() => setActiveIndex(active ? null : i)}
+                aria-expanded={active}
                 className={cn(
-                  "absolute inset-0 flex flex-col items-center justify-between p-5 transition-opacity duration-300",
-                  active ? "opacity-0 pointer-events-none" : "opacity-100",
+                  "flex w-full items-center gap-4 px-5 py-4 text-left transition-colors md:px-6",
+                  active ? "bg-sand/40" : "hover:bg-sand/30",
                 )}
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/10 text-accent">
+                <div
+                  className={cn(
+                    "flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors",
+                    active ? "bg-accent text-accent-foreground" : "bg-accent/10 text-accent",
+                  )}
+                >
                   {item.icon}
                 </div>
-                <p className="font-display text-lg leading-tight text-ink md:[writing-mode:vertical-rl] md:rotate-180 md:text-base">
-                  {item.title}
-                </p>
-                <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-              </div>
-
-              {/* Expanded content */}
-              <div
-                className={cn(
-                  "relative flex h-full flex-col justify-between gap-4 p-6 md:p-8 transition-opacity duration-500 delay-150",
-                  active ? "opacity-100" : "opacity-0 pointer-events-none",
-                )}
-              >
-                <div>
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-full bg-accent/15 text-accent">
-                      {item.icon}
-                    </div>
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-accent">
-                      {item.eyebrow}
-                    </span>
-                  </div>
-                  <h3 className="mt-4 font-display text-2xl leading-snug text-ink md:text-3xl">
+                <div className="min-w-0 flex-1">
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-accent">
+                    {item.eyebrow}
+                  </p>
+                  <p className="mt-0.5 font-display text-base leading-snug text-ink md:text-lg">
                     {item.title}
-                  </h3>
-                  <p className="mt-3 text-sm text-muted-foreground md:text-base">
-                    {item.description}
                   </p>
                 </div>
-
-                {item.bullets && item.bullets.length > 0 && (
-                  <ul className="mt-2 space-y-1.5 text-sm text-foreground/85">
-                    {item.bullets.map((b) => (
-                      <li key={b} className="flex items-start gap-2">
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border text-muted-foreground">
+                  {active ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                </span>
+              </button>
+              <AnimatePresence initial={false}>
+                {active && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.28, ease: "easeOut" }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-5 pb-5 pl-[calc(1.25rem+40px+1rem)] md:px-6 md:pb-6 md:pl-[calc(1.5rem+40px+1rem)]">
+                      <p className="text-sm text-muted-foreground md:text-[15px]">
+                        {item.description}
+                      </p>
+                      {item.bullets && item.bullets.length > 0 && (
+                        <ul className="mt-3 grid gap-1.5 sm:grid-cols-2">
+                          {item.bullets.map((b) => (
+                            <li key={b} className="flex items-start gap-2 text-sm text-foreground/85">
+                              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                              <span>{b}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </motion.div>
                 )}
-              </div>
+              </AnimatePresence>
             </li>
           );
         })}
