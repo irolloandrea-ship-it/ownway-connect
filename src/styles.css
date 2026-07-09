@@ -52,23 +52,27 @@
   --color-gold-foreground: var(--accent-foreground);
   --color-cream: var(--sand);
 
-  --shadow-warm: 0 20px 60px -30px oklch(0.35 0.08 40 / 0.35);
-  --shadow-card: 0 1px 2px oklch(0.35 0.05 60 / 0.06), 0 8px 24px -12px oklch(0.35 0.05 60 / 0.12);
-  --shadow-soft: 0 4px 24px -8px oklch(0.2 0.02 60 / 0.08);
+  --shadow-warm: 0 20px 60px -30px oklch(0.65 0.15 40 / 0.35);
+  --shadow-card: 0 1px 2px oklch(0.55 0.12 40 / 0.06), 0 10px 30px -14px oklch(0.55 0.12 40 / 0.14);
+  --shadow-soft: 0 4px 24px -8px oklch(0.55 0.12 40 / 0.12);
+  --shadow-glow: 0 0 0 1px oklch(0.65 0.15 40 / 0.15), 0 20px 50px -20px oklch(0.65 0.15 40 / 0.35);
+
+  --gradient-warm: linear-gradient(135deg, oklch(0.72 0.16 45), oklch(0.62 0.17 30));
+  --gradient-cream: linear-gradient(180deg, oklch(0.985 0.018 70), oklch(0.96 0.03 60));
 }
 
 :root {
   --radius: 0.9rem;
 
-  /* Sand base */
-  --background: oklch(0.98 0.015 80);
+  /* Warm cream base with a whisper of coral */
+  --background: oklch(0.98 0.02 70);
   --foreground: oklch(0.24 0.03 200);
   --ink: oklch(0.24 0.03 200);
-  --sand: oklch(0.95 0.025 75);
+  --sand: oklch(0.95 0.035 65);
   --olive: oklch(0.55 0.06 130);
   --terracotta: oklch(0.65 0.15 40);
 
-  --card: oklch(1 0 0);
+  --card: oklch(0.995 0.008 70);
   --card-foreground: var(--foreground);
   --popover: oklch(1 0 0);
   --popover-foreground: var(--foreground);
@@ -77,10 +81,11 @@
   --primary: oklch(0.28 0.05 200);
   --primary-foreground: oklch(0.98 0.015 80);
 
-  --secondary: oklch(0.94 0.03 75);
+  /* Secondary = warm peach wash for section bands */
+  --secondary: oklch(0.94 0.04 55);
   --secondary-foreground: var(--foreground);
 
-  --muted: oklch(0.94 0.02 75);
+  --muted: oklch(0.94 0.025 65);
   --muted-foreground: oklch(0.45 0.03 200);
 
   /* Accent = terracotta orange */
@@ -90,10 +95,12 @@
   --destructive: oklch(0.58 0.22 27);
   --destructive-foreground: oklch(0.99 0.01 80);
 
-  --border: oklch(0.88 0.02 75);
-  --input: oklch(0.9 0.02 75);
+  /* Warm beige borders that echo the accent */
+  --border: oklch(0.88 0.035 55);
+  --input: oklch(0.9 0.03 60);
   --ring: oklch(0.65 0.15 40);
 }
+
 
 .dark {
   --background: oklch(0.2 0.02 200);
