@@ -68,7 +68,7 @@ export function OwnWayPhoneCarousel({ screens, className }: OwnWayPhoneCarouselP
   const current = screens[activeIndex];
 
   return (
-    <div className={cn("relative mx-auto flex flex-col items-center", className)}>
+    <div className={cn("group relative mx-auto flex flex-col items-center", className)}>
       {/* Ambient glow */}
       <div className="absolute -inset-8 -z-10 rounded-[3rem] bg-[radial-gradient(ellipse_at_center,var(--color-accent)/20,transparent_70%)] blur-2xl" />
 
