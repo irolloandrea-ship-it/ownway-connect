@@ -168,9 +168,6 @@ export function OwnWayPhoneCarousel(_: OwnWayPhoneCarouselProps) {
         </button>
       </div>
 
-      <p className="mt-3 text-xs text-muted-foreground">
-        A live preview of the OwnWay app
-      </p>
     </div>
   );
 }
