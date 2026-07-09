@@ -64,8 +64,18 @@ function PrivacyPage() {
             <h1 className="mt-3 text-4xl leading-[1.1] md:text-5xl">
               Privacy Policy
             </h1>
+            <p className="mt-4 text-sm text-muted-foreground">
+              Last updated: 09/07/2026
+            </p>
             <p className="mt-4 text-muted-foreground">
-              How OwnWay collects, uses, and protects your personal data.
+              This Privacy Policy explains how OwnWay collects and processes
+              personal data from users who enter their email address through the
+              OwnWay website.
+            </p>
+            <p className="mt-4 text-muted-foreground">
+              OwnWay is an early-stage travel platform designed to connect
+              travelers with people who truly know a destination, so they can
+              receive human, practical, and personalized travel advice.
             </p>
           </header>
 
