@@ -130,26 +130,43 @@ export function OwnWayPhoneCarousel({ screens, className }: OwnWayPhoneCarouselP
             </div>
           </div>
         </div>
+
+        {/* Desktop arrows — outside the phone frame */}
+        <button
+          type="button"
+          onClick={handlePrev}
+          aria-label="Previous app screen"
+          className="absolute left-[-56px] top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card text-ink opacity-0 shadow-sm transition hover:bg-sand/60 md:flex group-hover:opacity-100"
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </button>
+        <button
+          type="button"
+          onClick={handleNext}
+          aria-label="Next app screen"
+          className="absolute right-[-56px] top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card text-ink opacity-0 shadow-sm transition hover:bg-sand/60 md:flex group-hover:opacity-100"
+        >
+          <ChevronRight className="h-4 w-4" />
+        </button>
       </div>
 
-      {/* Mobile / always-visible controls */}
+      {/* Controls below (mobile-friendly + dots) */}
       <div className="mt-6 flex items-center gap-4">
         <button
           type="button"
-          onClick={goToPrevious}
+          onClick={handlePrev}
           aria-label="Previous app screen"
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-ink shadow-sm transition hover:bg-sand/60"
+          className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-ink shadow-sm transition hover:bg-sand/60 md:hidden"
         >
           <ChevronLeft className="h-4 w-4" />
         </button>
 
-        {/* Dots */}
         <div className="flex items-center gap-2">
           {screens.map((_, index) => (
             <button
               key={index}
               type="button"
-              onClick={() => goToSlide(index)}
+              onClick={() => handleDot(index)}
               aria-label={`Show app screen ${index + 1}`}
               className={cn(
                 "h-2 rounded-full transition-all",
@@ -163,13 +180,14 @@ export function OwnWayPhoneCarousel({ screens, className }: OwnWayPhoneCarouselP
 
         <button
           type="button"
-          onClick={goToNext}
+          onClick={handleNext}
           aria-label="Next app screen"
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-ink shadow-sm transition hover:bg-sand/60"
+          className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-ink shadow-sm transition hover:bg-sand/60 md:hidden"
         >
           <ChevronRight className="h-4 w-4" />
         </button>
       </div>
+
 
       <p className="mt-3 text-xs text-muted-foreground">
         Tap to preview the app experience
