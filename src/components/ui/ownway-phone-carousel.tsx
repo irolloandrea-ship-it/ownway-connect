@@ -3,44 +3,36 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-type Screen = { src: string; alt: string };
+import { APP_SCREENS } from "./ownway-app-screens";
 
 type OwnWayPhoneCarouselProps = {
-  screens: Screen[];
   className?: string;
 };
 
-// Native screenshot ratio: 780 × 1768
+// iPhone 15-ish proportions (9:19.5)
 const SCREEN_W = 290;
-const SCREEN_H = Math.round((SCREEN_W * 1768) / 780); // 657
+const SCREEN_H = Math.round((SCREEN_W * 19.5) / 9); // 628
 
 const variants = {
-  enter: (direction: number) => ({
-    x: direction > 0 ? 80 : -80,
-    opacity: 0,
-    scale: 0.985,
-  }),
-  center: { x: 0, opacity: 1, scale: 1 },
-  exit: (direction: number) => ({
-    x: direction > 0 ? -80 : 80,
-    opacity: 0,
-    scale: 0.985,
-  }),
+  enter: (direction: number) => ({ x: direction > 0 ? 60 : -60, opacity: 0 }),
+  center: { x: 0, opacity: 1 },
+  exit: (direction: number) => ({ x: direction > 0 ? -60 : 60, opacity: 0 }),
 };
 
-export function OwnWayPhoneCarousel({ screens, className }: OwnWayPhoneCarouselProps) {
+export function OwnWayPhoneCarousel(_: OwnWayPhoneCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [paused, setPaused] = useState(false);
 
+  const total = APP_SCREENS.length;
+
   const goToNext = () => {
     setDirection(1);
-    setActiveIndex((c) => (c + 1) % screens.length);
+    setActiveIndex((c) => (c + 1) % total);
   };
   const goToPrevious = () => {
     setDirection(-1);
-    setActiveIndex((c) => (c === 0 ? screens.length - 1 : c - 1));
+    setActiveIndex((c) => (c === 0 ? total - 1 : c - 1));
   };
   const goToSlide = (index: number) => {
     setDirection(index > activeIndex ? 1 : -1);
@@ -51,48 +43,56 @@ export function OwnWayPhoneCarousel({ screens, className }: OwnWayPhoneCarouselP
     if (paused) return;
     const t = setInterval(() => {
       setDirection(1);
-      setActiveIndex((c) => (c + 1) % screens.length);
+      setActiveIndex((c) => (c + 1) % total);
     }, 3800);
     return () => clearInterval(t);
-  }, [paused, screens.length]);
+  }, [paused, total]);
 
   const pauseBriefly = () => {
     setPaused(true);
     window.setTimeout(() => setPaused(false), 6000);
   };
-
   const handlePrev = () => { pauseBriefly(); goToPrevious(); };
   const handleNext = () => { pauseBriefly(); goToNext(); };
   const handleDot = (i: number) => { pauseBriefly(); goToSlide(i); };
 
-  const current = screens[activeIndex];
+  // basic touch swipe
+  const touch = React.useRef<{ x: number } | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => { touch.current = { x: e.touches[0].clientX }; };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (!touch.current) return;
+    const dx = e.changedTouches[0].clientX - touch.current.x;
+    if (dx > 40) handlePrev();
+    else if (dx < -40) handleNext();
+    touch.current = null;
+  };
+
+  const current = APP_SCREENS[activeIndex];
 
   return (
-    <div className={cn("group relative mx-auto flex flex-col items-center", className)}>
+    <div className={cn("group relative mx-auto flex flex-col items-center", _.className)}>
       {/* Ambient glow */}
       <div className="absolute -inset-8 -z-10 rounded-[3rem] bg-[radial-gradient(ellipse_at_center,var(--color-accent)/20,transparent_70%)] blur-2xl" />
 
-      {/* iPhone frame */}
       <div className="relative" style={{ width: SCREEN_W + 10 }}>
         {/* Side buttons */}
-        <div className="absolute -left-[3px] top-[110px] h-8 w-[3px] rounded-l-sm bg-neutral-800" />
-        <div className="absolute -left-[3px] top-[160px] h-14 w-[3px] rounded-l-sm bg-neutral-800" />
-        <div className="absolute -left-[3px] top-[230px] h-14 w-[3px] rounded-l-sm bg-neutral-800" />
-        <div className="absolute -right-[3px] top-[180px] h-20 w-[3px] rounded-r-sm bg-neutral-800" />
+        <div className="absolute -left-[3px] top-[92px] h-8 w-[3px] rounded-l-sm bg-neutral-800" />
+        <div className="absolute -left-[3px] top-[140px] h-14 w-[3px] rounded-l-sm bg-neutral-800" />
+        <div className="absolute -left-[3px] top-[210px] h-14 w-[3px] rounded-l-sm bg-neutral-800" />
+        <div className="absolute -right-[3px] top-[160px] h-20 w-[3px] rounded-r-sm bg-neutral-800" />
 
         {/* Titanium outer frame */}
         <div className="rounded-[3rem] bg-gradient-to-b from-neutral-700 via-neutral-900 to-neutral-800 p-[3px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.35),0_10px_25px_-10px_rgba(0,0,0,0.25)]">
           <div className="rounded-[2.85rem] bg-black p-[2px]">
-            {/* Screen */}
             <div
-              className="relative overflow-hidden rounded-[2.7rem] bg-background"
-              style={{ width: SCREEN_W, height: SCREEN_H }}
+              className="relative overflow-hidden rounded-[2.7rem]"
+              style={{ width: SCREEN_W, height: SCREEN_H, background: "#FAFAF5" }}
+              onTouchStart={onTouchStart}
+              onTouchEnd={onTouchEnd}
             >
               <AnimatePresence initial={false} custom={direction} mode="wait">
-                <motion.img
-                  key={current.src}
-                  src={current.src}
-                  alt={current.alt}
+                <motion.div
+                  key={current.key}
                   custom={direction}
                   variants={variants}
                   initial="enter"
@@ -100,20 +100,18 @@ export function OwnWayPhoneCarousel({ screens, className }: OwnWayPhoneCarouselP
                   exit="exit"
                   transition={{
                     x: { type: "spring", stiffness: 260, damping: 30 },
-                    opacity: { duration: 0.25 },
-                    scale: { duration: 0.3 },
+                    opacity: { duration: 0.22 },
                   }}
-                  className="absolute inset-0 h-full w-full select-none object-cover object-top"
-                  draggable={false}
-                  decoding="async"
-                  loading="eager"
-                />
+                  className="absolute inset-0"
+                >
+                  {current.render()}
+                </motion.div>
               </AnimatePresence>
             </div>
           </div>
         </div>
 
-        {/* Desktop arrows — outside the phone frame */}
+        {/* Desktop arrows outside frame */}
         <button
           type="button"
           onClick={handlePrev}
@@ -132,7 +130,7 @@ export function OwnWayPhoneCarousel({ screens, className }: OwnWayPhoneCarouselP
         </button>
       </div>
 
-      {/* Controls below (mobile-friendly + dots) */}
+      {/* Dots + mobile controls */}
       <div className="mt-6 flex items-center gap-4">
         <button
           type="button"
@@ -144,12 +142,12 @@ export function OwnWayPhoneCarousel({ screens, className }: OwnWayPhoneCarouselP
         </button>
 
         <div className="flex items-center gap-2">
-          {screens.map((_, index) => (
+          {APP_SCREENS.map((s, index) => (
             <button
-              key={index}
+              key={s.key}
               type="button"
               onClick={() => handleDot(index)}
-              aria-label={`Show app screen ${index + 1}`}
+              aria-label={`Show ${s.label} screen`}
               className={cn(
                 "h-2 rounded-full transition-all",
                 activeIndex === index
@@ -170,9 +168,8 @@ export function OwnWayPhoneCarousel({ screens, className }: OwnWayPhoneCarouselP
         </button>
       </div>
 
-
       <p className="mt-3 text-xs text-muted-foreground">
-        Tap to preview the app experience
+        A live preview of the OwnWay app
       </p>
     </div>
   );
