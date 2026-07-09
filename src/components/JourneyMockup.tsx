@@ -190,9 +190,6 @@ function MatchesScreen() {
           )}
         </motion.div>
       ))}
-      <p className="mt-auto text-center text-[10px] text-muted-foreground">
-        You choose · you request · WayMaker decides
-      </p>
     </>
   );
 }
@@ -234,9 +231,6 @@ function ContactScreen() {
         </div>
       </div>
 
-      <p className="mt-auto text-center text-[10px] italic text-muted-foreground">
-        Contact happens outside OwnWay.
-      </p>
     </>
   );
 }

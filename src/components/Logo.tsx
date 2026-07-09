@@ -8,17 +8,14 @@ type LogoProps = {
 export function Logo({ size = 36, withWordmark = true, tagline = false, className }: LogoProps) {
   return (
     <div className={`flex items-center gap-3 ${className ?? ""}`}>
-      <svg
+      <img
+        src="/ownway-mark.png"
+        alt="OwnWay"
         width={size}
         height={size}
-        viewBox="0 0 80 60"
-        fill="none"
-        aria-hidden
-        className="shrink-0"
-      >
-        <circle cx="30" cy="30" r="26" fill="oklch(0.18 0.012 60)" />
-        <circle cx="50" cy="30" r="26" fill="oklch(0.72 0.09 85)" style={{ mixBlendMode: "multiply" }} />
-      </svg>
+        className="shrink-0 object-contain"
+        style={{ width: size, height: size }}
+      />
       {withWordmark && (
         <div className="flex flex-col leading-none">
           <span className="font-display text-xl tracking-tight text-ink" style={{ fontFamily: "var(--font-display)" }}>

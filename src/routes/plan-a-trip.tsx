@@ -77,21 +77,19 @@ function PlanATripPage() {
     <div className="min-h-screen bg-background">
       <SiteHeader />
       <main className="container-page py-14 md:py-20">
-        <div className="max-w-3xl">
-          <p className="text-xs uppercase tracking-[0.25em] text-accent">For Travelers</p>
-          <h1 className="mt-4 text-4xl leading-[1.1] md:text-5xl">
-            Plan a trip with advice from someone who actually knows the place.
-          </h1>
-          <p className="mt-5 text-lg text-muted-foreground">
-            OwnWay helps you stop searching across endless travel content and get practical,
-            human advice for your real trip.
-          </p>
-        </div>
+        <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-start lg:gap-14">
+          <div>
+            <p className="text-xs uppercase tracking-[0.25em] text-accent">For Travelers</p>
+            <h1 className="mt-4 text-4xl leading-[1.1] md:text-5xl">
+              Plan a trip with advice from someone who actually knows the place.
+            </h1>
+            <p className="mt-5 text-lg text-muted-foreground">
+              OwnWay helps you stop searching across endless travel content and get practical,
+              human advice for your real trip.
+            </p>
+          </div>
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_360px] lg:items-start">
-          <ExpandingCards items={CARDS} />
-
-          <aside className="rounded-3xl border border-border bg-card p-6 shadow-card lg:sticky lg:top-24">
+          <aside className="rounded-3xl border border-border bg-card p-6 shadow-card md:p-8">
             <p className="text-[11px] uppercase tracking-[0.25em] text-accent">Get early access</p>
             <h2 className="mt-2 font-display text-2xl leading-tight text-ink">
               Join as a Traveler
@@ -103,6 +101,10 @@ function PlanATripPage() {
               <EmailCapture id="join" intendedRole="explorer" location="plan_a_trip_page" />
             </div>
           </aside>
+        </div>
+
+        <div className="mt-12 md:mt-16">
+          <ExpandingCards items={CARDS} />
         </div>
       </main>
       <SiteFooter />

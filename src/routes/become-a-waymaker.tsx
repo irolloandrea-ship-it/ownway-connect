@@ -81,21 +81,19 @@ function BecomeAWayMakerPage() {
     <div className="min-h-screen bg-background">
       <SiteHeader />
       <main className="container-page py-14 md:py-20">
-        <div className="max-w-3xl">
-          <p className="text-xs uppercase tracking-[0.25em] text-accent">For WayMakers</p>
-          <h1 className="mt-4 text-4xl leading-[1.1] md:text-5xl">
-            Become a WayMaker and help travelers experience your place better.
-          </h1>
-          <p className="mt-5 text-lg text-muted-foreground">
-            Share what you know about a destination and help travelers make better,
-            more authentic choices.
-          </p>
-        </div>
+        <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-start lg:gap-14">
+          <div>
+            <p className="text-xs uppercase tracking-[0.25em] text-accent">For WayMakers</p>
+            <h1 className="mt-4 text-4xl leading-[1.1] md:text-5xl">
+              Become a WayMaker and help travelers experience your place better.
+            </h1>
+            <p className="mt-5 text-lg text-muted-foreground">
+              Share what you know about a destination and help travelers make better,
+              more authentic choices.
+            </p>
+          </div>
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_360px] lg:items-start">
-          <ExpandingCards items={CARDS} />
-
-          <aside className="rounded-3xl border border-border bg-card p-6 shadow-card lg:sticky lg:top-24">
+          <aside className="rounded-3xl border border-border bg-card p-6 shadow-card md:p-8">
             <p className="text-[11px] uppercase tracking-[0.25em] text-accent">Get Early Access</p>
             <h2 className="mt-2 font-display text-2xl leading-tight text-ink">
               Join as a WayMaker
@@ -107,6 +105,10 @@ function BecomeAWayMakerPage() {
               <EmailCapture id="join" intendedRole="waymaker" location="become_a_waymaker_page" />
             </div>
           </aside>
+        </div>
+
+        <div className="mt-12 md:mt-16">
+          <ExpandingCards items={CARDS} />
         </div>
       </main>
       <SiteFooter />
