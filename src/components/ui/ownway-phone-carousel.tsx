@@ -32,6 +32,7 @@ const variants = {
 export function OwnWayPhoneCarousel({ screens, className }: OwnWayPhoneCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   const goToNext = () => {
     setDirection(1);
@@ -45,6 +46,24 @@ export function OwnWayPhoneCarousel({ screens, className }: OwnWayPhoneCarouselP
     setDirection(index > activeIndex ? 1 : -1);
     setActiveIndex(index);
   };
+
+  React.useEffect(() => {
+    if (paused) return;
+    const t = setInterval(() => {
+      setDirection(1);
+      setActiveIndex((c) => (c + 1) % screens.length);
+    }, 3800);
+    return () => clearInterval(t);
+  }, [paused, screens.length]);
+
+  const pauseBriefly = () => {
+    setPaused(true);
+    window.setTimeout(() => setPaused(false), 6000);
+  };
+
+  const handlePrev = () => { pauseBriefly(); goToPrevious(); };
+  const handleNext = () => { pauseBriefly(); goToNext(); };
+  const handleDot = (i: number) => { pauseBriefly(); goToSlide(i); };
 
   const current = screens[activeIndex];
 
