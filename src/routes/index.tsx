@@ -156,7 +156,7 @@ function LandingPage() {
               </div>
             </div>
             <div className="md:pl-4">
-              <JourneyMockup />
+              <OwnWayPhoneCarousel screens={APP_SCREENS} />
             </div>
           </div>
         </section>
