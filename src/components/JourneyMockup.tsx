@@ -68,9 +68,9 @@ export function JourneyMockup() {
                 <div className="h-1.5 w-1.5 rounded-full bg-neutral-700" />
               </div>
 
-              {/* App screen — pushed below the island, natural-width, sharp */}
+              {/* App screen — natural pixel size, centered, never upscaled */}
               <div
-                className="absolute inset-x-0 overflow-hidden"
+                className="absolute inset-x-0 flex justify-center overflow-hidden bg-background"
                 style={{ top: ISLAND_SAFE, height: SCREEN_H - ISLAND_SAFE }}
               >
                 <AnimatePresence mode="wait">
@@ -82,8 +82,8 @@ export function JourneyMockup() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
-                    className="block w-full select-none"
-                    style={{ height: "auto", imageRendering: "auto" }}
+                    className="block h-auto max-w-full select-none"
+                    style={{ width: "auto", imageRendering: "-webkit-optimize-contrast" as never }}
                     draggable={false}
                     decoding="async"
                     loading="eager"
