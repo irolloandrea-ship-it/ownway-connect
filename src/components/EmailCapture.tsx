@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { ArrowRight } from "lucide-react";
@@ -115,6 +115,13 @@ export function EmailCapture({
           </button>
         </div>
       </div>
+      <p className="text-xs leading-relaxed text-muted-foreground">
+        We'll only use your email to send OwnWay launch updates. You can unsubscribe anytime.{" "}
+        <Link to="/privacy" className="text-accent underline-offset-2 hover:underline">
+          Read our Privacy Policy
+        </Link>
+        .
+      </p>
     </form>
   );
 }
