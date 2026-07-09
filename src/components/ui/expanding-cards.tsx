@@ -34,8 +34,14 @@ export const ExpandingCards = React.forwardRef<HTMLUListElement, ExpandingCardsP
       >
         {items.map((item, i) => {
           const active = i === activeIndex;
+          const openOnHover = () => {
+            // hover-capable pointer only (desktop); mobile keeps click behavior
+            if (typeof window !== "undefined" && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+              setActiveIndex(i);
+            }
+          };
           return (
-            <li key={item.id}>
+            <li key={item.id} onMouseEnter={openOnHover} onFocus={openOnHover}>
               <button
                 type="button"
                 onClick={() => setActiveIndex(active ? null : i)}
@@ -45,6 +51,7 @@ export const ExpandingCards = React.forwardRef<HTMLUListElement, ExpandingCardsP
                   active ? "bg-sand/40" : "hover:bg-sand/30",
                 )}
               >
+
                 <div
                   className={cn(
                     "flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors",
