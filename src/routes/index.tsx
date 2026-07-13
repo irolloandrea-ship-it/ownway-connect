@@ -16,8 +16,6 @@ import screen13 from "@/assets/screen-13.png.asset.json";
 import screen14 from "@/assets/screen-14.png.asset.json";
 import screen15 from "@/assets/screen-15.png.asset.json";
 import { EmailCapture } from "@/components/EmailCapture";
-import planningTripImg from "@/assets/planning-trip.jpg.asset.json";
-import waymakerLocalImg from "@/assets/waymaker-local.jpg.asset.json";
 
 const APP_SCREENS = [
   { src: screen13.url, alt: "OwnWay — Discover curated journeys" },
@@ -201,52 +199,28 @@ function LandingPage() {
         {/* Traveler / WayMaker */}
         <section className="bg-secondary/40 py-20 md:py-28">
           <div className="container-page grid gap-6 md:grid-cols-2">
-            <div className="flex flex-col overflow-hidden rounded-3xl border border-border/60 bg-card shadow-card">
-              <div className="aspect-[16/10] w-full overflow-hidden">
-                <img
-                  src={planningTripImg.url}
-                  alt="Traveler walking down a sunlit Italian street"
-                  loading="lazy"
-                  width={1024}
-                  height={1024}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div className="flex flex-col p-8">
-                <p className="text-xs uppercase tracking-[0.25em] text-accent">For Travelers</p>
-                <h3 className="mt-3 font-display text-3xl">Planning a trip?</h3>
-                <p className="mt-3 text-muted-foreground">
-                  Join the waitlist if you want advice that fits your way of traveling, not generic recommendations made for everyone.
-                </p>
-                <Button onClick={() => scrollToHero("explorer")} className="mt-6 self-start rounded-full">
-                  Join as Traveler <ArrowRight className="ml-1.5 size-4" />
-                </Button>
-              </div>
+            <div className="flex flex-col rounded-3xl border border-border/60 bg-card p-8 shadow-card">
+              <p className="text-xs uppercase tracking-[0.25em] text-accent">For Travelers</p>
+              <h3 className="mt-3 font-display text-3xl">Planning a trip?</h3>
+              <p className="mt-3 text-muted-foreground">
+                Join the waitlist if you want advice that fits your way of traveling, not generic recommendations made for everyone.
+              </p>
+              <Button onClick={() => scrollToHero("explorer")} className="mt-6 self-start rounded-full">
+                Join as Traveler <ArrowRight className="ml-1.5 size-4" />
+              </Button>
             </div>
-            <div className="flex flex-col overflow-hidden rounded-3xl border border-border/60 bg-card shadow-card">
-              <div className="aspect-[16/10] w-full overflow-hidden">
-                <img
-                  src={waymakerLocalImg.url}
-                  alt="Smiling local WayMaker enjoying coffee in a cozy café"
-                  loading="lazy"
-                  width={1024}
-                  height={1024}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div className="flex flex-col p-8">
-                <p className="text-xs uppercase tracking-[0.25em] text-accent">For WayMakers</p>
-                <h3 className="mt-3 font-display text-3xl">Know a place deeply?</h3>
-                <p className="mt-3 text-muted-foreground">
-                  Join the waitlist if you want to become one of the first WayMakers and help travelers experience places better.
-                </p>
-                <Button
-                  onClick={() => scrollToHero("waymaker")}
-                  className="mt-6 self-start rounded-full bg-accent text-accent-foreground hover:bg-accent/90"
-                >
-                  Become a WayMaker <ArrowRight className="ml-1.5 size-4" />
-                </Button>
-              </div>
+            <div className="flex flex-col rounded-3xl border border-border/60 bg-card p-8 shadow-card">
+              <p className="text-xs uppercase tracking-[0.25em] text-accent">For WayMakers</p>
+              <h3 className="mt-3 font-display text-3xl">Know a place deeply?</h3>
+              <p className="mt-3 text-muted-foreground">
+                Join the waitlist if you want to become one of the first WayMakers and help travelers experience places better.
+              </p>
+              <Button
+                onClick={() => scrollToHero("waymaker")}
+                className="mt-6 self-start rounded-full bg-accent text-accent-foreground hover:bg-accent/90"
+              >
+                Become a WayMaker <ArrowRight className="ml-1.5 size-4" />
+              </Button>
             </div>
           </div>
         </section>
