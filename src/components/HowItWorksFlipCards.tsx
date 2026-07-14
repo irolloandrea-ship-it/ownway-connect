@@ -85,6 +85,7 @@ function FlipCard({
   onHoverFlip,
   reducedMotion,
   isTouch,
+  onboarding,
 }: {
   card: Card;
   flipped: boolean;
@@ -92,8 +93,10 @@ function FlipCard({
   onHoverFlip: (v: boolean) => void;
   reducedMotion: boolean;
   isTouch: boolean;
+  onboarding: boolean;
 }) {
   const Icon = card.icon;
+
 
   const handleKey = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" || e.key === " ") {
