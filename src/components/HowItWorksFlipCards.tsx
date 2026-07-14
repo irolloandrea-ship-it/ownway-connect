@@ -145,25 +145,30 @@ function FlipCard({
             aria-hidden={flipped}
             className={
               reducedMotion
-                ? `absolute inset-0 flex flex-col items-center justify-between rounded-3xl border border-border/60 bg-card p-8 text-center shadow-card transition-opacity duration-300 group-hover:shadow-warm ${
+                ? `absolute inset-0 flex flex-col items-center justify-between rounded-3xl border border-border/60 bg-card p-8 text-center shadow-card transition-[opacity,box-shadow,border-color] duration-300 group-hover:shadow-warm lg:justify-start lg:gap-6 lg:pt-10 lg:group-hover:border-accent/40 ${
                     flipped ? "opacity-0 pointer-events-none" : "opacity-100"
                   }`
-                : "absolute inset-0 flex flex-col items-center justify-between rounded-3xl border border-border/60 bg-card p-8 text-center shadow-card [backface-visibility:hidden] group-hover:shadow-warm"
+                : "absolute inset-0 flex flex-col items-center justify-between rounded-3xl border border-border/60 bg-card p-8 text-center shadow-card transition-[box-shadow,border-color] duration-300 [backface-visibility:hidden] group-hover:shadow-warm lg:justify-start lg:gap-6 lg:pt-10 lg:group-hover:border-accent/40"
             }
           >
             <p className="text-xs uppercase tracking-[0.28em] text-accent">
               {card.step}
             </p>
-            <div className="flex flex-1 items-center justify-center">
+            <div className="flex flex-1 items-center justify-center lg:flex-none">
               <div
-                className="flex h-24 w-24 items-center justify-center rounded-full bg-accent/10 transition-transform duration-500 ease-out"
+                className="flex h-24 w-24 items-center justify-center rounded-full bg-accent/10 transition-transform duration-500 ease-out lg:h-20 lg:w-20 lg:bg-accent/[0.07]"
                 style={onboarding ? { transform: "scale(1.08)" } : undefined}
               >
-                <Icon className="h-11 w-11 text-accent" strokeWidth={1.6} />
+                <Icon
+                  className="h-11 w-11 text-accent lg:h-9 lg:w-9"
+                  strokeWidth={1.4}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </div>
             </div>
-            <div className="space-y-2">
-              <h3 className="font-display text-2xl leading-tight text-ink">
+            <div className="space-y-2 lg:mt-2">
+              <h3 className="font-display text-2xl leading-tight text-ink lg:text-[34px] lg:leading-[1.15]">
                 {card.frontTitle}
               </h3>
             </div>
