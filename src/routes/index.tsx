@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router";
+import { createFileRoute, Link, useSearch } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -132,14 +132,6 @@ function LandingPage() {
     }
   }, [search.role]);
 
-  const scrollToHero = (role: "explorer" | "waymaker") => {
-    trackPrelaunchEvent("cta_click", {
-      button_text: role === "explorer" ? "Join as Traveler" : "Become a WayMaker",
-      button_location: "role_section",
-    });
-    setIntendedRole(role);
-    heroFormRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -181,8 +173,10 @@ function LandingPage() {
               <p className="mt-3 text-muted-foreground">
                 Join the waitlist if you want advice that fits your way of traveling, not generic recommendations made for everyone.
               </p>
-              <Button onClick={() => scrollToHero("explorer")} className="mt-6 self-start rounded-full">
-                Join as Traveler <ArrowRight className="ml-1.5 size-4" />
+              <Button className="mt-6 self-start rounded-full" asChild>
+                <Link to="/plan-a-trip">
+                  Join as Traveler <ArrowRight className="ml-1.5 size-4" />
+                </Link>
               </Button>
             </div>
             <div className="flex flex-col rounded-3xl border border-border/60 bg-card p-8 shadow-card">
@@ -192,10 +186,12 @@ function LandingPage() {
                 Join the waitlist if you want to become one of the first WayMakers and help travelers experience places better.
               </p>
               <Button
-                onClick={() => scrollToHero("waymaker")}
                 className="mt-6 self-start rounded-full bg-accent text-accent-foreground hover:bg-accent/90"
+                asChild
               >
-                Become a WayMaker <ArrowRight className="ml-1.5 size-4" />
+                <Link to="/become-a-waymaker">
+                  Become a WayMaker <ArrowRight className="ml-1.5 size-4" />
+                </Link>
               </Button>
             </div>
           </div>
