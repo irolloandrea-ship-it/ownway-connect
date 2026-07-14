@@ -26,7 +26,7 @@ const CARDS: Card[] = [
   },
   {
     step: "STEP 02",
-    icon: Sparkles,
+    icon: HeartHandshake,
     frontTitle: "Meet your right WayMaker",
     backTitle: "Personally curated by OwnWay",
     backBody: (
@@ -43,7 +43,7 @@ const CARDS: Card[] = [
   },
   {
     step: "STEP 03",
-    icon: MessageCircleHeart,
+    icon: Map,
     frontTitle: "Find your OwnWay",
     backTitle: "Advice made for your trip",
     backBody: (
