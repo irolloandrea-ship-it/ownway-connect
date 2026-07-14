@@ -14,12 +14,14 @@ export function EmailCapture({
   id,
   cta = "Get Early Access",
   location = "hero_section",
+  className,
 }: {
   referredBy?: string;
   intendedRole?: "explorer" | "waymaker";
   id?: string;
   cta?: string;
   location?: string;
+  className?: string;
 }) {
   const submit = useServerFn(submitEarlyAccess);
   const navigate = useNavigate();
