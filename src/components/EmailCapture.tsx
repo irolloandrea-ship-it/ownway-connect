@@ -64,7 +64,7 @@ export function EmailCapture({
   };
 
   return (
-    <form id={id} onSubmit={onSubmit} className="w-full space-y-3">
+    <form id={id} onSubmit={onSubmit} className={`w-full space-y-3 ${className ?? ""}`}>
       <div className="flex flex-col gap-2 sm:flex-row">
         <Input
           type="email"
