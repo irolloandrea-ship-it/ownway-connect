@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Compass, Sparkles, MessageCircleHeart, type LucideIcon } from "lucide-react";
+import { Compass, HeartHandshake, Map, type LucideIcon } from "lucide-react";
+type LucideIconType = LucideIcon;
 
 type Card = {
   step: string;
