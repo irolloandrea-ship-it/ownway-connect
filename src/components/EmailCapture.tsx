@@ -14,12 +14,14 @@ export function EmailCapture({
   id,
   cta = "Get Early Access",
   location = "hero_section",
+  className,
 }: {
   referredBy?: string;
   intendedRole?: "explorer" | "waymaker";
   id?: string;
   cta?: string;
   location?: string;
+  className?: string;
 }) {
   const submit = useServerFn(submitEarlyAccess);
   const navigate = useNavigate();
@@ -62,7 +64,7 @@ export function EmailCapture({
   };
 
   return (
-    <form id={id} onSubmit={onSubmit} className="w-full space-y-3">
+    <form id={id} onSubmit={onSubmit} className={`w-full space-y-3 ${className ?? ""}`}>
       <div className="flex flex-col gap-2 sm:flex-row">
         <Input
           type="email"

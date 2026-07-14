@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
-import { Logo } from "@/components/Logo";
 import { ArrowRight, Plus, Minus } from "lucide-react";
 import { HowItWorksFlipCards } from "@/components/HowItWorksFlipCards";
 import { captureSourceOnce, trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
@@ -138,19 +137,23 @@ function LandingPage() {
 
       <main>
         {/* Hero */}
-        <section className="container-page pt-14 pb-20 md:pt-20 md:pb-28">
+        <section className="container-page pt-10 pb-16 md:pt-20 md:pb-28">
           <div className="grid items-center gap-12 md:grid-cols-2 md:gap-16">
             <div ref={heroFormRef}>
-              <Logo size={36} withWordmark />
-
-              <h1 className="mt-6 text-5xl leading-[1.05] md:text-6xl">
+              <h1 className="mt-0 text-5xl leading-[1.05] md:text-6xl">
                 One right tip can change the whole trip.
               </h1>
-              <p className="mt-5 text-lg text-muted-foreground">
+              <p className="mt-4 text-lg text-muted-foreground md:mt-5">
                 Get matched with people who know a destination deeply and can help you experience it your way.
               </p>
-              <div className="mt-8">
-                <EmailCapture referredBy={search.ref} intendedRole={intendedRole} id="join" location="hero_section" />
+              <div className="mt-6 md:mt-8">
+                <EmailCapture
+                  referredBy={search.ref}
+                  intendedRole={intendedRole}
+                  id="join"
+                  location="hero_section"
+                  className="space-y-2 md:space-y-3"
+                />
               </div>
             </div>
             <div className="md:pl-4">
