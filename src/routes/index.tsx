@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
-import { Logo } from "@/components/Logo";
 import { ArrowRight, Plus, Minus } from "lucide-react";
 import { HowItWorksFlipCards } from "@/components/HowItWorksFlipCards";
 import { captureSourceOnce, trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
