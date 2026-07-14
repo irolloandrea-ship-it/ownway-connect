@@ -169,33 +169,8 @@ function LandingPage() {
         </section>
 
         {/* How it works */}
-        <section id="how-it-works" className="container-page border-t border-border/60 py-20 md:py-28">
-          <p className="text-center text-xs uppercase tracking-[0.25em] text-accent">How OwnWay works</p>
-        <h2 className="mx-auto mt-3 max-w-3xl text-center text-4xl md:text-5xl">
-            AI can give you answers. OwnWay connects you with people who have lived them.
-          </h2>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {[
-              { icon: Compass, n: "01", title: "Plan your trip", body: "Share your destination, rhythm, interests, budget, and travel style." },
-              { icon: Sparkles, n: "02", title: "Get matched with a WayMaker", body: "We connect you with a local who knows the destination and understands the kind of experience you want." },
-              { icon: MessageCircleHeart, n: "03", title: "Find your OwnWay", body: "Once your WayMaker accepts, contact details unlock and you continue the conversation outside OwnWay." },
-            ].map(({ icon: Icon, n, title, body }) => (
-              <motion.div
-                key={n}
-                whileHover={{ y: -6 }}
-                transition={{ type: "spring", stiffness: 200, damping: 18 }}
-                className="rounded-2xl border border-border/60 bg-card p-7 shadow-card"
-              >
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-accent/15">
-                  <Icon className="size-5 text-accent" />
-                </div>
-                <p className="mt-5 text-xs uppercase tracking-[0.2em] text-muted-foreground">Step {n}</p>
-                <h3 className="mt-1 text-xl">{title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{body}</p>
-              </motion.div>
-            ))}
-          </div>
-        </section>
+        <HowItWorksFlipCards />
+
 
         {/* Traveler / WayMaker */}
         <section className="bg-secondary/40 py-20 md:py-28">
