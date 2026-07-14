@@ -132,7 +132,6 @@ function LandingPage() {
     }
   }, [search.role]);
 
-
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
