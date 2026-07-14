@@ -84,8 +84,7 @@ function PlanATripPage() {
               Plan a trip with advice from someone who actually knows the place.
             </h1>
             <p className="mt-5 text-lg text-muted-foreground">
-              OwnWay helps you stop searching across endless travel content and get practical,
-              human advice for your real trip.
+              We carefully select a WayMaker who best matches your destination, travel style and expectations.
             </p>
           </div>
 
