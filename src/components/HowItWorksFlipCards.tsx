@@ -85,6 +85,7 @@ function FlipCard({
   onHoverFlip,
   reducedMotion,
   isTouch,
+  onboarding,
 }: {
   card: Card;
   flipped: boolean;
@@ -92,8 +93,10 @@ function FlipCard({
   onHoverFlip: (v: boolean) => void;
   reducedMotion: boolean;
   isTouch: boolean;
+  onboarding: boolean;
 }) {
   const Icon = card.icon;
+
 
   const handleKey = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -114,7 +117,9 @@ function FlipCard({
         onKeyDown={handleKey}
         aria-pressed={flipped}
         aria-label={`${card.step}: ${card.frontTitle}. Activate to reveal details.`}
-        className="relative block h-[380px] w-full rounded-3xl outline-none transition-transform duration-300 ease-out focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background group-hover:-translate-y-1 md:h-[400px]"
+        className={`relative block h-[380px] w-full rounded-3xl outline-none transition-[transform,box-shadow] duration-500 ease-out focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background group-hover:-translate-y-1 md:h-[400px] ${
+          onboarding ? "-translate-y-1.5 shadow-warm" : ""
+        }`}
       >
         <div
           className={
@@ -125,7 +130,13 @@ function FlipCard({
           style={
             reducedMotion
               ? undefined
-              : { transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }
+              : {
+                  transform: flipped
+                    ? "rotateY(180deg)"
+                    : onboarding
+                    ? "rotateY(10deg)"
+                    : "rotateY(0deg)",
+                }
           }
         >
           {/* FRONT */}
@@ -143,7 +154,10 @@ function FlipCard({
               {card.step}
             </p>
             <div className="flex flex-1 items-center justify-center">
-              <div className="flex h-24 w-24 items-center justify-center rounded-full bg-accent/10">
+              <div
+                className="flex h-24 w-24 items-center justify-center rounded-full bg-accent/10 transition-transform duration-500 ease-out"
+                style={onboarding ? { transform: "scale(1.08)" } : undefined}
+              >
                 <Icon className="h-11 w-11 text-accent" strokeWidth={1.6} />
               </div>
             </div>
@@ -151,9 +165,6 @@ function FlipCard({
               <h3 className="font-display text-2xl leading-tight text-ink">
                 {card.frontTitle}
               </h3>
-              <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                Hover or tap to discover
-              </p>
             </div>
           </div>
 
@@ -187,11 +198,45 @@ function FlipCard({
 export function HowItWorksFlipCards() {
   const [openIndex, setOpenIndex] = React.useState<number | null>(null);
   const [hoverIndex, setHoverIndex] = React.useState<number | null>(null);
+  const [onboardingIndex, setOnboardingIndex] = React.useState<number | null>(null);
   const reducedMotion = usePrefersReducedMotion();
   const isTouch = useIsTouch();
+  const sectionRef = React.useRef<HTMLElement | null>(null);
+  const hasPlayedRef = React.useRef(false);
+
+  React.useEffect(() => {
+    if (reducedMotion) return;
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && !hasPlayedRef.current) {
+            hasPlayedRef.current = true;
+            observer.disconnect();
+            const timeouts: ReturnType<typeof setTimeout>[] = [];
+            CARDS.forEach((_, i) => {
+              timeouts.push(
+                setTimeout(() => setOnboardingIndex(i), i * 200),
+              );
+              timeouts.push(
+                setTimeout(() => {
+                  setOnboardingIndex((cur) => (cur === i ? null : cur));
+                }, i * 200 + 250 + 500),
+              );
+            });
+          }
+        }
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [reducedMotion]);
 
   return (
     <section
+      ref={sectionRef}
       id="how-it-works"
       className="container-page border-t border-border/60 py-20 md:py-28"
     >
@@ -214,7 +259,9 @@ export function HowItWorksFlipCards() {
               flipped={flipped}
               reducedMotion={reducedMotion}
               isTouch={isTouch}
+              onboarding={onboardingIndex === i && !flipped}
               onToggle={() =>
+
                 setOpenIndex((prev) => (prev === i ? null : i))
               }
               onHoverFlip={(v) => setHoverIndex(v ? i : null)}
