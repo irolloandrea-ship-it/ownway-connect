@@ -23,7 +23,7 @@ const CARDS: FloatingCarouselItem[] = [
     eyebrow: "Stop searching",
     title: "Stop jumping between endless travel content.",
     description:
-      "Planning a trip often means opening Instagram, TikTok, blogs, reviews, maps, and random lists — and still not knowing what actually fits your trip. OwnWay helps you cut through the noise and focus on advice that is relevant to you.",
+      "Cut through Instagram, TikTok, blogs and random lists. Focus on advice that actually fits your trip.",
     bullets: [
       "Less time comparing random tips",
       "Fewer generic recommendations",
