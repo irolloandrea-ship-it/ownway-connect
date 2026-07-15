@@ -17,7 +17,7 @@ export const Route = createFileRoute("/become-a-waymaker")({
   component: BecomeAWayMakerPage,
 });
 
-const CARDS: ExpandingCardItem[] = [
+const CARDS: FloatingCarouselItem[] = [
   {
     id: "you-know",
     eyebrow: "You know a place",
