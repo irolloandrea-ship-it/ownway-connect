@@ -3,7 +3,7 @@ import { Search, MapPin, Route as RouteIcon, ShieldCheck } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { EmailCapture } from "@/components/EmailCapture";
-import { ExpandingCards, type ExpandingCardItem } from "@/components/ui/expanding-cards";
+import { FloatingCarousel, type FloatingCarouselItem } from "@/components/ui/floating-carousel";
 
 export const Route = createFileRoute("/plan-a-trip")({
   head: () => ({
