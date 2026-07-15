@@ -17,7 +17,7 @@ export const Route = createFileRoute("/plan-a-trip")({
   component: PlanATripPage,
 });
 
-const CARDS: ExpandingCardItem[] = [
+const CARDS: FloatingCarouselItem[] = [
   {
     id: "stop-searching",
     eyebrow: "Stop searching",
