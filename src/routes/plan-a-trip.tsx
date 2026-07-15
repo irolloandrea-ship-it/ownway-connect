@@ -103,7 +103,7 @@ function PlanATripPage() {
         </div>
 
         <div className="mt-12 md:mt-16">
-          <ExpandingCards items={CARDS} />
+          <FloatingCarousel items={CARDS} />
         </div>
       </main>
       <SiteFooter />
