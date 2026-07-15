@@ -23,12 +23,11 @@ const CARDS: FloatingCarouselItem[] = [
     eyebrow: "You know a place",
     title: "You know a destination better than most travelers.",
     description:
-      "You do not need to be a professional guide to become a WayMaker. You may live in a place, have grown up there, visit it often, or simply know it deeply. If you can give practical, honest advice, you can help travelers.",
+      "You don't need to be a professional guide. If you know a place well and can give honest advice, you can help travelers.",
     bullets: [
-      "Locals",
-      "Frequent visitors",
-      "People with deep destination knowledge",
-      "People who enjoy helping others travel better",
+      "Locals and frequent visitors",
+      "Deep destination knowledge",
+      "You enjoy helping others travel better",
     ],
     icon: <MapPin className="h-5 w-5" />,
   },
