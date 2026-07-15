@@ -3,7 +3,7 @@ import { MapPin, Compass, MessageSquare, Store } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { EmailCapture } from "@/components/EmailCapture";
-import { ExpandingCards, type ExpandingCardItem } from "@/components/ui/expanding-cards";
+import { FloatingCarousel, type FloatingCarouselItem } from "@/components/ui/floating-carousel";
 
 export const Route = createFileRoute("/become-a-waymaker")({
   head: () => ({
@@ -17,18 +17,17 @@ export const Route = createFileRoute("/become-a-waymaker")({
   component: BecomeAWayMakerPage,
 });
 
-const CARDS: ExpandingCardItem[] = [
+const CARDS: FloatingCarouselItem[] = [
   {
     id: "you-know",
     eyebrow: "You know a place",
     title: "You know a destination better than most travelers.",
     description:
-      "You do not need to be a professional guide to become a WayMaker. You may live in a place, have grown up there, visit it often, or simply know it deeply. If you can give practical, honest advice, you can help travelers.",
+      "You don't need to be a professional guide. If you know a place well and can give honest advice, you can help travelers.",
     bullets: [
-      "Locals",
-      "Frequent visitors",
-      "People with deep destination knowledge",
-      "People who enjoy helping others travel better",
+      "Locals and frequent visitors",
+      "Deep destination knowledge",
+      "You enjoy helping others travel better",
     ],
     icon: <MapPin className="h-5 w-5" />,
   },
@@ -37,11 +36,10 @@ const CARDS: ExpandingCardItem[] = [
     eyebrow: "Better advice",
     title: "Help travelers go beyond generic recommendations.",
     description:
-      "Most travelers are overwhelmed by the same viral spots, crowded lists, and repeated suggestions. As a WayMaker, you can help them understand what is really worth doing, what to skip, when to go, and how to experience the place better.",
+      "Help travelers understand what's really worth doing, what to skip, and how to experience the place better.",
     bullets: [
       "Better timing",
       "Authentic places",
-      "Practical routes",
       "Honest local context",
     ],
     icon: <Compass className="h-5 w-5" />,
@@ -51,12 +49,11 @@ const CARDS: ExpandingCardItem[] = [
     eyebrow: "Your perspective",
     title: "Your experience can make someone's trip easier.",
     description:
-      "Small details can change a whole trip: where to stay, when to visit a place, how to move around, where to eat, what area to avoid, or what is actually worth the time. OwnWay helps you turn that knowledge into useful advice for travelers.",
+      "Small details change a whole trip — where to stay, when to visit, how to move around, what's worth the time.",
     bullets: [
       "Food and local neighborhoods",
       "Transport and timing tips",
       "Hidden gems and realistic expectations",
-      "Personal recommendations",
     ],
     icon: <MessageSquare className="h-5 w-5" />,
   },
@@ -65,10 +62,9 @@ const CARDS: ExpandingCardItem[] = [
     eyebrow: "Local business",
     title: "Own a local business? Share your area transparently.",
     description:
-      "If you own a hotel, B&B, restaurant, tour, shop, or local structure, you can still become a WayMaker. The key is transparency. You can help travelers discover your area while being honest about your connection to any business.",
+      "Hotel, B&B, restaurant, tour or shop owners can join too — the key is transparency about any business connection.",
     bullets: [
       "Hosts and local operators",
-      "Restaurants, tours, shops, or activities",
       "Transparent local recommendations",
       "Build trust through useful advice",
     ],
@@ -108,7 +104,7 @@ function BecomeAWayMakerPage() {
         </div>
 
         <div className="mt-12 md:mt-16">
-          <ExpandingCards items={CARDS} />
+          <FloatingCarousel items={CARDS} />
         </div>
       </main>
       <SiteFooter />

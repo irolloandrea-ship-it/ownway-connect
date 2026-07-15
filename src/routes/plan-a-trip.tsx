@@ -3,7 +3,7 @@ import { Search, MapPin, Route as RouteIcon, ShieldCheck } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { EmailCapture } from "@/components/EmailCapture";
-import { ExpandingCards, type ExpandingCardItem } from "@/components/ui/expanding-cards";
+import { FloatingCarousel, type FloatingCarouselItem } from "@/components/ui/floating-carousel";
 
 export const Route = createFileRoute("/plan-a-trip")({
   head: () => ({
@@ -17,13 +17,13 @@ export const Route = createFileRoute("/plan-a-trip")({
   component: PlanATripPage,
 });
 
-const CARDS: ExpandingCardItem[] = [
+const CARDS: FloatingCarouselItem[] = [
   {
     id: "stop-searching",
     eyebrow: "Stop searching",
     title: "Stop jumping between endless travel content.",
     description:
-      "Planning a trip often means opening Instagram, TikTok, blogs, reviews, maps, and random lists — and still not knowing what actually fits your trip. OwnWay helps you cut through the noise and focus on advice that is relevant to you.",
+      "Cut through Instagram, TikTok, blogs and random lists. Focus on advice that actually fits your trip.",
     bullets: [
       "Less time comparing random tips",
       "Fewer generic recommendations",
@@ -36,7 +36,7 @@ const CARDS: ExpandingCardItem[] = [
     eyebrow: "Human advice",
     title: "Get advice from someone who knows the destination.",
     description:
-      "A WayMaker is someone who knows a place well — because they live there, grew up there, visit often, or work locally. They can help you understand what is worth doing, what to avoid, when to go, and how to make your trip feel more authentic.",
+      "A WayMaker knows the place — because they live there, visit often, or work locally.",
     bullets: [
       "Local timing tips",
       "Practical recommendations",
@@ -49,7 +49,7 @@ const CARDS: ExpandingCardItem[] = [
     eyebrow: "Your trip",
     title: "Advice that fits your travel style.",
     description:
-      "OwnWay is not about giving everyone the same itinerary. You tell us where you are going, who you are traveling with, what you care about, and what kind of experience you want. Then we help match you with a WayMaker who fits your trip.",
+      "Tell us where you're going and how you like to travel. We match you with a WayMaker who fits.",
     bullets: [
       "Food, culture, nature, nightlife, local areas",
       "Solo, couple, family, or group trips",
@@ -62,7 +62,7 @@ const CARDS: ExpandingCardItem[] = [
     eyebrow: "More confidence",
     title: "Arrive with better decisions already made.",
     description:
-      "Before your trip, you can receive useful advice that helps you avoid common mistakes, save time, and choose experiences with more confidence. The goal is simple: make your trip feel easier, smarter, and more personal.",
+      "Avoid common mistakes, save time, and choose experiences with more confidence before you land.",
     bullets: [
       "Avoid tourist traps",
       "Save planning time",
@@ -103,7 +103,7 @@ function PlanATripPage() {
         </div>
 
         <div className="mt-12 md:mt-16">
-          <ExpandingCards items={CARDS} />
+          <FloatingCarousel items={CARDS} />
         </div>
       </main>
       <SiteFooter />
