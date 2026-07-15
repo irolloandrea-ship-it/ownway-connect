@@ -49,7 +49,7 @@ const CARDS: FloatingCarouselItem[] = [
     eyebrow: "Your trip",
     title: "Advice that fits your travel style.",
     description:
-      "OwnWay is not about giving everyone the same itinerary. You tell us where you are going, who you are traveling with, what you care about, and what kind of experience you want. Then we help match you with a WayMaker who fits your trip.",
+      "Tell us where you're going and how you like to travel. We match you with a WayMaker who fits.",
     bullets: [
       "Food, culture, nature, nightlife, local areas",
       "Solo, couple, family, or group trips",
