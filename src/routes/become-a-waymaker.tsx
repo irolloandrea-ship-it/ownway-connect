@@ -62,10 +62,9 @@ const CARDS: FloatingCarouselItem[] = [
     eyebrow: "Local business",
     title: "Own a local business? Share your area transparently.",
     description:
-      "If you own a hotel, B&B, restaurant, tour, shop, or local structure, you can still become a WayMaker. The key is transparency. You can help travelers discover your area while being honest about your connection to any business.",
+      "Hotel, B&B, restaurant, tour or shop owners can join too — the key is transparency about any business connection.",
     bullets: [
       "Hosts and local operators",
-      "Restaurants, tours, shops, or activities",
       "Transparent local recommendations",
       "Build trust through useful advice",
     ],
