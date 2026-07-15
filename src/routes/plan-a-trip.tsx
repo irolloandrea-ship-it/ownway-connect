@@ -36,7 +36,7 @@ const CARDS: FloatingCarouselItem[] = [
     eyebrow: "Human advice",
     title: "Get advice from someone who knows the destination.",
     description:
-      "A WayMaker is someone who knows a place well — because they live there, grew up there, visit often, or work locally. They can help you understand what is worth doing, what to avoid, when to go, and how to make your trip feel more authentic.",
+      "A WayMaker knows the place — because they live there, visit often, or work locally.",
     bullets: [
       "Local timing tips",
       "Practical recommendations",
