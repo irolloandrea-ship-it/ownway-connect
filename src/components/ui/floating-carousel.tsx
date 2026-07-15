@@ -43,12 +43,12 @@ function Card({
   return (
     <div
       className={cn(
-        "flex h-full w-full flex-col rounded-3xl border border-border bg-card p-7 text-left md:p-9",
-        isPeek ? "shadow-card" : "shadow-warm",
+        "flex h-full w-full flex-col rounded-3xl border border-border bg-card p-7 md:p-9",
+        isPeek ? "shadow-card text-center" : "shadow-warm text-center justify-center",
       )}
       aria-hidden={isPeek}
     >
-      <div className="flex items-center gap-3">
+      <div className={cn("flex items-center gap-3", isPeek ? "justify-center" : "justify-center")}>
         <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/10 text-accent">
           {item.icon}
         </span>
@@ -59,21 +59,25 @@ function Card({
       <h3 className="mt-5 font-display text-2xl leading-tight text-ink md:text-[28px] md:leading-[1.2]">
         {item.title}
       </h3>
-      <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
-        {item.description}
-      </p>
-      {item.bullets && item.bullets.length > 0 && (
-        <ul className="mt-5 space-y-2">
-          {item.bullets.map((b) => (
-            <li
-              key={b}
-              className="flex items-start gap-2 text-sm text-ink/80"
-            >
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-              <span>{b}</span>
-            </li>
-          ))}
-        </ul>
+      {!isPeek && (
+        <>
+          <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
+            {item.description}
+          </p>
+          {item.bullets && item.bullets.length > 0 && (
+            <ul className="mt-5 space-y-2">
+              {item.bullets.map((b) => (
+                <li
+                  key={b}
+                  className="flex items-start gap-2 text-sm text-ink/80"
+                >
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </>
       )}
     </div>
   );
