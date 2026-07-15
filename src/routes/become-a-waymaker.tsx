@@ -36,11 +36,10 @@ const CARDS: FloatingCarouselItem[] = [
     eyebrow: "Better advice",
     title: "Help travelers go beyond generic recommendations.",
     description:
-      "Most travelers are overwhelmed by the same viral spots, crowded lists, and repeated suggestions. As a WayMaker, you can help them understand what is really worth doing, what to skip, when to go, and how to experience the place better.",
+      "Help travelers understand what's really worth doing, what to skip, and how to experience the place better.",
     bullets: [
       "Better timing",
       "Authentic places",
-      "Practical routes",
       "Honest local context",
     ],
     icon: <Compass className="h-5 w-5" />,
