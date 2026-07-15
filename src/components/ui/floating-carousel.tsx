@@ -160,18 +160,17 @@ export function FloatingCarousel({
       </span>
 
       {/* Stage */}
-      <div className="relative mx-auto h-[460px] w-full max-w-3xl md:h-[440px]">
+      <div className="relative mx-auto h-[460px] w-full max-w-5xl md:h-[440px]">
         <AnimatePresence initial={false}>
           {/* Peek left */}
           {total > 1 && (
             <motion.div
               key={`peek-l-${prevIdx}`}
-              className="pointer-events-none absolute left-0 top-1/2 hidden h-[86%] w-[62%] -translate-y-1/2 md:block"
-              initial={{ opacity: 0, x: -40, scale: 0.8 }}
-              animate={{ opacity: 0.35, x: "-38%", scale: 0.85 }}
-              exit={{ opacity: 0, x: -40, scale: 0.8 }}
+              className="pointer-events-none absolute left-0 top-1/2 hidden h-[82%] w-[26%] -translate-y-1/2 md:block"
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 0.45, scale: 0.9 }}
+              exit={{ opacity: 0, scale: 0.85 }}
               transition={transition}
-              style={{ filter: "blur(0.5px)" }}
             >
               <Card item={items[prevIdx]} variant="peek" />
             </motion.div>
@@ -180,10 +179,10 @@ export function FloatingCarousel({
           {/* Active */}
           <motion.div
             key={`active-${index}`}
-            className="absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 md:w-[78%]"
-            initial={{ opacity: 0, x: reducedMotion ? 0 : 60, scale: 0.96 }}
+            className="absolute left-1/2 top-1/2 h-full w-full -translate-y-1/2 md:w-[46%]"
+            initial={{ opacity: 0, x: reducedMotion ? "-50%" : "-30%", scale: 0.96 }}
             animate={{ opacity: 1, x: "-50%", scale: 1 }}
-            exit={{ opacity: 0, x: reducedMotion ? 0 : -60, scale: 0.96 }}
+            exit={{ opacity: 0, x: reducedMotion ? "-50%" : "-70%", scale: 0.96 }}
             transition={transition}
           >
             <Card item={items[index]} variant="active" />
@@ -193,12 +192,11 @@ export function FloatingCarousel({
           {total > 1 && (
             <motion.div
               key={`peek-r-${nextIdx}`}
-              className="pointer-events-none absolute right-0 top-1/2 hidden h-[86%] w-[62%] -translate-y-1/2 md:block"
-              initial={{ opacity: 0, x: 40, scale: 0.8 }}
-              animate={{ opacity: 0.35, x: "38%", scale: 0.85 }}
-              exit={{ opacity: 0, x: 40, scale: 0.8 }}
+              className="pointer-events-none absolute right-0 top-1/2 hidden h-[82%] w-[26%] -translate-y-1/2 md:block"
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 0.45, scale: 0.9 }}
+              exit={{ opacity: 0, scale: 0.85 }}
               transition={transition}
-              style={{ filter: "blur(0.5px)" }}
             >
               <Card item={items[nextIdx]} variant="peek" />
             </motion.div>
@@ -213,7 +211,7 @@ export function FloatingCarousel({
             go(-1);
           }}
           aria-label="Previous slide"
-          className="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background/90 text-ink shadow-card backdrop-blur transition hover:border-accent/50 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent md:-left-4"
+          className="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background/90 text-ink shadow-card backdrop-blur transition hover:border-accent/50 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent md:-left-6"
         >
           <ChevronLeft className="h-5 w-5" strokeWidth={1.6} />
         </button>
@@ -224,7 +222,7 @@ export function FloatingCarousel({
             go(1);
           }}
           aria-label="Next slide"
-          className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background/90 text-ink shadow-card backdrop-blur transition hover:border-accent/50 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent md:-right-4"
+          className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background/90 text-ink shadow-card backdrop-blur transition hover:border-accent/50 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent md:-right-6"
         >
           <ChevronRight className="h-5 w-5" strokeWidth={1.6} />
         </button>
