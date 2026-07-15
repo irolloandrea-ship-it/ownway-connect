@@ -49,12 +49,11 @@ const CARDS: FloatingCarouselItem[] = [
     eyebrow: "Your perspective",
     title: "Your experience can make someone's trip easier.",
     description:
-      "Small details can change a whole trip: where to stay, when to visit a place, how to move around, where to eat, what area to avoid, or what is actually worth the time. OwnWay helps you turn that knowledge into useful advice for travelers.",
+      "Small details change a whole trip — where to stay, when to visit, how to move around, what's worth the time.",
     bullets: [
       "Food and local neighborhoods",
       "Transport and timing tips",
       "Hidden gems and realistic expectations",
-      "Personal recommendations",
     ],
     icon: <MessageSquare className="h-5 w-5" />,
   },
