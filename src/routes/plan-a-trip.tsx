@@ -62,7 +62,7 @@ const CARDS: FloatingCarouselItem[] = [
     eyebrow: "More confidence",
     title: "Arrive with better decisions already made.",
     description:
-      "Before your trip, you can receive useful advice that helps you avoid common mistakes, save time, and choose experiences with more confidence. The goal is simple: make your trip feel easier, smarter, and more personal.",
+      "Avoid common mistakes, save time, and choose experiences with more confidence before you land.",
     bullets: [
       "Avoid tourist traps",
       "Save planning time",
