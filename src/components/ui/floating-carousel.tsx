@@ -48,15 +48,32 @@ function Card({
       )}
       aria-hidden={isPeek}
     >
-      <div className={cn("flex items-center gap-3", isPeek ? "justify-center" : "justify-center")}>
-        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/10 text-accent">
+      <div className="flex items-center justify-center gap-3">
+        <span
+          className={cn(
+            "flex items-center justify-center rounded-full bg-accent/10 text-accent",
+            isPeek ? "h-8 w-8 [&_svg]:h-4 [&_svg]:w-4" : "h-10 w-10",
+          )}
+        >
           {item.icon}
         </span>
-        <p className="text-xs uppercase tracking-[0.25em] text-accent">
+        <p
+          className={cn(
+            "uppercase tracking-[0.25em] text-accent",
+            isPeek ? "text-[10px]" : "text-xs",
+          )}
+        >
           {item.eyebrow}
         </p>
       </div>
-      <h3 className="mt-5 font-display text-2xl leading-tight text-ink md:text-[28px] md:leading-[1.2]">
+      <h3
+        className={cn(
+          "mt-5 font-display leading-tight text-ink",
+          isPeek
+            ? "text-lg md:text-xl md:leading-[1.25]"
+            : "text-2xl md:text-[28px] md:leading-[1.2]",
+        )}
+      >
         {item.title}
       </h3>
       {!isPeek && (
