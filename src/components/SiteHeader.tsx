@@ -20,11 +20,11 @@ export function SiteHeader() {
             Home
           </Link>
           <Link
-            to="/plan-a-trip"
+            to="/find-a-waymaker"
             className="hover:text-foreground"
             activeProps={{ className: "text-foreground font-medium" }}
           >
-            Plan a Trip
+            Find a WayMaker
           </Link>
           <Link
             to="/become-a-waymaker"

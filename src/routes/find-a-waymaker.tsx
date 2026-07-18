@@ -8,13 +8,13 @@ import { FloatingCarousel, type FloatingCarouselItem } from "@/components/ui/flo
 export const Route = createFileRoute("/find-a-waymaker")({
   head: () => ({
     meta: [
-      { title: "Plan a Trip — OwnWay" },
-      { name: "description", content: "Stop searching everywhere. OwnWay helps you get practical, human advice from someone who actually knows your destination." },
-      { property: "og:title", content: "Plan a Trip — OwnWay" },
+      { title: "Find a WayMaker — OwnWay" },
+      { name: "description", content: "Find a WayMaker who knows your destination and get practical, human advice for your real trip." },
+      { property: "og:title", content: "Find a WayMaker — OwnWay" },
       { property: "og:description", content: "Get personal travel advice from a local WayMaker who knows your destination." },
     ],
   }),
-  component: PlanATripPage,
+  component: FindAWayMakerPage,
 });
 
 const CARDS: FloatingCarouselItem[] = [
@@ -72,7 +72,7 @@ const CARDS: FloatingCarouselItem[] = [
   },
 ];
 
-function PlanATripPage() {
+function FindAWayMakerPage() {
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
@@ -81,7 +81,7 @@ function PlanATripPage() {
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-accent">For Travelers</p>
             <h1 className="mt-4 text-4xl leading-[1.1] md:text-5xl">
-              Plan a trip with advice from someone who actually knows the place.
+              Find a WayMaker who actually knows the place.
             </h1>
             <p className="mt-5 text-lg text-muted-foreground">
               We carefully select a WayMaker who best matches your destination, travel style and expectations.
@@ -97,7 +97,7 @@ function PlanATripPage() {
               Be among the first to get matched with a WayMaker for your next trip.
             </p>
             <div className="mt-5">
-              <EmailCapture id="join" intendedRole="explorer" location="plan_a_trip_page" />
+              <EmailCapture id="join" intendedRole="explorer" location="find_a_waymaker_page" />
             </div>
           </aside>
         </div>
