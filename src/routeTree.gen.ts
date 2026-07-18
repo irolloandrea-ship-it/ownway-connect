@@ -12,7 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as UnsubscribeRouteImport } from './routes/unsubscribe'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as PlanATripRouteImport } from './routes/plan-a-trip'
+import { Route as FindAWaymakerRouteImport } from './routes/find-a-waymaker'
 import { Route as BecomeAWaymakerRouteImport } from './routes/become-a-waymaker'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -49,9 +49,9 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PlanATripRoute = PlanATripRouteImport.update({
-  id: '/plan-a-trip',
-  path: '/plan-a-trip',
+const FindAWaymakerRoute = FindAWaymakerRouteImport.update({
+  id: '/find-a-waymaker',
+  path: '/find-a-waymaker',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BecomeAWaymakerRoute = BecomeAWaymakerRouteImport.update({
@@ -163,7 +163,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/become-a-waymaker': typeof BecomeAWaymakerRoute
-  '/plan-a-trip': typeof PlanATripRoute
+  '/find-a-waymaker': typeof FindAWaymakerRoute
   '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/unsubscribe': typeof UnsubscribeRoute
@@ -189,7 +189,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/become-a-waymaker': typeof BecomeAWaymakerRoute
-  '/plan-a-trip': typeof PlanATripRoute
+  '/find-a-waymaker': typeof FindAWaymakerRoute
   '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/unsubscribe': typeof UnsubscribeRoute
@@ -216,7 +216,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/become-a-waymaker': typeof BecomeAWaymakerRoute
-  '/plan-a-trip': typeof PlanATripRoute
+  '/find-a-waymaker': typeof FindAWaymakerRoute
   '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/unsubscribe': typeof UnsubscribeRoute
@@ -244,7 +244,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/become-a-waymaker'
-    | '/plan-a-trip'
+    | '/find-a-waymaker'
     | '/privacy'
     | '/sitemap.xml'
     | '/unsubscribe'
@@ -270,7 +270,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/become-a-waymaker'
-    | '/plan-a-trip'
+    | '/find-a-waymaker'
     | '/privacy'
     | '/sitemap.xml'
     | '/unsubscribe'
@@ -296,7 +296,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/become-a-waymaker'
-    | '/plan-a-trip'
+    | '/find-a-waymaker'
     | '/privacy'
     | '/sitemap.xml'
     | '/unsubscribe'
@@ -323,7 +323,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   AuthRoute: typeof AuthRoute
   BecomeAWaymakerRoute: typeof BecomeAWaymakerRoute
-  PlanATripRoute: typeof PlanATripRoute
+  FindAWaymakerRoute: typeof FindAWaymakerRoute
   PrivacyRoute: typeof PrivacyRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   UnsubscribeRoute: typeof UnsubscribeRoute
@@ -366,11 +366,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/plan-a-trip': {
-      id: '/plan-a-trip'
-      path: '/plan-a-trip'
-      fullPath: '/plan-a-trip'
-      preLoaderRoute: typeof PlanATripRouteImport
+    '/find-a-waymaker': {
+      id: '/find-a-waymaker'
+      path: '/find-a-waymaker'
+      fullPath: '/find-a-waymaker'
+      preLoaderRoute: typeof FindAWaymakerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/become-a-waymaker': {
@@ -543,7 +543,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   AuthRoute: AuthRoute,
   BecomeAWaymakerRoute: BecomeAWaymakerRoute,
-  PlanATripRoute: PlanATripRoute,
+  FindAWaymakerRoute: FindAWaymakerRoute,
   PrivacyRoute: PrivacyRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   UnsubscribeRoute: UnsubscribeRoute,

@@ -176,7 +176,7 @@ function LandingPage() {
                 Join the waitlist if you want advice that fits your way of traveling, not generic recommendations made for everyone.
               </p>
               <Button className="mt-6 self-start rounded-full" asChild>
-                <Link to="/plan-a-trip">
+                <Link to="/find-a-waymaker">
                   Join as Traveler <ArrowRight className="ml-1.5 size-4" />
                 </Link>
               </Button>
