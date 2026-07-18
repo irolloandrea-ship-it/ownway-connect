@@ -5,7 +5,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { EmailCapture } from "@/components/EmailCapture";
 import { FloatingCarousel, type FloatingCarouselItem } from "@/components/ui/floating-carousel";
 
-export const Route = createFileRoute("/plan-a-trip")({
+export const Route = createFileRoute("/find-a-waymaker")({
   head: () => ({
     meta: [
       { title: "Plan a Trip — OwnWay" },
