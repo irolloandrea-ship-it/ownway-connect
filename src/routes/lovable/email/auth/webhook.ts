@@ -31,7 +31,7 @@ const EMAIL_TEMPLATES: Record<string, React.ComponentType<any>> = {
 }
 
 // Configuration
-const SITE_NAME = "ownway-connect"
+const SITE_NAME = "OwnWay"
 const SENDER_DOMAIN = "notify.ownway.app"
 const ROOT_DOMAIN = "ownway.app"
 const FROM_DOMAIN = "ownway.app"

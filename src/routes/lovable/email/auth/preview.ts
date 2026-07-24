@@ -18,7 +18,7 @@ const EMAIL_TEMPLATES: Record<string, React.ComponentType<any>> = {
 }
 
 // Configuration
-const SITE_NAME = "ownway-connect"
+const SITE_NAME = "OwnWay"
 const ROOT_DOMAIN = "ownway.app"
 
 // Sample data for preview mode ONLY (not used in actual email sending).
