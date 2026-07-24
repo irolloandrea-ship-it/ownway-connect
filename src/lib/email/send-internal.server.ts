@@ -4,7 +4,7 @@ import { render } from 'react-email'
 import { TEMPLATES } from '@/lib/email-templates/registry'
 import { supabaseAdmin } from '@/integrations/supabase/client.server'
 
-const SITE_NAME = 'ownway-connect'
+const SITE_NAME = 'OwnWay'
 const SENDER_DOMAIN = 'notify.ownway.app'
 const FROM_DOMAIN = 'ownway.app'
 
