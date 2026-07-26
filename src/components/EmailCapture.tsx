@@ -40,8 +40,18 @@ export function EmailCapture({
   }, [intendedRole]);
 
   useEffect(() => {
+    trackAnalyticsEvent("waitlist_form_viewed", { location });
+  }, [location]);
+
+  useEffect(() => {
     if (consent && consentError) setConsentError(false);
   }, [consent, consentError]);
+
+  const selectRole = (next: "explorer" | "waymaker") => {
+    setRole(next);
+    trackAnalyticsEvent("interest_selected", { role: next, location });
+  };
+
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
