@@ -6,7 +6,13 @@ const emailSchema = z.object({
   role: z.enum(["explorer", "waymaker"]),
   source: z.string().trim().max(120).optional().nullable(),
   referred_by: z.string().trim().max(64).optional().nullable(),
+  consent_marketing: z.literal(true, {
+    errorMap: () => ({ message: "Marketing consent is required to join the waitlist." }),
+  }),
+  consent_policy_version: z.string().trim().min(1).max(64),
+  consent_source: z.string().trim().max(120).optional().nullable(),
 });
+
 
 const updateSchema = z.object({
   referral_code: z.string().trim().min(4).max(64),
