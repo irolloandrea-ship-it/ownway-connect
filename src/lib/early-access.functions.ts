@@ -84,6 +84,17 @@ export const submitEarlyAccess = createServerFn({ method: "POST" })
       .maybeSingle();
 
     if (existing?.referral_code) {
+      // Re-confirm consent record on repeat submission from the form.
+      await supabaseAdmin
+        .from("early_access_signups")
+        .update({
+          consent_to_updates: true,
+          consent_marketing: true,
+          consent_marketing_at: new Date().toISOString(),
+          consent_policy_version: data.consent_policy_version,
+          consent_source: data.consent_source ?? data.source ?? null,
+        })
+        .eq("id", existing.id);
       const position = await computePosition(supabaseAdmin, existing.priority_score ?? 0, existing.id);
       await sendConfirmationEmail({
         email: data.email,
@@ -93,6 +104,7 @@ export const submitEarlyAccess = createServerFn({ method: "POST" })
       });
       return { referral_code: existing.referral_code, position, already: true as const };
     }
+
 
     // Self-referral guard handled by code lookup later
     let referral_code = generateCode();
