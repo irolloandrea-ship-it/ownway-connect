@@ -112,7 +112,7 @@ export function EmailCapture({
         <div className="inline-flex rounded-full border border-border/70 bg-card p-1 shadow-soft">
           <button
             type="button"
-            onClick={() => setRole("explorer")}
+            onClick={() => selectRole("explorer")}
             className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
               role === "explorer" ? "bg-ink text-background" : "text-foreground/70 hover:text-foreground"
             }`}
@@ -122,7 +122,7 @@ export function EmailCapture({
           </button>
           <button
             type="button"
-            onClick={() => setRole("waymaker")}
+            onClick={() => selectRole("waymaker")}
             className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
               role === "waymaker" ? "bg-accent text-accent-foreground" : "text-foreground/70 hover:text-foreground"
             }`}
