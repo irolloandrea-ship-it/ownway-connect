@@ -38,11 +38,6 @@ export const Route = createFileRoute("/privacy")({
 const POLICY_VERSION = "2026-07-26";
 const EFFECTIVE_DATE = "26 July 2026";
 
-// FOUNDER TO CONFIRM: Set Google Analytics 4 data-retention window in the GA
-// admin UI, then update this string. Do not claim a specific number here
-// until it is configured. Common values are 2 or 14 months.
-const GA_RETENTION_PLACEHOLDER = "to be confirmed in the Google Analytics 4 admin console";
-
 function Section({
   n,
   title,
