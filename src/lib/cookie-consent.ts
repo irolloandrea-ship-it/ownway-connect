@@ -98,8 +98,14 @@ export function applyConsent(choice: ConsentChoice) {
     if (gtag) gtag("consent", "update", { analytics_storage: "granted" });
     if (measurementId) {
       loadGtagScript(measurementId);
-      // Configure only after user grants; anonymize IP as an extra safeguard.
-      if (gtag) gtag("config", measurementId, { anonymize_ip: true });
+      // Manual page_view tracking is driven by the router; disable auto send.
+      if (gtag)
+        gtag("config", measurementId, {
+          anonymize_ip: true,
+          send_page_view: false,
+        });
+      // Send an initial page_view for the current location.
+      trackPageView();
     }
   } else {
     if (gtag) gtag("consent", "update", { analytics_storage: "denied" });
@@ -115,6 +121,11 @@ export function setConsent(choice: ConsentChoice): StoredConsent {
   const record = writeConsent(choice);
   applyConsent(choice);
   window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: record }));
+  // Record the consent decision itself (only fires post-grant for "granted";
+  // for "denied" this is a no-op because gtag consent is denied).
+  trackAnalyticsEvent(
+    choice === "granted" ? "consent_accepted" : "consent_rejected",
+  );
   return record;
 }
 
@@ -132,3 +143,22 @@ export function trackAnalyticsEvent(name: string, params?: Record<string, string
   if (!gtag) return;
   gtag("event", name, params ?? {});
 }
+
+// Manual page_view. Sends only the path — never query strings, which may
+// contain referral codes or other identifiers.
+export function trackPageView(pathOverride?: string) {
+  if (typeof window === "undefined") return;
+  const measurementId = getMeasurementId();
+  if (!measurementId) return;
+  const consent = readConsent();
+  if (!consent || consent.analytics !== "granted") return;
+  const gtag = window.gtag;
+  if (!gtag) return;
+  const page_path = pathOverride ?? window.location.pathname;
+  gtag("event", "page_view", {
+    page_path,
+    page_location: `${window.location.origin}${page_path}`,
+    page_title: document.title,
+  });
+}
+
