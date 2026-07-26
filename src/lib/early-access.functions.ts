@@ -6,7 +6,13 @@ const emailSchema = z.object({
   role: z.enum(["explorer", "waymaker"]),
   source: z.string().trim().max(120).optional().nullable(),
   referred_by: z.string().trim().max(64).optional().nullable(),
+  consent_marketing: z.literal(true, {
+    errorMap: () => ({ message: "Marketing consent is required to join the waitlist." }),
+  }),
+  consent_policy_version: z.string().trim().min(1).max(64),
+  consent_source: z.string().trim().max(120).optional().nullable(),
 });
+
 
 const updateSchema = z.object({
   referral_code: z.string().trim().min(4).max(64),
@@ -78,6 +84,17 @@ export const submitEarlyAccess = createServerFn({ method: "POST" })
       .maybeSingle();
 
     if (existing?.referral_code) {
+      // Re-confirm consent record on repeat submission from the form.
+      await supabaseAdmin
+        .from("early_access_signups")
+        .update({
+          consent_to_updates: true,
+          consent_marketing: true,
+          consent_marketing_at: new Date().toISOString(),
+          consent_policy_version: data.consent_policy_version,
+          consent_source: data.consent_source ?? data.source ?? null,
+        })
+        .eq("id", existing.id);
       const position = await computePosition(supabaseAdmin, existing.priority_score ?? 0, existing.id);
       await sendConfirmationEmail({
         email: data.email,
@@ -87,6 +104,7 @@ export const submitEarlyAccess = createServerFn({ method: "POST" })
       });
       return { referral_code: existing.referral_code, position, already: true as const };
     }
+
 
     // Self-referral guard handled by code lookup later
     let referral_code = generateCode();
@@ -108,9 +126,15 @@ export const submitEarlyAccess = createServerFn({ method: "POST" })
         referral_code,
         referred_by: data.referred_by ?? null,
         source: data.source ?? null,
+        consent_to_updates: true,
+        consent_marketing: true,
+        consent_marketing_at: new Date().toISOString(),
+        consent_policy_version: data.consent_policy_version,
+        consent_source: data.consent_source ?? data.source ?? null,
       })
       .select("id, priority_score, referral_code")
       .single();
+
 
     if (error || !inserted) throw new Error(error?.message ?? "Could not save signup");
 

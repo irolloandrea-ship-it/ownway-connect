@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as UnsubscribeRouteImport } from './routes/unsubscribe'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as LegalNoticeRouteImport } from './routes/legal-notice'
 import { Route as FindAWaymakerRouteImport } from './routes/find-a-waymaker'
 import { Route as BecomeAWaymakerRouteImport } from './routes/become-a-waymaker'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -47,6 +48,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalNoticeRoute = LegalNoticeRouteImport.update({
+  id: '/legal-notice',
+  path: '/legal-notice',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FindAWaymakerRoute = FindAWaymakerRouteImport.update({
@@ -164,6 +170,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/become-a-waymaker': typeof BecomeAWaymakerRoute
   '/find-a-waymaker': typeof FindAWaymakerRoute
+  '/legal-notice': typeof LegalNoticeRoute
   '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/unsubscribe': typeof UnsubscribeRoute
@@ -190,6 +197,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/become-a-waymaker': typeof BecomeAWaymakerRoute
   '/find-a-waymaker': typeof FindAWaymakerRoute
+  '/legal-notice': typeof LegalNoticeRoute
   '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/unsubscribe': typeof UnsubscribeRoute
@@ -217,6 +225,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/become-a-waymaker': typeof BecomeAWaymakerRoute
   '/find-a-waymaker': typeof FindAWaymakerRoute
+  '/legal-notice': typeof LegalNoticeRoute
   '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/unsubscribe': typeof UnsubscribeRoute
@@ -245,6 +254,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/become-a-waymaker'
     | '/find-a-waymaker'
+    | '/legal-notice'
     | '/privacy'
     | '/sitemap.xml'
     | '/unsubscribe'
@@ -271,6 +281,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/become-a-waymaker'
     | '/find-a-waymaker'
+    | '/legal-notice'
     | '/privacy'
     | '/sitemap.xml'
     | '/unsubscribe'
@@ -297,6 +308,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/become-a-waymaker'
     | '/find-a-waymaker'
+    | '/legal-notice'
     | '/privacy'
     | '/sitemap.xml'
     | '/unsubscribe'
@@ -324,6 +336,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   BecomeAWaymakerRoute: typeof BecomeAWaymakerRoute
   FindAWaymakerRoute: typeof FindAWaymakerRoute
+  LegalNoticeRoute: typeof LegalNoticeRoute
   PrivacyRoute: typeof PrivacyRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   UnsubscribeRoute: typeof UnsubscribeRoute
@@ -364,6 +377,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal-notice': {
+      id: '/legal-notice'
+      path: '/legal-notice'
+      fullPath: '/legal-notice'
+      preLoaderRoute: typeof LegalNoticeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/find-a-waymaker': {
@@ -544,6 +564,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   BecomeAWaymakerRoute: BecomeAWaymakerRoute,
   FindAWaymakerRoute: FindAWaymakerRoute,
+  LegalNoticeRoute: LegalNoticeRoute,
   PrivacyRoute: PrivacyRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   UnsubscribeRoute: UnsubscribeRoute,

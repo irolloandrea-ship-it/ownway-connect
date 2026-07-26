@@ -68,6 +68,10 @@ export type Database = {
       early_access_signups: {
         Row: {
           base_position: number | null
+          consent_marketing: boolean
+          consent_marketing_at: string | null
+          consent_policy_version: string | null
+          consent_source: string | null
           consent_to_updates: boolean
           created_at: string
           destination: string | null
@@ -83,6 +87,10 @@ export type Database = {
         }
         Insert: {
           base_position?: number | null
+          consent_marketing?: boolean
+          consent_marketing_at?: string | null
+          consent_policy_version?: string | null
+          consent_source?: string | null
           consent_to_updates?: boolean
           created_at?: string
           destination?: string | null
@@ -98,6 +106,10 @@ export type Database = {
         }
         Update: {
           base_position?: number | null
+          consent_marketing?: boolean
+          consent_marketing_at?: string | null
+          consent_policy_version?: string | null
+          consent_source?: string | null
           consent_to_updates?: boolean
           created_at?: string
           destination?: string | null
