@@ -39,7 +39,7 @@ export const Route = createFileRoute("/")({
       { title: "OwnWay — One right tip can change the whole trip" },
       { name: "description", content: "Join the OwnWay waitlist. Get matched with locals who know a destination deeply and can help you experience it your way." },
       { property: "og:title", content: "OwnWay — One right tip can change the whole trip" },
-      { property: "og:description", content: "Get matched with a local WayMaker who knows your destination deeply. Join the OwnWay early-access waitlist." },
+      { property: "og:description", content: "Join the OwnWay waitlist. Get matched with locals who know a destination deeply and can help you experience it your way." },
       { property: "og:url", content: "https://ownway.app/" },
     ],
   }),
