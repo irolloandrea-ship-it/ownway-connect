@@ -114,9 +114,15 @@ export const submitEarlyAccess = createServerFn({ method: "POST" })
         referral_code,
         referred_by: data.referred_by ?? null,
         source: data.source ?? null,
+        consent_to_updates: true,
+        consent_marketing: true,
+        consent_marketing_at: new Date().toISOString(),
+        consent_policy_version: data.consent_policy_version,
+        consent_source: data.consent_source ?? data.source ?? null,
       })
       .select("id, priority_score, referral_code")
       .single();
+
 
     if (error || !inserted) throw new Error(error?.message ?? "Could not save signup");
 
