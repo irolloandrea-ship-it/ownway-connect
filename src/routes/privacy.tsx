@@ -271,10 +271,10 @@ function PrivacyPage() {
               .
             </p>
             <p className="rounded-lg border border-dashed border-border/70 bg-card/50 p-4 text-sm text-muted-foreground">
-              <strong>Configuration value (founder to confirm):</strong>{" "}
-              Google Analytics 4 data-retention period is{" "}
-              <em>{GA_RETENTION_PLACEHOLDER}</em>. This will be updated once
-              the retention window is set in the GA4 admin console.
+              <strong>Google Analytics data retention:</strong> Event-level
+              analytics data is retained for 2 months. Aggregate reports may
+              be retained by Google for longer in accordance with Google’s
+              applicable terms and settings.
             </p>
             {hasAnalytics && (
               <p>
