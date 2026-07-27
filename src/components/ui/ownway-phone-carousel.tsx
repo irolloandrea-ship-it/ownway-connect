@@ -27,7 +27,7 @@ type OwnWayPhoneCarouselProps = {
 // Sized to native screenshot aspect (780×1768) so nothing is cropped.
 const SCREEN_W = 290;
 const SCREEN_H = Math.round((SCREEN_W * 1768) / 780); // 657
-const SCREEN_BG = "#F5F2E9";
+const SCREEN_BG = "#FFFFFF";
 
 const variants = {
   enter: (direction: number) => ({ x: direction > 0 ? 60 : -60, opacity: 0 }),
