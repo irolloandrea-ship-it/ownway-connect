@@ -119,7 +119,7 @@ export function OwnWayPhoneCarousel(_: OwnWayPhoneCarouselProps) {
                     opacity: { duration: 0.22 },
                   }}
                   className="absolute inset-0 flex items-center justify-center"
-                  style={{ background: SCREEN_BG }}
+                  style={{ background: SCREEN_BG, paddingTop: "7%" }}
                 >
                   <img
                     src={current.src}
