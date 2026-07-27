@@ -119,8 +119,16 @@ export function OwnWayPhoneCarousel(_: OwnWayPhoneCarouselProps) {
                   }}
                   className="absolute inset-0"
                 >
-                  {current.render()}
+                  <img
+                    src={current.src}
+                    alt={current.alt}
+                    className="h-full w-full select-none object-cover object-top"
+                    draggable={false}
+                    decoding="async"
+                    loading="eager"
+                  />
                 </motion.div>
+
               </AnimatePresence>
             </div>
           </div>
