@@ -3,7 +3,22 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { APP_SCREENS } from "./ownway-app-screens";
+import hero1 from "@/assets/hero-1.png.asset.json";
+import hero2 from "@/assets/hero-2.png.asset.json";
+import hero3 from "@/assets/hero-3.png.asset.json";
+import hero4 from "@/assets/hero-4.png.asset.json";
+import hero5 from "@/assets/hero-5.png.asset.json";
+import hero6 from "@/assets/hero-6.png.asset.json";
+
+const APP_SCREENS = [
+  { key: "explore", label: "Explore destinations", src: hero1.url, alt: "OwnWay app — explore curated journeys and destinations" },
+  { key: "dates", label: "Pick travel dates", src: hero2.url, alt: "OwnWay app — pick your travel dates" },
+  { key: "style", label: "Travel style", src: hero3.url, alt: "OwnWay app — choose your travel style" },
+  { key: "matching", label: "Finding your WayMaker", src: hero4.url, alt: "OwnWay app — finding your WayMaker" },
+  { key: "suggested", label: "Suggested WayMakers", src: hero5.url, alt: "OwnWay app — suggested WayMaker profile in Florence" },
+  { key: "journeys", label: "My Journeys", src: hero6.url, alt: "OwnWay app — My Journeys dashboard" },
+];
+
 
 type OwnWayPhoneCarouselProps = {
   className?: string;
