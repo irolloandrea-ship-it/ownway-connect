@@ -102,7 +102,7 @@ export function OwnWayPhoneCarousel(_: OwnWayPhoneCarouselProps) {
           <div className="rounded-[2.85rem] bg-black p-[2px]">
             <div
               className="relative overflow-hidden rounded-[2.7rem]"
-              style={{ width: SCREEN_W, height: SCREEN_H, background: "#FAFAF5" }}
+              style={{ width: SCREEN_W, height: SCREEN_H, background: SCREEN_BG }}
               onTouchStart={onTouchStart}
               onTouchEnd={onTouchEnd}
             >
@@ -118,22 +118,31 @@ export function OwnWayPhoneCarousel(_: OwnWayPhoneCarouselProps) {
                     x: { type: "spring", stiffness: 260, damping: 30 },
                     opacity: { duration: 0.22 },
                   }}
-                  className="absolute inset-0"
+                  className="absolute inset-0 flex items-center justify-center"
+                  style={{ background: SCREEN_BG }}
                 >
                   <img
                     src={current.src}
                     alt={current.alt}
-                    className="h-full w-full select-none object-cover object-top"
+                    className="h-full w-full select-none object-contain"
+                    style={{ objectPosition: "center" }}
                     draggable={false}
                     decoding="async"
                     loading="eager"
                   />
                 </motion.div>
-
               </AnimatePresence>
+
+              {/* Dynamic Island — persistent overlay above every slide */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute left-1/2 top-[10px] z-20 h-[26px] w-[92px] -translate-x-1/2 rounded-full bg-black"
+                style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.4)" }}
+              />
             </div>
           </div>
         </div>
+
 
         {/* Desktop arrows outside frame */}
         <button
