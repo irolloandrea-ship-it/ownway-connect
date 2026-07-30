@@ -4,7 +4,6 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Plus, Minus } from "lucide-react";
-import { HowItWorksFlipCards } from "@/components/HowItWorksFlipCards";
 import { captureSourceOnce, trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
 import { motion, AnimatePresence } from "framer-motion";
 import { OwnWayPhoneCarousel } from "@/components/ui/ownway-phone-carousel";
@@ -15,7 +14,7 @@ import screen12 from "@/assets/screen-12.png.asset.json";
 import screen13 from "@/assets/screen-13.png.asset.json";
 import screen14 from "@/assets/screen-14.png.asset.json";
 import screen15 from "@/assets/screen-15.png.asset.json";
-import { EmailCapture } from "@/components/EmailCapture";
+import { JoinEarlyAccess } from "@/components/JoinEarlyAccess";
 
 const APP_SCREENS = [
   { src: screen13.url, alt: "OwnWay — Discover curated journeys" },
@@ -137,33 +136,68 @@ function LandingPage() {
 
       <main>
         {/* Hero */}
-        <section className="container-page pt-10 pb-16 md:pt-20 md:pb-28">
-          <div className="grid items-center gap-12 md:grid-cols-2 md:gap-16">
-            <div ref={heroFormRef}>
-              <h1 className="mt-0 text-5xl leading-[1.05] md:text-6xl">
-                One right tip can change the whole trip.
-              </h1>
-              <p className="mt-4 text-lg text-muted-foreground md:mt-5">
-                Get matched with people who know a destination deeply and can help you experience it your way.
+        <section className="container-page pt-12 pb-20 md:pt-20 md:pb-28">
+          <div ref={heroFormRef} className="mx-auto max-w-xl text-center md:max-w-2xl">
+            <p className="text-[11px] uppercase tracking-[0.28em] text-accent md:text-xs">
+              Travel deeper. Share what you know
+            </p>
+            <h1 className="mt-5 text-[2rem] leading-[1.12] md:text-5xl">
+              One right tip can change the whole trip
+            </h1>
+            <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
+              OwnWay connects travellers who want to experience a destination more deeply
+              with local experts ready to share what they know.
+            </p>
+            <div className="mt-8 flex flex-col items-center">
+              <JoinEarlyAccess referredBy={search.ref} intendedRole={intendedRole} location="hero_section">
+                <Button size="lg" className="h-12 w-full rounded-full px-8 text-base sm:w-auto">
+                  Join early access <ArrowRight className="ml-1.5 size-4" />
+                </Button>
+              </JoinEarlyAccess>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Early access for travellers and local experts.
               </p>
-              <div className="mt-6 md:mt-8">
-                <EmailCapture
-                  referredBy={search.ref}
-                  intendedRole={intendedRole}
-                  id="join"
-                  location="hero_section"
-                  className="space-y-2 md:space-y-3"
-                />
-              </div>
-            </div>
-            <div className="md:pl-4">
-              <OwnWayPhoneCarousel />
             </div>
           </div>
         </section>
 
-        {/* How it works */}
-        <HowItWorksFlipCards />
+        {/* How OwnWay works */}
+        <section className="border-t border-border/60 py-20 md:py-28">
+          <div className="container-page">
+            <p className="text-center text-xs uppercase tracking-[0.25em] text-accent">
+              How OwnWay works
+            </p>
+            <h2 className="mx-auto mt-3 max-w-2xl text-center text-3xl md:text-5xl">
+              A more personal way to travel.
+            </h2>
+
+            <div className="mt-14 grid items-center gap-14 md:grid-cols-2 md:gap-16">
+              <div className="order-2 space-y-6 md:order-1">
+                {[
+                  "Tell us what matters to you",
+                  "Meet someone who knows the destination",
+                  "Travel with a plan that feels yours",
+                ].map((step, i) => (
+                  <div
+                    key={step}
+                    className="flex items-start gap-4 rounded-3xl bg-card/70 px-6 py-6"
+                  >
+                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/10 text-sm text-accent">
+                      {i + 1}
+                    </span>
+                    <p className="font-display text-xl leading-snug text-ink md:text-2xl">
+                      {step}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <div className="order-1 md:order-2 md:pl-4">
+                <OwnWayPhoneCarousel />
+              </div>
+            </div>
+          </div>
+        </section>
+
 
 
         {/* Traveler / WayMaker */}
