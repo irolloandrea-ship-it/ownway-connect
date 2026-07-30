@@ -220,11 +220,13 @@ function PrivacyPage() {
                 <strong>Website analytics:</strong> Google Analytics 4 — only
                 after you accept analytics cookies (see section 8).
               </li>
-              <li>
-                <strong>Marketing / newsletter tool:</strong>{" "}
-                <em>[provider to be confirmed once selected]</em>.
-              </li>
             </ul>
+            <p>
+              If we introduce an additional email marketing or newsletter
+              provider, we will update this policy and its version before that
+              provider processes any personal data.
+            </p>
+
           </Section>
 
           <Section n={7} title="International transfers">
