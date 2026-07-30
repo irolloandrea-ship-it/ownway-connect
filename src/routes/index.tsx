@@ -4,7 +4,6 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Plus, Minus } from "lucide-react";
-import { HowItWorksFlipCards } from "@/components/HowItWorksFlipCards";
 import { captureSourceOnce, trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
 import { motion, AnimatePresence } from "framer-motion";
 import { OwnWayPhoneCarousel } from "@/components/ui/ownway-phone-carousel";
@@ -15,7 +14,7 @@ import screen12 from "@/assets/screen-12.png.asset.json";
 import screen13 from "@/assets/screen-13.png.asset.json";
 import screen14 from "@/assets/screen-14.png.asset.json";
 import screen15 from "@/assets/screen-15.png.asset.json";
-import { EmailCapture } from "@/components/EmailCapture";
+import { JoinEarlyAccess } from "@/components/JoinEarlyAccess";
 
 const APP_SCREENS = [
   { src: screen13.url, alt: "OwnWay — Discover curated journeys" },
