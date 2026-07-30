@@ -82,10 +82,7 @@ export function JoinEarlyAccess({
           consent_source: location,
         },
       });
-      void trackPrelaunchEvent("email_signup", {
-        email: email.trim(),
-        metadata: { role, location },
-      });
+      void trackPrelaunchEvent("email_signup", { metadata: { location } });
       trackAnalyticsEvent("waitlist_form_submitted", { location });
       setDone(true);
     } catch (err: any) {

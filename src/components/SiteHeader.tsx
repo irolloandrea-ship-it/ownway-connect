@@ -37,6 +37,7 @@ export function SiteHeader() {
         <Link
           to="/"
           hash="join"
+          className="hidden md:block"
           onClick={() =>
             trackPrelaunchEvent("cta_click", {
               button_text: "Get early access",
