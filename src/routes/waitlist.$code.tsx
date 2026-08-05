@@ -55,13 +55,39 @@ function WaitlistPage() {
   }, [code]);
 
   const shareUrl = typeof window !== "undefined" ? `${window.location.origin}/?ref=${code}` : `https://ownway-connect.lovable.app/?ref=${code}`;
-  const shareText = "I just joined the OwnWay waitlist — get matched with locals who can give you the one tip that changes the trip.";
+  const shareText = "I'm on the OwnWay early-access list. Join through my invite link:";
 
-  const copy = () => {
-    navigator.clipboard.writeText(shareUrl);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1800);
+  const [canShare, setCanShare] = useState(false);
+  const [showUrlFallback, setShowUrlFallback] = useState(false);
+  const [liveMessage, setLiveMessage] = useState("");
+
+  useEffect(() => {
+    setCanShare(typeof navigator !== "undefined" && typeof navigator.share === "function");
+  }, []);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setLiveMessage("Invite link copied to clipboard.");
+      setTimeout(() => setCopied(false), 1800);
+      return true;
+    } catch {
+      setShowUrlFallback(true);
+      setLiveMessage("Copy this link to share it.");
+      return false;
+    }
   };
+
+  const share = async () => {
+    try {
+      await navigator.share({ title: "OwnWay", text: shareText, url: shareUrl });
+    } catch (err: any) {
+      if (err?.name === "AbortError") return; // user cancelled — normal
+      await copy();
+    }
+  };
+
 
   const save = async () => {
     setSaving(true);
