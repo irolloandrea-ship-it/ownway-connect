@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { getWaitlistStatus, updateSignup } from "@/lib/early-access.functions";
-import { Check, Copy, Link as LinkIcon } from "lucide-react";
+import { Check, Copy, Link as LinkIcon, Share2 } from "lucide-react";
 
 type Search = { role?: "explorer" | "waymaker"; already?: boolean };
 
