@@ -117,6 +117,7 @@ function LandingPage() {
   const search = useSearch({ from: "/" });
   const heroFormRef = useRef<HTMLDivElement>(null);
   const [intendedRole, setIntendedRole] = useState<"explorer" | "waymaker" | undefined>(search.role);
+  const [joinOpen, setJoinOpen] = useState(false);
 
   useEffect(() => {
     captureSourceOnce();
@@ -126,9 +127,21 @@ function LandingPage() {
   useEffect(() => {
     if (search.role) {
       setIntendedRole(search.role);
-      setTimeout(() => heroFormRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
     }
   }, [search.role]);
+
+  // Open the signup dialog for #join deep links (header CTA, /trip/new, /waymaker/apply)
+  useEffect(() => {
+    const openFromHash = () => {
+      if (window.location.hash === "#join") {
+        heroFormRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+        setJoinOpen(true);
+      }
+    };
+    openFromHash();
+    window.addEventListener("hashchange", openFromHash);
+    return () => window.removeEventListener("hashchange", openFromHash);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -137,7 +150,7 @@ function LandingPage() {
       <main>
         {/* Hero */}
         <section className="container-page pt-12 pb-20 md:pt-20 md:pb-28">
-          <div ref={heroFormRef} className="mx-auto max-w-xl text-center md:max-w-2xl">
+          <div ref={heroFormRef} id="join" className="mx-auto max-w-xl text-center md:max-w-2xl">
             <p className="text-[11px] uppercase tracking-[0.28em] text-accent md:text-xs">
               Travel deeper. Share what you know
             </p>
@@ -149,11 +162,18 @@ function LandingPage() {
               with local experts ready to share what they know.
             </p>
             <div className="mt-8 flex flex-col items-center">
-              <JoinEarlyAccess referredBy={search.ref} intendedRole={intendedRole} location="hero_section">
+              <JoinEarlyAccess
+                referredBy={search.ref}
+                intendedRole={intendedRole}
+                location="hero_section"
+                open={joinOpen}
+                onOpenChange={setJoinOpen}
+              >
                 <Button size="lg" className="h-12 w-full rounded-full px-8 text-base sm:w-auto">
                   Join early access <ArrowRight className="ml-1.5 size-4" />
                 </Button>
               </JoinEarlyAccess>
+
               <p className="mt-3 text-sm text-muted-foreground">
                 Early access for travellers and local experts.
               </p>
