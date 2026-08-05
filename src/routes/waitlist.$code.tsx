@@ -160,18 +160,52 @@ function WaitlistPage() {
                   {status.referral_count === 1 ? "person" : "people"} so far.
                 </p>
 
-                <div className="mx-auto mt-8 max-w-md rounded-2xl border border-border/60 bg-card p-4 text-left">
-                  <p className="flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
-                    <LinkIcon className="size-3.5" /> Share this unique link
-                  </p>
-                  <div className="mt-2 flex items-center gap-2">
-                    <Input readOnly value={shareUrl} aria-label="Your unique referral link" className="font-mono text-sm" />
-                    <Button type="button" variant="outline" size="sm" onClick={copy}>
-                      <Copy className="mr-1.5 size-3.5" />
-                      {copied ? "Copied" : "Copy"}
+                <div className="mx-auto mt-8 flex max-w-md flex-col items-stretch gap-3">
+                  {canShare && (
+                    <Button type="button" size="lg" className="h-12 w-full rounded-full text-base" onClick={share}>
+                      <Share2 className="mr-2 size-4" />
+                      Share your OwnWay invite
                     </Button>
-                  </div>
+                  )}
+                  <Button
+                    type="button"
+                    size="lg"
+                    variant={canShare ? "outline" : "default"}
+                    className="h-12 w-full rounded-full text-base"
+                    onClick={copy}
+                  >
+                    {copied ? <Check className="mr-2 size-4" /> : <Copy className="mr-2 size-4" />}
+                    {copied ? "Link copied" : "Copy invite link"}
+                  </Button>
+
+                  <p aria-live="polite" className="sr-only">
+                    {liveMessage}
+                  </p>
+
+                  {showUrlFallback ? (
+                    <div className="mt-2 rounded-2xl border border-border/60 bg-card p-4 text-left">
+                      <Label htmlFor="referral-url" className="flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
+                        <LinkIcon className="size-3.5" /> Copy this link to share it
+                      </Label>
+                      <Input
+                        id="referral-url"
+                        readOnly
+                        value={shareUrl}
+                        onFocus={(e) => e.currentTarget.select()}
+                        className="mt-2 font-mono text-sm"
+                      />
+                    </div>
+                  ) : (
+                    <Input
+                      readOnly
+                      value={shareUrl}
+                      aria-label="Your unique referral link"
+                      onFocus={(e) => e.currentTarget.select()}
+                      className="mt-1 h-9 border-transparent bg-transparent text-center font-mono text-xs text-muted-foreground"
+                    />
+                  )}
                 </div>
+
               </div>
 
             </>
