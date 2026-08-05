@@ -18,17 +18,18 @@ No JavaScript is added to the email.
 
 In the referral section of `/waitlist/<code>`:
 
-- Add a prominent primary button: "Share your OwnWay invite".
+- Add a prominent primary button: "Share your OwnWay invite". Shown when native sharing is available; on desktop browsers without it, "Copy invite link" becomes the primary action.
 - On tap/click it opens the device share sheet with title "OwnWay", text "I'm on the OwnWay early-access list. Join through my invite link:", and the person's exact existing referral URL.
-- Cancelling the share sheet is silent — no error, no toast.
+- Cancelling the share sheet is silent — no error, no toast. Any other share failure immediately falls back to the copy path.
 
-Fallback when the device has no native sharing:
+Always-visible secondary action:
 
-- Secondary button "Copy invite link" copies the exact referral URL.
+- "Copy invite link" is shown at all times, not only when native sharing is missing — some people prefer pasting the link into WhatsApp or Instagram themselves.
 - On success the label switches to "Link copied" for a moment, and a screen-reader-friendly live message announces "Invite link copied to clipboard."
-- If the clipboard is blocked, a selectable read-only field with the URL appears with the instruction "Copy this link to share it."
+- If the clipboard is blocked (or a share fails for a non-cancel reason), a selectable read-only field with the URL appears with the instruction "Copy this link to share it."
 
-The referral URL itself stays on the page as a small, secondary fallback element rather than the main focus.
+The referral URL is displayed only as a small read-only selectable field — never a clickable link, so nobody accidentally opens it instead of sharing it.
+
 
 ## What stays exactly the same
 
@@ -37,6 +38,7 @@ Routes, referral codes, referral counting and attribution, waitlist position mat
 ## Technical notes
 
 - `src/lib/email-templates/waitlist-confirmation.tsx`: repoint `Button href` to the `waitlistUrl` prop (already passed and already defaulted to `${siteUrl}/waitlist/${referralCode}`), change the label, drop the `linkBlock` referral URL paragraph, add the helper line.
-- `src/routes/waitlist.$code.tsx`: replace the current input + "Copy" row with the new share/copy UI. Detect support with `typeof navigator !== "undefined" && !!navigator.share` inside an effect (avoids SSR/hydration mismatch); call `navigator.share` inside the click handler and swallow `AbortError`. Clipboard write wrapped in try/catch, falling back to a `readOnly` input plus instruction. `aria-live="polite"` region for copy feedback; native `<button>` elements via the existing `Button` component keep keyboard and focus-ring behaviour.
+- `src/routes/waitlist.$code.tsx`: replace the current input + "Copy" row with the new share/copy UI. Detect support with `typeof navigator !== "undefined" && !!navigator.share` inside an effect (avoids SSR/hydration mismatch); call `navigator.share` inside the click handler, swallow `AbortError`, and route every other rejection into the copy fallback. Copy button always rendered. Clipboard write wrapped in try/catch, falling back to a `readOnly` input plus instruction. `aria-live="polite"` region for copy feedback; native `<button>` elements via the existing `Button` component keep keyboard and focus-ring behaviour.
 - `shareUrl` derivation and all server-function calls stay untouched.
-- Verify with a type check and confirm mobile/desktop behaviour in the preview before reporting done.
+- Verification: type check plus desktop and mobile-viewport preview checks. The actual iOS/Android share sheet cannot be triggered from the sandbox — that last step needs a quick check on a real phone using the preview or published URL.
+
