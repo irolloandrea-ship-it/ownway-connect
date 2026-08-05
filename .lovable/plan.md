@@ -38,6 +38,7 @@ Routes, referral codes, referral counting and attribution, waitlist position mat
 ## Technical notes
 
 - `src/lib/email-templates/waitlist-confirmation.tsx`: repoint `Button href` to the `waitlistUrl` prop (already passed and already defaulted to `${siteUrl}/waitlist/${referralCode}`), change the label, drop the `linkBlock` referral URL paragraph, add the helper line.
-- `src/routes/waitlist.$code.tsx`: replace the current input + "Copy" row with the new share/copy UI. Detect support with `typeof navigator !== "undefined" && !!navigator.share` inside an effect (avoids SSR/hydration mismatch); call `navigator.share` inside the click handler and swallow `AbortError`. Clipboard write wrapped in try/catch, falling back to a `readOnly` input plus instruction. `aria-live="polite"` region for copy feedback; native `<button>` elements via the existing `Button` component keep keyboard and focus-ring behaviour.
+- `src/routes/waitlist.$code.tsx`: replace the current input + "Copy" row with the new share/copy UI. Detect support with `typeof navigator !== "undefined" && !!navigator.share` inside an effect (avoids SSR/hydration mismatch); call `navigator.share` inside the click handler, swallow `AbortError`, and route every other rejection into the copy fallback. Copy button always rendered. Clipboard write wrapped in try/catch, falling back to a `readOnly` input plus instruction. `aria-live="polite"` region for copy feedback; native `<button>` elements via the existing `Button` component keep keyboard and focus-ring behaviour.
 - `shareUrl` derivation and all server-function calls stay untouched.
-- Verify with a type check and confirm mobile/desktop behaviour in the preview before reporting done.
+- Verification: type check plus desktop and mobile-viewport preview checks. The actual iOS/Android share sheet cannot be triggered from the sandbox — that last step needs a quick check on a real phone using the preview or published URL.
+
