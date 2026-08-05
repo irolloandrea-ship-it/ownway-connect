@@ -91,17 +91,16 @@ const WaitlistConfirmationEmail = ({
               signup through your link moves you roughly five places higher.
             </Text>
 
-            <Section style={{ textAlign: 'center', margin: '20px 0 12px' }}>
-              <Button style={button} href={share}>
-                Share your OwnWay invite link
+            <Section style={{ textAlign: 'center', margin: '20px 0 8px' }}>
+              <Button style={button} href={wl}>
+                Share your OwnWay invite
               </Button>
             </Section>
 
-            <Text style={linkBlock}>
-              <Link href={share} style={linkStyle}>
-                {share}
-              </Link>
+            <Text style={helperText}>
+              Open your invite page to share or copy your personal link.
             </Text>
+
 
             <Text style={body}>
               You can{' '}
@@ -266,6 +265,14 @@ const button = {
   textDecoration: 'none',
   display: 'inline-block',
   border: `1px solid ${primaryGreen}`,
+}
+const helperText = {
+  fontFamily: 'Arial, Helvetica, sans-serif',
+  fontSize: '13px',
+  lineHeight: 1.5,
+  color: textMuted,
+  textAlign: 'center' as const,
+  margin: '0 0 16px',
 }
 const linkBlock = {
   fontFamily: 'Arial, Helvetica, sans-serif',
