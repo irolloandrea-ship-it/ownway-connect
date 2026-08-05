@@ -167,7 +167,12 @@ function LandingPage() {
                 intendedRole={intendedRole}
                 location="hero_section"
                 open={joinOpen}
-                onOpenChange={setJoinOpen}
+                onOpenChange={(next) => {
+                  setJoinOpen(next);
+                  if (!next && window.location.hash === "#join") {
+                    window.history.replaceState(null, "", window.location.pathname + window.location.search);
+                  }
+                }}
               >
                 <Button size="lg" className="h-12 w-full rounded-full px-8 text-base sm:w-auto">
                   Join early access <ArrowRight className="ml-1.5 size-4" />
