@@ -26,14 +26,23 @@ export function JoinEarlyAccess({
   referredBy,
   intendedRole,
   location = "hero_section",
+  open: openProp,
+  onOpenChange,
 }: {
   children: React.ReactNode;
   referredBy?: string;
   intendedRole?: Role;
   location?: string;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }) {
   const submit = useServerFn(submitEarlyAccess);
-  const [open, setOpen] = useState(false);
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
+  const open = openProp ?? uncontrolledOpen;
+  const setOpen = (next: boolean) => {
+    setUncontrolledOpen(next);
+    onOpenChange?.(next);
+  };
   const [role, setRole] = useState<Role | null>(intendedRole ?? null);
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
