@@ -266,6 +266,14 @@ const button = {
   display: 'inline-block',
   border: `1px solid ${primaryGreen}`,
 }
+const helperText = {
+  fontFamily: 'Arial, Helvetica, sans-serif',
+  fontSize: '13px',
+  lineHeight: 1.5,
+  color: textMuted,
+  textAlign: 'center' as const,
+  margin: '0 0 16px',
+}
 const linkBlock = {
   fontFamily: 'Arial, Helvetica, sans-serif',
   fontSize: '12px',
