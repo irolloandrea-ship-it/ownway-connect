@@ -116,18 +116,18 @@ export function MyTripsScreen() {
             </div>
           ))}
 
-          <div className="space-y-2 rounded-3xl p-4 text-white" style={{ background: APP.green }}>
+          <div
+            className="flex items-center gap-3 rounded-2xl p-3.5"
+            style={{ background: APP.green, color: "#fff" }}
+          >
             <div
-              className="flex h-9 w-9 items-center justify-center rounded-full"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
               style={{ background: "rgba(255,255,255,0.1)", color: APP.greenTint }}
               aria-hidden
             >
-              <Plus className="h-5 w-5" />
+              <Plus className="h-4 w-4" />
             </div>
-            <h3 className="font-display text-lg font-bold text-white">Plan a New Trip</h3>
-            <p className="text-[11px] leading-relaxed" style={{ color: APP.greenText }}>
-              Connect with a new WayMaker and start crafting your next journey.
-            </p>
+            <h3 className="font-display text-base font-bold text-white">Plan a new trip</h3>
           </div>
         </div>
 
