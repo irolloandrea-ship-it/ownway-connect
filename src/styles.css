@@ -152,3 +152,29 @@
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-card);
 }
+
+/* Decorative motion for the in-phone app preview screens */
+@keyframes ow-screen-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes ow-pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(0.98); }
+  50% { opacity: 0.9; transform: scale(1.02); }
+}
+@keyframes ow-slow-spin {
+  to { transform: rotate(360deg); }
+}
+.ow-screen-fade { animation: ow-screen-fade 0.35s ease-out both; }
+.ow-pulse-glow { animation: ow-pulse-glow 2.5s ease-in-out infinite; }
+.ow-slow-spin { animation: ow-slow-spin 12s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ow-screen-fade,
+  .ow-pulse-glow,
+  .ow-slow-spin {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
