@@ -139,7 +139,7 @@ export function MyTripsScreen() {
         </div>
 
         <div className="space-y-2">
-          {past.map((journey) => (
+          {past.slice(0, 2).map((journey) => (
             <div
               key={journey.id}
               className="flex items-center justify-between gap-3 rounded-2xl p-3"
