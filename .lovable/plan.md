@@ -29,3 +29,4 @@ The current "roughly five places higher" sentence is removed.
 - Render the template to HTML with a realistic recipient and grep the output for the full address (must be absent) and for `?ref=` (must be absent).
 - Confirm both the CTA `href` and the "manage your waitlist" link resolve to `/waitlist/<code>`.
 - Run the type check and report changed files and results.
+- Then send one real test email to a controlled address you provide (a live send through the normal waitlist flow) so you can open it in a mobile email app — Gmail and Apple Mail render differently from the template preview. Report the send status; you confirm the visual result on device.
