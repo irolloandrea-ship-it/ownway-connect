@@ -8,8 +8,14 @@ import {
   SCREEN_DESIGN_H,
   SCREEN_DESIGN_W,
 } from "@/components/ui/journey-screens";
+import { WAYMAKER_SCREENS } from "@/components/ui/journey-screens/waymaker";
 
-const APP_SCREENS = JOURNEY_SCREENS;
+type Audience = "traveller" | "waymaker";
+
+const AUDIENCES: { key: Audience; label: string }[] = [
+  { key: "traveller", label: "For Travellers" },
+  { key: "waymaker", label: "For WayMakers" },
+];
 
 type OwnWayPhoneCarouselProps = {
   className?: string;
@@ -29,10 +35,12 @@ const variants = {
 };
 
 export function OwnWayPhoneCarousel(_: OwnWayPhoneCarouselProps) {
+  const [audience, setAudience] = useState<Audience>("traveller");
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [paused, setPaused] = useState(false);
 
+  const APP_SCREENS = audience === "traveller" ? JOURNEY_SCREENS : WAYMAKER_SCREENS;
   const total = APP_SCREENS.length;
 
   const goToNext = () => {
@@ -76,10 +84,46 @@ export function OwnWayPhoneCarousel(_: OwnWayPhoneCarouselProps) {
     touch.current = null;
   };
 
-  const current = APP_SCREENS[activeIndex];
+  const selectAudience = (next: Audience) => {
+    if (next === audience) return;
+    pauseBriefly();
+    setDirection(1);
+    setActiveIndex(0);
+    setAudience(next);
+  };
+
+  const current = APP_SCREENS[Math.min(activeIndex, total - 1)];
 
   return (
     <div className={cn("group relative mx-auto flex flex-col items-center", _.className)}>
+      {/* Audience switch */}
+      <div
+        role="tablist"
+        aria-label="Choose which OwnWay journey to preview"
+        className="mb-6 inline-flex items-center gap-1 rounded-full border border-border bg-card p-1 shadow-sm"
+      >
+        {AUDIENCES.map((a) => {
+          const isActive = audience === a.key;
+          return (
+            <button
+              key={a.key}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              onClick={() => selectAudience(a.key)}
+              className={cn(
+                "rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                isActive
+                  ? "bg-accent text-accent-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-ink"
+              )}
+            >
+              {a.label}
+            </button>
+          );
+        })}
+      </div>
+
       {/* Ambient glow */}
       <div className="absolute -inset-8 -z-10 rounded-[3rem] bg-[radial-gradient(ellipse_at_center,var(--color-accent)/20,transparent_70%)] blur-2xl" />
 
@@ -101,7 +145,7 @@ export function OwnWayPhoneCarousel(_: OwnWayPhoneCarouselProps) {
             >
               <AnimatePresence initial={false} custom={direction} mode="wait">
                 <motion.div
-                  key={current.key}
+                  key={`${audience}-${current.key}`}
                   custom={direction}
                   variants={variants}
                   initial="enter"
