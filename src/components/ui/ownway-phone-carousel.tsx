@@ -3,31 +3,24 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import hero1 from "@/assets/screen-v2-1.png.asset.json";
-import hero2 from "@/assets/screen-v2-2.png.asset.json";
-import hero3 from "@/assets/screen-v2-3.png.asset.json";
-import hero4 from "@/assets/screen-v2-4.png.asset.json";
-import hero5 from "@/assets/screen-v2-5.png.asset.json";
-import hero6 from "@/assets/screen-v2-6.png.asset.json";
+import {
+  JOURNEY_SCREENS,
+  SCREEN_DESIGN_H,
+  SCREEN_DESIGN_W,
+} from "@/components/ui/journey-screens";
 
-const APP_SCREENS = [
-  { key: "explore", label: "Explore destinations", src: hero1.url, alt: "OwnWay app — explore curated journeys with Rome featured" },
-  { key: "dates", label: "Pick travel dates", src: hero2.url, alt: "OwnWay app — pick your travel dates on the September calendar" },
-  { key: "style", label: "Travel style", src: hero3.url, alt: "OwnWay app — choose Relaxed & Slow or Adventurous & Active" },
-  { key: "matching", label: "Finding your WayMaker", src: hero4.url, alt: "OwnWay app — finding your WayMakers for Florence" },
-  { key: "suggested", label: "Suggested WayMakers", src: hero5.url, alt: "OwnWay app — suggested WayMaker Isabella Rossi in Florence" },
-  { key: "journeys", label: "My Journeys", src: hero6.url, alt: "OwnWay app — My Journeys dashboard with upcoming Florence trip" },
-];
-
+const APP_SCREENS = JOURNEY_SCREENS;
 
 type OwnWayPhoneCarouselProps = {
   className?: string;
 };
 
-// Sized to native screenshot aspect (780×1768) so nothing is cropped.
+// Phone viewport keeps the previous frame proportions (780×1768 native aspect).
 const SCREEN_W = 290;
 const SCREEN_H = Math.round((SCREEN_W * 1768) / 780); // 657
 const SCREEN_BG = "#FFFFFF";
+// Screens are authored on a 390×884 canvas and scaled to fit — no clipping, no inner scroll.
+const SCALE = Math.min(SCREEN_W / SCREEN_DESIGN_W, SCREEN_H / SCREEN_DESIGN_H);
 
 const variants = {
   enter: (direction: number) => ({ x: direction > 0 ? 60 : -60, opacity: 0 }),
