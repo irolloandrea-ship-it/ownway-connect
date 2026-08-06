@@ -35,7 +35,7 @@ export type TravelStyleOption = {
   icon: "relaxed" | "adventurous" | "family" | "culture";
 };
 
-export const CATEGORY_TAGS = ["Slow Travel", "Local Food", "Art & Culture", "Nature"];
+export const CATEGORY_TAGS = ["Slow Travel", "Local Food", "Art & Culture"];
 
 export const DESTINATIONS: Destination[] = [
   {
