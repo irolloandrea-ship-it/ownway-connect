@@ -35,7 +35,7 @@ export function MyTripsScreen() {
               className="space-y-3 rounded-3xl p-4"
               style={{ background: APP.surface, border: `1px solid ${APP.chip}` }}
             >
-              <div className="relative h-[132px] overflow-hidden rounded-2xl">
+              <div className="relative h-[118px] overflow-hidden rounded-2xl">
                 <img
                   src={journey.image}
                   alt={`${journey.city}, ${journey.country}`}
@@ -139,7 +139,7 @@ export function MyTripsScreen() {
         </div>
 
         <div className="space-y-2">
-          {past.slice(0, 2).map((journey) => (
+          {past.slice(0, 1).map((journey) => (
             <div
               key={journey.id}
               className="flex items-center justify-between gap-3 rounded-2xl p-3"
