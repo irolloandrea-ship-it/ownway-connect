@@ -8,35 +8,50 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 
+function safeNext(value: unknown): string | undefined {
+  if (typeof value !== "string" || !value.startsWith("/") || value.startsWith("//")) return undefined;
+  return value;
+}
+
 export const Route = createFileRoute("/auth")({
   head: () => ({ meta: [{ title: "Admin sign in — OwnWay" }, { name: "robots", content: "noindex, nofollow" }] }),
+  validateSearch: (s: Record<string, unknown>) => ({ next: safeNext(s.next) }),
   component: AuthPage,
 });
 
 function AuthPage() {
   const navigate = useNavigate();
+  const { next } = Route.useSearch();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
 
+  const goNext = () => {
+    if (next) window.location.href = next;
+    else navigate({ to: "/admin" });
+  };
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/admin" });
+      if (data.session) goNext();
     });
-  }, [navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigate, next]);
 
   const onSubmit = async () => {
     setBusy(true);
     try {
-      const fn = mode === "signin" ? supabase.auth.signInWithPassword({ email, password }) : supabase.auth.signUp({ email, password, options: { emailRedirectTo: window.location.origin + "/admin" } });
+      const redirectTo = window.location.origin + (next ?? "/admin");
+      const fn = mode === "signin" ? supabase.auth.signInWithPassword({ email, password }) : supabase.auth.signUp({ email, password, options: { emailRedirectTo: redirectTo } });
       const { error } = await fn;
       if (error) throw error;
       toast.success(mode === "signin" ? "Welcome back" : "Account created — check your email if confirmation is required");
-      navigate({ to: "/admin" });
+      goNext();
     } catch (e: any) { toast.error(e?.message ?? "Authentication failed"); }
     finally { setBusy(false); }
   };
+
 
   return (
     <div className="min-h-screen bg-background">

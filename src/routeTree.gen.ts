@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as UnsubscribeRouteImport } from './routes/unsubscribe'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as McpRouteImport } from './routes/mcp'
 import { Route as LegalNoticeRouteImport } from './routes/legal-notice'
 import { Route as FindAWaymakerRouteImport } from './routes/find-a-waymaker'
 import { Route as BecomeAWaymakerRouteImport } from './routes/become-a-waymaker'
@@ -25,10 +26,14 @@ import { Route as TripNewRouteImport } from './routes/trip.new'
 import { Route as TripTokenRouteImport } from './routes/trip.$token'
 import { Route as EmailUnsubscribeRouteImport } from './routes/email/unsubscribe'
 import { Route as AdminPrelaunchAnalyticsRouteImport } from './routes/admin.prelaunch-analytics'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as TripConfirmationTokenRouteImport } from './routes/trip.confirmation.$token'
 import { Route as TripTokenFeedbackRouteImport } from './routes/trip.$token.feedback'
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
 import { Route as ApiPublicBootstrapAdminRouteImport } from './routes/api/public/bootstrap-admin'
+import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
+import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
@@ -48,6 +53,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LegalNoticeRoute = LegalNoticeRouteImport.update({
@@ -115,6 +125,18 @@ const AdminPrelaunchAnalyticsRoute = AdminPrelaunchAnalyticsRouteImport.update({
   path: '/prelaunch-analytics',
   getParentRoute: () => AdminRoute,
 } as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char91DotmcpChar93ListToolsRoute =
+  Char91DotmcpChar93ListToolsRouteImport.update({
+    id: '/.mcp/list-tools',
+    path: '/.mcp/list-tools',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const TripConfirmationTokenRoute = TripConfirmationTokenRouteImport.update({
   id: '/trip/confirmation/$token',
   path: '/trip/confirmation/$token',
@@ -133,6 +155,17 @@ const LovableEmailSuppressionRoute = LovableEmailSuppressionRouteImport.update({
 const ApiPublicBootstrapAdminRoute = ApiPublicBootstrapAdminRouteImport.update({
   id: '/api/public/bootstrap-admin',
   path: '/api/public/bootstrap-admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Char91DotmcpChar93InvokeToolToolRoute =
+  Char91DotmcpChar93InvokeToolToolRouteImport.update({
+    id: '/.mcp/invoke-tool/$tool',
+    path: '/.mcp/invoke-tool/$tool',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
+  id: '/.lovable/oauth/consent',
+  path: '/.lovable/oauth/consent',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LovableEmailTransactionalSendRoute =
@@ -171,9 +204,12 @@ export interface FileRoutesByFullPath {
   '/become-a-waymaker': typeof BecomeAWaymakerRoute
   '/find-a-waymaker': typeof FindAWaymakerRoute
   '/legal-notice': typeof LegalNoticeRoute
+  '/mcp': typeof McpRoute
   '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/unsubscribe': typeof UnsubscribeRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/prelaunch-analytics': typeof AdminPrelaunchAnalyticsRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
@@ -181,6 +217,8 @@ export interface FileRoutesByFullPath {
   '/waitlist/$code': typeof WaitlistCodeRoute
   '/waymaker/$id': typeof WaymakerIdRoute
   '/waymaker/apply': typeof WaymakerApplyRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
@@ -198,9 +236,12 @@ export interface FileRoutesByTo {
   '/become-a-waymaker': typeof BecomeAWaymakerRoute
   '/find-a-waymaker': typeof FindAWaymakerRoute
   '/legal-notice': typeof LegalNoticeRoute
+  '/mcp': typeof McpRoute
   '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/unsubscribe': typeof UnsubscribeRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/prelaunch-analytics': typeof AdminPrelaunchAnalyticsRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
@@ -208,6 +249,8 @@ export interface FileRoutesByTo {
   '/waitlist/$code': typeof WaitlistCodeRoute
   '/waymaker/$id': typeof WaymakerIdRoute
   '/waymaker/apply': typeof WaymakerApplyRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
@@ -226,9 +269,12 @@ export interface FileRoutesById {
   '/become-a-waymaker': typeof BecomeAWaymakerRoute
   '/find-a-waymaker': typeof FindAWaymakerRoute
   '/legal-notice': typeof LegalNoticeRoute
+  '/mcp': typeof McpRoute
   '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/unsubscribe': typeof UnsubscribeRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/prelaunch-analytics': typeof AdminPrelaunchAnalyticsRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/trip/$token': typeof TripTokenRouteWithChildren
@@ -236,6 +282,8 @@ export interface FileRoutesById {
   '/waitlist/$code': typeof WaitlistCodeRoute
   '/waymaker/$id': typeof WaymakerIdRoute
   '/waymaker/apply': typeof WaymakerApplyRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
@@ -255,9 +303,12 @@ export interface FileRouteTypes {
     | '/become-a-waymaker'
     | '/find-a-waymaker'
     | '/legal-notice'
+    | '/mcp'
     | '/privacy'
     | '/sitemap.xml'
     | '/unsubscribe'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/admin/prelaunch-analytics'
     | '/email/unsubscribe'
     | '/trip/$token'
@@ -265,6 +316,8 @@ export interface FileRouteTypes {
     | '/waitlist/$code'
     | '/waymaker/$id'
     | '/waymaker/apply'
+    | '/.lovable/oauth/consent'
+    | '/.mcp/invoke-tool/$tool'
     | '/api/public/bootstrap-admin'
     | '/lovable/email/suppression'
     | '/trip/$token/feedback'
@@ -282,9 +335,12 @@ export interface FileRouteTypes {
     | '/become-a-waymaker'
     | '/find-a-waymaker'
     | '/legal-notice'
+    | '/mcp'
     | '/privacy'
     | '/sitemap.xml'
     | '/unsubscribe'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/admin/prelaunch-analytics'
     | '/email/unsubscribe'
     | '/trip/$token'
@@ -292,6 +348,8 @@ export interface FileRouteTypes {
     | '/waitlist/$code'
     | '/waymaker/$id'
     | '/waymaker/apply'
+    | '/.lovable/oauth/consent'
+    | '/.mcp/invoke-tool/$tool'
     | '/api/public/bootstrap-admin'
     | '/lovable/email/suppression'
     | '/trip/$token/feedback'
@@ -309,9 +367,12 @@ export interface FileRouteTypes {
     | '/become-a-waymaker'
     | '/find-a-waymaker'
     | '/legal-notice'
+    | '/mcp'
     | '/privacy'
     | '/sitemap.xml'
     | '/unsubscribe'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/admin/prelaunch-analytics'
     | '/email/unsubscribe'
     | '/trip/$token'
@@ -319,6 +380,8 @@ export interface FileRouteTypes {
     | '/waitlist/$code'
     | '/waymaker/$id'
     | '/waymaker/apply'
+    | '/.lovable/oauth/consent'
+    | '/.mcp/invoke-tool/$tool'
     | '/api/public/bootstrap-admin'
     | '/lovable/email/suppression'
     | '/trip/$token/feedback'
@@ -337,15 +400,20 @@ export interface RootRouteChildren {
   BecomeAWaymakerRoute: typeof BecomeAWaymakerRoute
   FindAWaymakerRoute: typeof FindAWaymakerRoute
   LegalNoticeRoute: typeof LegalNoticeRoute
+  McpRoute: typeof McpRoute
   PrivacyRoute: typeof PrivacyRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   UnsubscribeRoute: typeof UnsubscribeRoute
+  Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
+  Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
   TripTokenRoute: typeof TripTokenRouteWithChildren
   TripNewRoute: typeof TripNewRoute
   WaitlistCodeRoute: typeof WaitlistCodeRoute
   WaymakerIdRoute: typeof WaymakerIdRoute
   WaymakerApplyRoute: typeof WaymakerApplyRoute
+  DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
+  Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   ApiPublicBootstrapAdminRoute: typeof ApiPublicBootstrapAdminRoute
   LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
   TripConfirmationTokenRoute: typeof TripConfirmationTokenRoute
@@ -377,6 +445,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/legal-notice': {
@@ -470,6 +545,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPrelaunchAnalyticsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.mcp/list-tools': {
+      id: '/.mcp/list-tools'
+      path: '/.mcp/list-tools'
+      fullPath: '/.mcp/list-tools'
+      preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/trip/confirmation/$token': {
       id: '/trip/confirmation/$token'
       path: '/trip/confirmation/$token'
@@ -496,6 +585,20 @@ declare module '@tanstack/react-router' {
       path: '/api/public/bootstrap-admin'
       fullPath: '/api/public/bootstrap-admin'
       preLoaderRoute: typeof ApiPublicBootstrapAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.mcp/invoke-tool/$tool': {
+      id: '/.mcp/invoke-tool/$tool'
+      path: '/.mcp/invoke-tool/$tool'
+      fullPath: '/.mcp/invoke-tool/$tool'
+      preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.lovable/oauth/consent': {
+      id: '/.lovable/oauth/consent'
+      path: '/.lovable/oauth/consent'
+      fullPath: '/.lovable/oauth/consent'
+      preLoaderRoute: typeof DotlovableOauthConsentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lovable/email/transactional/send': {
@@ -565,15 +668,21 @@ const rootRouteChildren: RootRouteChildren = {
   BecomeAWaymakerRoute: BecomeAWaymakerRoute,
   FindAWaymakerRoute: FindAWaymakerRoute,
   LegalNoticeRoute: LegalNoticeRoute,
+  McpRoute: McpRoute,
   PrivacyRoute: PrivacyRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   UnsubscribeRoute: UnsubscribeRoute,
+  Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
+  Char91DotwellKnownChar93OauthProtectedResourceRoute:
+    Char91DotwellKnownChar93OauthProtectedResourceRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
   TripTokenRoute: TripTokenRouteWithChildren,
   TripNewRoute: TripNewRoute,
   WaitlistCodeRoute: WaitlistCodeRoute,
   WaymakerIdRoute: WaymakerIdRoute,
   WaymakerApplyRoute: WaymakerApplyRoute,
+  DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
+  Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   ApiPublicBootstrapAdminRoute: ApiPublicBootstrapAdminRoute,
   LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
   TripConfirmationTokenRoute: TripConfirmationTokenRoute,
@@ -586,3 +695,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
