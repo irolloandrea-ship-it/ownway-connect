@@ -14,6 +14,7 @@ import {
   Text,
 } from '@react-email/components'
 
+import { maskEmail } from './mask-email'
 import type { TemplateEntry } from './registry'
 
 interface WaitlistConfirmationProps {
@@ -46,8 +47,8 @@ const WaitlistConfirmationEmail = ({
   waitlistUrl,
   alreadyIn = false,
 }: WaitlistConfirmationProps) => {
-  const share = referralUrl ?? `${siteUrl}/?ref=${referralCode}`
   const wl = waitlistUrl ?? `${siteUrl}/waitlist/${referralCode}`
+  const maskedEmail = maskEmail(email)
   const previewText = alreadyIn
     ? `You're already on the OwnWay waitlist — spot #${position}`
     : `You're on the OwnWay waitlist — spot #${position}`
@@ -77,7 +78,7 @@ const WaitlistConfirmationEmail = ({
               <Text style={positionLabel}>Your waitlist position</Text>
               <Text style={positionNumber}>#{position}</Text>
               <Text style={positionMeta}>
-                Held for <span style={emailStrong}>{email}</span>
+                Reserved for <span style={emailStrong}>{maskedEmail}</span>
               </Text>
             </Section>
 
@@ -87,8 +88,8 @@ const WaitlistConfirmationEmail = ({
               Move up the list
             </Heading>
             <Text style={body}>
-              Share your invite link with friends who love to travel. Each
-              signup through your link moves you roughly five places higher.
+              Share your invite link with friends who love to travel. Each new
+              friend who joins through your link helps you move up the list.
             </Text>
 
             <Section style={{ textAlign: 'center', margin: '20px 0 8px' }}>
@@ -105,7 +106,7 @@ const WaitlistConfirmationEmail = ({
             <Text style={body}>
               You can{' '}
               <Link href={wl} style={linkStyle}>
-                view your waitlist page
+                manage your waitlist
               </Link>{' '}
               anytime to check your position or update your details.
             </Text>
