@@ -45,7 +45,7 @@ export function ExploreScreen() {
 
         <div className="space-y-4">
           {DESTINATIONS.slice(0, 2).map((dest) => (
-            <div key={dest.id} className="relative h-[196px] overflow-hidden rounded-2xl">
+            <div key={dest.id} className="relative h-[178px] overflow-hidden rounded-2xl">
               <img
                 src={dest.image}
                 alt={`${dest.name}, ${dest.country.toLowerCase()}`}

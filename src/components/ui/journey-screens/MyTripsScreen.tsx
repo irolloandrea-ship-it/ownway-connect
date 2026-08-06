@@ -1,11 +1,10 @@
-import { Calendar, CheckCircle2, ChevronRight, Clock, Compass, Menu, Plus, Sparkles } from "lucide-react";
+import { Calendar, CheckCircle2, Compass, Menu, Plus, Sparkles } from "lucide-react";
 import { APP } from "./palette";
 import { MY_JOURNEYS } from "./data";
 import { ScreenShell, TabBar } from "./shell";
 
 export function MyTripsScreen() {
   const upcoming = MY_JOURNEYS.filter((j) => j.status !== "past");
-  const past = MY_JOURNEYS.filter((j) => j.status === "past");
 
   return (
     <ScreenShell footer={<TabBar active="trips" />}>
@@ -131,41 +130,6 @@ export function MyTripsScreen() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2 pt-1">
-          <Clock className="h-4 w-4" style={{ color: APP.inkFaint }} aria-hidden />
-          <h2 className="font-display text-lg font-bold" style={{ color: APP.green }}>
-            Past Journeys
-          </h2>
-        </div>
-
-        <div className="space-y-2">
-          {past.slice(0, 1).map((journey) => (
-            <div
-              key={journey.id}
-              className="flex items-center justify-between gap-3 rounded-2xl p-3"
-              style={{ background: APP.surface, border: `1px solid ${APP.chip}` }}
-            >
-              <div className="flex min-w-0 items-center gap-3">
-                <img
-                  src={journey.image}
-                  alt=""
-                  className="h-11 w-11 shrink-0 rounded-xl object-cover"
-                  loading="lazy"
-                  draggable={false}
-                />
-                <div className="min-w-0">
-                  <h4 className="truncate font-display text-sm font-bold" style={{ color: APP.green }}>
-                    {journey.city}, {journey.country}
-                  </h4>
-                  <p className="text-[11px]" style={{ color: APP.inkFaint }}>
-                    {journey.dates}
-                  </p>
-                </div>
-              </div>
-              <ChevronRight className="h-4 w-4 shrink-0" style={{ color: APP.inkFaint }} aria-hidden />
-            </div>
-          ))}
-        </div>
       </div>
     </ScreenShell>
   );
