@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "sdk_version": "0.26.1",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://ekcndzgxrvkhwwrlzckx.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "ownwayapp-landingpage",
+      "version": "0.1.0",
+      "title": "OwnwayApp_landingpage"
+    },
+    "tools": [
+      {
+        "name": "waitlist_stats",
+        "title": "Waitlist stats",
+        "description": "Summary of the OwnWay early-access waitlist: total signups, split by role, signups in the last 7 days, and total referrals.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_waitlist_signups",
+        "title": "List waitlist signups",
+        "description": "List the most recent OwnWay early-access signups, newest first. Optionally filter by role (explorer = traveller, waymaker).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer",
+              "description": "How many signups to return (default 20, max 100)."
+            },
+            "role": {
+              "type": "string",
+              "enum": [
+                "explorer",
+                "waymaker",
+                "curious",
+                "unknown"
+              ],
+              "description": "Only return signups with this role."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_waitlist_signup",
+        "title": "Get waitlist signup",
+        "description": "Look up one OwnWay waitlist signup by email address or referral code, including its referral count.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "description": "Email address of the signup."
+            },
+            "referral_code": {
+              "type": "string",
+              "description": "Referral code of the signup."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_waymaker_applications",
+        "title": "List WayMaker applications",
+        "description": "List submitted WayMaker applications, newest first. Optionally filter by review status.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer",
+              "description": "How many applications to return (default 20, max 100)."
+            },
+            "status": {
+              "type": "string",
+              "description": "Only return applications with this status."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
