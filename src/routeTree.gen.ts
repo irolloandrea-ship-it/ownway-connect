@@ -33,6 +33,7 @@ import { Route as TripTokenFeedbackRouteImport } from './routes/trip.$token.feed
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
 import { Route as ApiPublicBootstrapAdminRouteImport } from './routes/api/public/bootstrap-admin'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
+import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
@@ -162,6 +163,11 @@ const Char91DotmcpChar93InvokeToolToolRoute =
     path: '/.mcp/invoke-tool/$tool',
     getParentRoute: () => rootRouteImport,
   } as any)
+const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
+  id: '/.lovable/oauth/consent',
+  path: '/.lovable/oauth/consent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LovableEmailTransactionalSendRoute =
   LovableEmailTransactionalSendRouteImport.update({
     id: '/lovable/email/transactional/send',
@@ -211,6 +217,7 @@ export interface FileRoutesByFullPath {
   '/waitlist/$code': typeof WaitlistCodeRoute
   '/waymaker/$id': typeof WaymakerIdRoute
   '/waymaker/apply': typeof WaymakerApplyRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
@@ -242,6 +249,7 @@ export interface FileRoutesByTo {
   '/waitlist/$code': typeof WaitlistCodeRoute
   '/waymaker/$id': typeof WaymakerIdRoute
   '/waymaker/apply': typeof WaymakerApplyRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
@@ -274,6 +282,7 @@ export interface FileRoutesById {
   '/waitlist/$code': typeof WaitlistCodeRoute
   '/waymaker/$id': typeof WaymakerIdRoute
   '/waymaker/apply': typeof WaymakerApplyRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
@@ -307,6 +316,7 @@ export interface FileRouteTypes {
     | '/waitlist/$code'
     | '/waymaker/$id'
     | '/waymaker/apply'
+    | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/api/public/bootstrap-admin'
     | '/lovable/email/suppression'
@@ -338,6 +348,7 @@ export interface FileRouteTypes {
     | '/waitlist/$code'
     | '/waymaker/$id'
     | '/waymaker/apply'
+    | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/api/public/bootstrap-admin'
     | '/lovable/email/suppression'
@@ -369,6 +380,7 @@ export interface FileRouteTypes {
     | '/waitlist/$code'
     | '/waymaker/$id'
     | '/waymaker/apply'
+    | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/api/public/bootstrap-admin'
     | '/lovable/email/suppression'
@@ -400,6 +412,7 @@ export interface RootRouteChildren {
   WaitlistCodeRoute: typeof WaitlistCodeRoute
   WaymakerIdRoute: typeof WaymakerIdRoute
   WaymakerApplyRoute: typeof WaymakerApplyRoute
+  DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   ApiPublicBootstrapAdminRoute: typeof ApiPublicBootstrapAdminRoute
   LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
@@ -581,6 +594,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/.lovable/oauth/consent': {
+      id: '/.lovable/oauth/consent'
+      path: '/.lovable/oauth/consent'
+      fullPath: '/.lovable/oauth/consent'
+      preLoaderRoute: typeof DotlovableOauthConsentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lovable/email/transactional/send': {
       id: '/lovable/email/transactional/send'
       path: '/lovable/email/transactional/send'
@@ -661,6 +681,7 @@ const rootRouteChildren: RootRouteChildren = {
   WaitlistCodeRoute: WaitlistCodeRoute,
   WaymakerIdRoute: WaymakerIdRoute,
   WaymakerApplyRoute: WaymakerApplyRoute,
+  DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   ApiPublicBootstrapAdminRoute: ApiPublicBootstrapAdminRoute,
   LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
