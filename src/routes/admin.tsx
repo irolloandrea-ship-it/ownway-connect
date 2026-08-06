@@ -29,7 +29,7 @@ function AdminPage() {
   useEffect(() => {
     (async () => {
       const { data } = await supabase.auth.getSession();
-      if (!data.session) { navigate({ to: "/auth" }); return; }
+      if (!data.session) { navigate({ to: "/auth", search: { next: undefined } }); return; }
       try {
         const r = await grantSelf();
         if (r.granted || r.alreadyAdmin) setIsAdmin(true);
@@ -40,7 +40,7 @@ function AdminPage() {
     })();
   }, [navigate, grantSelf]);
 
-  const signOut = async () => { await supabase.auth.signOut(); navigate({ to: "/auth" }); };
+  const signOut = async () => { await supabase.auth.signOut(); navigate({ to: "/auth", search: { next: undefined } }); };
 
   if (!ready) return <div className="min-h-screen bg-background"><SiteHeader /><div className="container-page py-20 text-center text-muted-foreground">Loading…</div></div>;
   if (!isAdmin) {

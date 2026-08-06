@@ -30,7 +30,7 @@ function PrelaunchAnalyticsPage() {
     (async () => {
       const { data } = await supabase.auth.getSession();
       if (!data.session) {
-        navigate({ to: "/auth" });
+        navigate({ to: "/auth", search: { next: undefined } });
         return;
       }
       try {
@@ -45,7 +45,7 @@ function PrelaunchAnalyticsPage() {
 
   const signOut = async () => {
     await supabase.auth.signOut();
-    navigate({ to: "/auth" });
+    navigate({ to: "/auth", search: { next: undefined } });
   };
 
   if (!ready) {
