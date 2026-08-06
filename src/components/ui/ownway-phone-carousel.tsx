@@ -111,18 +111,21 @@ export function OwnWayPhoneCarousel(_: OwnWayPhoneCarouselProps) {
                     x: { type: "spring", stiffness: 260, damping: 30 },
                     opacity: { duration: 0.22 },
                   }}
-                  className="absolute inset-0 flex items-center justify-center"
-                  style={{ background: SCREEN_BG, paddingTop: "7%" }}
+                  className="absolute inset-0"
+                  style={{ background: SCREEN_BG }}
+                  role="img"
+                  aria-label={`OwnWay app preview — ${current.label}`}
                 >
-                  <img
-                    src={current.src}
-                    alt={current.alt}
-                    className="h-full w-full select-none object-contain"
-                    style={{ objectPosition: "center" }}
-                    draggable={false}
-                    decoding="async"
-                    loading="eager"
-                  />
+                  <div
+                    style={{
+                      width: SCREEN_DESIGN_W,
+                      height: SCREEN_DESIGN_H,
+                      transform: `scale(${SCALE})`,
+                      transformOrigin: "top left",
+                    }}
+                  >
+                    <current.Screen />
+                  </div>
                 </motion.div>
               </AnimatePresence>
 
