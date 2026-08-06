@@ -4,7 +4,7 @@ Only `src/lib/email-templates/waitlist-confirmation.tsx` (plus a tiny helper) ch
 
 ## Referral copy — backend check result
 
-The backend does **not** award one place per referral: each referral improves the priority score by 5 positions (`priority_score = base_position - referral_count * 5`), and final position is recomputed against everyone else, so the exact "one place higher" promise is not implemented.
+The backend does **not** award one place per referral: each referral reduces the priority score by 5 (`priority_score = base_position - referral_count * 5`). The visible rank is dynamic because it depends on everyone else's score, so the exact "one place higher" promise is not implemented. The neutral copy stays until the referral flow is fully audited.
 
 Therefore the neutral wording will be used:
 
