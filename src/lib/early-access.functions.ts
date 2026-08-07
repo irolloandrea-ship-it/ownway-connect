@@ -25,20 +25,39 @@ const statusSchema = z.object({
   referral_code: z.string().trim().min(4).max(64),
 });
 
-function generateCode() {
-  const chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
-  let out = "";
-  for (let i = 0; i < 7; i++) out += chars[Math.floor(Math.random() * chars.length)];
-  return out;
-}
-
-async function computePosition(supabaseAdmin: any, priority_score: number, id: string) {
-  // Position = 1 + number of rows ahead (lower priority_score, or same score but earlier id)
+/**
+ * Waitlist position counts CONFIRMED members only. Unverified signups do not
+ * appear in the queue and do not shift anyone else's position.
+ * Ordering: priority_score, then base_position (deterministic, never by UUID).
+ */
+async function computePosition(
+  supabaseAdmin: any,
+  priority_score: number,
+  base_position: number,
+) {
   const { count } = await supabaseAdmin
     .from("early_access_signups")
     .select("id", { count: "exact", head: true })
-    .or(`priority_score.lt.${priority_score},and(priority_score.eq.${priority_score},id.lt.${id})`);
+    .not("email_verified_at", "is", null)
+    .or(
+      `priority_score.lt.${priority_score},and(priority_score.eq.${priority_score},base_position.lt.${base_position})`,
+    );
   return (count ?? 0) + 1;
+}
+
+function generateConfirmToken() {
+  const bytes = new Uint8Array(32);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+async function hashToken(token: string) {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(token));
+  return Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 export const submitEarlyAccess = createServerFn({ method: "POST" })
@@ -49,119 +68,77 @@ export const submitEarlyAccess = createServerFn({ method: "POST" })
 
     const SITE_URL = "https://ownway.app";
 
-    async function sendConfirmationEmail(args: {
-      email: string;
-      position: number;
-      referral_code: string;
-      alreadyIn: boolean;
-    }) {
-      try {
-        await sendTransactionalEmailInternal({
-          templateName: "waitlist-confirmation",
-          recipientEmail: args.email,
-          idempotencyKey: `waitlist-confirm-${args.referral_code}-${args.alreadyIn ? "already" : "new"}`,
-          templateData: {
-            siteUrl: SITE_URL,
-            email: args.email,
-            position: args.position,
-            referralCode: args.referral_code,
-            referralUrl: `${SITE_URL}/?ref=${args.referral_code}`,
-            waitlistUrl: `${SITE_URL}/waitlist/${args.referral_code}`,
-            alreadyIn: args.alreadyIn,
-          },
-        });
-      } catch (err) {
-        // Never break signup on email failure
-        console.error("Waitlist confirmation email failed", err);
-      }
-    }
+    const token = generateConfirmToken();
+    const tokenHash = await hashToken(token);
+    const expiresAt = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString();
 
-    // Existing email?
-    const { data: existing } = await supabaseAdmin
-      .from("early_access_signups")
-      .select("id, referral_code, priority_score")
-      .ilike("email", data.email)
-      .maybeSingle();
-
-    if (existing?.referral_code) {
-      // Re-confirm consent record on repeat submission from the form.
-      await supabaseAdmin
-        .from("early_access_signups")
-        .update({
-          consent_to_updates: true,
-          consent_marketing: true,
-          consent_marketing_at: new Date().toISOString(),
-          consent_policy_version: data.consent_policy_version,
-          consent_source: data.consent_source ?? data.source ?? null,
-        })
-        .eq("id", existing.id);
-      const position = await computePosition(supabaseAdmin, existing.priority_score ?? 0, existing.id);
-      await sendConfirmationEmail({
-        email: data.email,
-        position,
-        referral_code: existing.referral_code,
-        alreadyIn: true,
-      });
-      return { referral_code: existing.referral_code, position, already: true as const };
-    }
-
-
-    // Self-referral guard handled by code lookup later
-    let referral_code = generateCode();
-    for (let i = 0; i < 5; i++) {
-      const { data: clash } = await supabaseAdmin
-        .from("early_access_signups")
-        .select("id")
-        .eq("referral_code", referral_code)
-        .maybeSingle();
-      if (!clash) break;
-      referral_code = generateCode();
-    }
-
-    const { data: inserted, error } = await supabaseAdmin
-      .from("early_access_signups")
-      .insert({
-        email: data.email,
-        role: data.role,
-        referral_code,
-        referred_by: data.referred_by ?? null,
-        source: data.source ?? null,
-        consent_to_updates: true,
-        consent_marketing: true,
-        consent_marketing_at: new Date().toISOString(),
-        consent_policy_version: data.consent_policy_version,
-        consent_source: data.consent_source ?? data.source ?? null,
-      })
-      .select("id, priority_score, referral_code")
-      .single();
-
-
-    if (error || !inserted) throw new Error(error?.message ?? "Could not save signup");
-
-    // Credit the referrer
-    if (data.referred_by) {
-      const { data: referrer } = await supabaseAdmin
-        .from("early_access_signups")
-        .select("id, referral_count")
-        .eq("referral_code", data.referred_by)
-        .maybeSingle();
-      if (referrer && referrer.id !== inserted.id) {
-        await supabaseAdmin
-          .from("early_access_signups")
-          .update({ referral_count: (referrer.referral_count ?? 0) + 1 })
-          .eq("id", referrer.id);
-      }
-    }
-
-    const position = await computePosition(supabaseAdmin, inserted.priority_score ?? 0, inserted.id);
-    await sendConfirmationEmail({
-      email: data.email,
-      position,
-      referral_code: inserted.referral_code,
-      alreadyIn: false,
+    // Atomic insert-or-return-existing. A pending referral credit is created
+    // ONLY when the signup row was genuinely inserted for the first time.
+    const { data: rows, error: rpcError } = await supabaseAdmin.rpc("create_or_get_signup", {
+      p_email: data.email,
+      p_role: data.role,
+      p_source: data.source ?? null,
+      p_referred_by: data.referred_by ?? null,
+      p_consent_policy_version: data.consent_policy_version,
+      p_consent_source: data.consent_source ?? data.source ?? null,
+      p_confirm_token_hash: tokenHash,
+      p_confirm_token_expires_at: expiresAt,
     });
-    return { referral_code: inserted.referral_code, position, already: false as const };
+    if (rpcError) throw new Error(rpcError.message);
+
+    const result = (rows as any[])?.[0];
+    if (!result?.signup_id) throw new Error("Could not save signup");
+
+    const referral_code = result.referral_code as string;
+    const verified = Boolean(result.email_verified);
+    const needsConfirmation = !verified;
+
+    let position = 0;
+    if (verified) {
+      const { data: row } = await supabaseAdmin
+        .from("early_access_signups")
+        .select("priority_score, base_position")
+        .eq("id", result.signup_id)
+        .maybeSingle();
+      position = await computePosition(
+        supabaseAdmin,
+        row?.priority_score ?? 0,
+        row?.base_position ?? 0,
+      );
+    }
+
+    try {
+      await sendTransactionalEmailInternal({
+        templateName: "waitlist-confirmation",
+        recipientEmail: data.email,
+        idempotencyKey: needsConfirmation
+          ? `waitlist-confirm-${tokenHash.slice(0, 32)}`
+          : `waitlist-already-${referral_code}`,
+        templateData: {
+          siteUrl: SITE_URL,
+          email: data.email,
+          position,
+          referralCode: referral_code,
+          referralUrl: `${SITE_URL}/?ref=${referral_code}`,
+          waitlistUrl: `${SITE_URL}/wl/${referral_code}`,
+          confirmUrl: `${SITE_URL}/confirm-email?t=${token}`,
+          needsConfirmation,
+          alreadyIn: !result.was_inserted,
+        },
+      });
+    } catch (err) {
+      // Never break signup on email failure
+      console.error("Waitlist confirmation email failed", err);
+    }
+
+    return {
+      referral_code,
+      position,
+      already: !result.was_inserted,
+      needs_confirmation: needsConfirmation,
+    };
   });
+
 
 
 export const updateSignup = createServerFn({ method: "POST" })
