@@ -59,6 +59,10 @@ export function JoinEarlyAccess({
   }, [intendedRole]);
 
   useEffect(() => {
+    captureReferralCode(referredBy);
+  }, [referredBy]);
+
+  useEffect(() => {
     if (open) {
       trackAnalyticsEvent("waitlist_form_viewed", { location });
     }

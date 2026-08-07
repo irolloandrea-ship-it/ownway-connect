@@ -41,6 +41,10 @@ export function EmailCapture({
   }, [intendedRole]);
 
   useEffect(() => {
+    captureReferralCode(referredBy);
+  }, [referredBy]);
+
+  useEffect(() => {
     trackAnalyticsEvent("waitlist_form_viewed", { location });
   }, [location]);
 
