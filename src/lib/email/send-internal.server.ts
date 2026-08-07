@@ -34,7 +34,7 @@ export async function sendTransactionalEmailInternal({
   recipientEmail,
   templateData = {},
   idempotencyKey,
-}: SendInternalArgs): Promise<{ ok: boolean; reason?: string }> {
+}: SendInternalArgs): Promise<{ ok: boolean; reason?: string; messageId?: string }> {
   const template = TEMPLATES[templateName]
   if (!template) {
     console.error('Template not found in registry', { templateName })
@@ -145,5 +145,5 @@ export async function sendTransactionalEmailInternal({
     return { ok: false, reason: 'enqueue_failed' }
   }
 
-  return { ok: true }
+  return { ok: true, messageId }
 }
