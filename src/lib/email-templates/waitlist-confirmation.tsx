@@ -169,7 +169,9 @@ export default WaitlistConfirmationEmail
 export const template = {
   component: WaitlistConfirmationEmail,
   subject: (data: Record<string, any>) =>
-    data?.alreadyIn
+    data?.needsConfirmation
+      ? 'Confirm your email to secure your OwnWay waitlist place'
+      : data?.alreadyIn
       ? `You're already on the OwnWay waitlist — spot #${data?.position ?? ''}`.trim()
       : `You're on the OwnWay waitlist — spot #${data?.position ?? ''}`.trim(),
   displayName: 'Waitlist confirmation',
@@ -179,7 +181,9 @@ export const template = {
     position: 128,
     referralCode: 'ABCDEFG',
     referralUrl: `${SITE_URL_FALLBACK}/?ref=ABCDEFG`,
-    waitlistUrl: `${SITE_URL_FALLBACK}/waitlist/ABCDEFG`,
+    waitlistUrl: `${SITE_URL_FALLBACK}/wl/ABCDEFG`,
+    confirmUrl: `${SITE_URL_FALLBACK}/confirm-email?t=example-token`,
+    needsConfirmation: true,
     alreadyIn: false,
   },
 } satisfies TemplateEntry
