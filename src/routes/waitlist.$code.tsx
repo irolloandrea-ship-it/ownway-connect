@@ -124,6 +124,22 @@ function WaitlistPage() {
                 Back to the homepage
               </Link>
             </div>
+          ) : !status.verified ? (
+            <div className="rounded-3xl border border-border/60 bg-card p-10 text-center shadow-card">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gold/20">
+                <Check className="size-6 text-gold" />
+              </div>
+              <h1 className="mt-6 font-display text-3xl md:text-4xl">Check your email</h1>
+              <p className="mx-auto mt-3 max-w-md text-muted-foreground">
+                We've sent a confirmation link to{" "}
+                <span className="text-foreground">{status.email}</span>. Confirming secures
+                your place on the OwnWay waitlist — until then your spot isn't reserved and
+                you won't appear in the queue.
+              </p>
+              <Link to="/" className="mt-6 inline-block text-sm text-gold hover:underline">
+                Back to the homepage
+              </Link>
+            </div>
           ) : (
             <>
               <div className="text-center">
