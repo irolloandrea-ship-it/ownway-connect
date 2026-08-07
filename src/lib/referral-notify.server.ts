@@ -115,7 +115,7 @@ export async function drainReferralNotifications(limit = 20) {
       await supabaseAdmin.rpc("mark_referral_notification", {
         p_outbox_id: job.outbox_id,
         p_status: "claimed",
-        p_provider_message_id: res.messageId ?? null,
+        p_provider_message_id: res.messageId ?? undefined,
         p_accepted: true,
       });
       await supabaseAdmin.rpc("mark_referral_notification", {
