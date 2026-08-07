@@ -15,6 +15,7 @@ import screen13 from "@/assets/screen-13.png.asset.json";
 import screen14 from "@/assets/screen-14.png.asset.json";
 import screen15 from "@/assets/screen-15.png.asset.json";
 import { JoinEarlyAccess } from "@/components/JoinEarlyAccess";
+import { captureReferralCode } from "@/lib/referral-code";
 
 const APP_SCREENS = [
   { src: screen13.url, alt: "OwnWay — Discover curated journeys" },
