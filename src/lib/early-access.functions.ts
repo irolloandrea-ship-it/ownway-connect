@@ -164,11 +164,19 @@ export const getWaitlistStatus = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: row } = await supabaseAdmin
       .from("early_access_signups")
-      .select("id, email, role, destination, referral_code, referral_count, priority_score, consent_to_updates")
+      .select(
+        "id, email, role, destination, referral_code, referral_count, priority_score, base_position, consent_to_updates, email_verified_at",
+      )
       .eq("referral_code", data.referral_code)
       .maybeSingle();
     if (!row) throw new Error("Signup not found");
-    const position = await computePosition(supabaseAdmin, row.priority_score ?? 0, row.id);
+
+    const verified = Boolean(row.email_verified_at);
+    // Unverified signups have no visible position and do not affect the queue.
+    const position = verified
+      ? await computePosition(supabaseAdmin, row.priority_score ?? 0, row.base_position ?? 0)
+      : 0;
+
     return {
       email: row.email as string,
       role: row.role as string,
@@ -176,6 +184,8 @@ export const getWaitlistStatus = createServerFn({ method: "POST" })
       referral_code: row.referral_code as string,
       referral_count: row.referral_count as number,
       consent_to_updates: row.consent_to_updates as boolean,
+      verified,
       position,
     };
   });
+
