@@ -40,6 +40,18 @@ export const confirmEmail = createServerFn({ method: "POST" })
     });
     if (error) throw new Error(error.message);
     const row = (rows as any[])?.[0];
+
+    // Best-effort immediate drain. The outbox is the durable record; the
+    // secured scheduled endpoint retries anything left behind.
+    if (row?.credit_awarded) {
+      try {
+        const { drainReferralNotifications } = await import("@/lib/referral-notify.server");
+        await drainReferralNotifications(5);
+      } catch (err) {
+        console.error("immediate referral notification drain failed", err);
+      }
+    }
+
     return {
       status: (row?.outcome as string) ?? "invalid",
       referral_code: (row?.referral_code as string | null) ?? null,
