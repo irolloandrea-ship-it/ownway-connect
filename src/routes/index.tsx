@@ -120,6 +120,7 @@ function LandingPage() {
   const [joinOpen, setJoinOpen] = useState(false);
 
   useEffect(() => {
+    captureReferralCode();
     captureSourceOnce();
     void trackPrelaunchEvent("page_view");
   }, []);
