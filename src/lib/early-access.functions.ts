@@ -121,7 +121,7 @@ export const submitEarlyAccess = createServerFn({ method: "POST" })
           position,
           referralCode: referral_code,
           referralUrl: `${SITE_URL}/?ref=${referral_code}`,
-          waitlistUrl: `${SITE_URL}/wl/${referral_code}`,
+          waitlistUrl: `${SITE_URL}/waitlist/${referral_code}`,
           confirmUrl: `${SITE_URL}/confirm-email?t=${token}`,
           needsConfirmation,
           alreadyIn: !result.was_inserted,
