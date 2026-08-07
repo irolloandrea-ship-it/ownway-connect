@@ -68,6 +68,9 @@ export type Database = {
       early_access_signups: {
         Row: {
           base_position: number | null
+          confirm_token_expires_at: string | null
+          confirm_token_hash: string | null
+          confirm_token_used_at: string | null
           consent_marketing: boolean
           consent_marketing_at: string | null
           consent_policy_version: string | null
@@ -76,6 +79,8 @@ export type Database = {
           created_at: string
           destination: string | null
           email: string
+          email_normalized: string | null
+          email_verified_at: string | null
           id: string
           priority_score: number | null
           referral_code: string
@@ -87,6 +92,9 @@ export type Database = {
         }
         Insert: {
           base_position?: number | null
+          confirm_token_expires_at?: string | null
+          confirm_token_hash?: string | null
+          confirm_token_used_at?: string | null
           consent_marketing?: boolean
           consent_marketing_at?: string | null
           consent_policy_version?: string | null
@@ -95,6 +103,8 @@ export type Database = {
           created_at?: string
           destination?: string | null
           email: string
+          email_normalized?: string | null
+          email_verified_at?: string | null
           id?: string
           priority_score?: number | null
           referral_code: string
@@ -106,6 +116,9 @@ export type Database = {
         }
         Update: {
           base_position?: number | null
+          confirm_token_expires_at?: string | null
+          confirm_token_hash?: string | null
+          confirm_token_used_at?: string | null
           consent_marketing?: boolean
           consent_marketing_at?: string | null
           consent_policy_version?: string | null
@@ -114,6 +127,8 @@ export type Database = {
           created_at?: string
           destination?: string | null
           email?: string
+          email_normalized?: string | null
+          email_verified_at?: string | null
           id?: string
           priority_score?: number | null
           referral_code?: string
@@ -376,8 +391,6 @@ export type Database = {
           button_location: string | null
           button_text: string | null
           created_at: string
-          email: string | null
-          email_normalized: string | null
           event_name: string
           id: string
           metadata: Json | null
@@ -395,8 +408,6 @@ export type Database = {
           button_location?: string | null
           button_text?: string | null
           created_at?: string
-          email?: string | null
-          email_normalized?: string | null
           event_name: string
           id?: string
           metadata?: Json | null
@@ -414,8 +425,6 @@ export type Database = {
           button_location?: string | null
           button_text?: string | null
           created_at?: string
-          email?: string | null
-          email_normalized?: string | null
           event_name?: string
           id?: string
           metadata?: Json | null
@@ -430,6 +439,105 @@ export type Database = {
           utm_term?: string | null
         }
         Relationships: []
+      }
+      referral_credits: {
+        Row: {
+          awarded_at: string | null
+          created_at: string
+          id: string
+          referred_signup_id: string
+          referrer_signup_id: string
+          status: string
+        }
+        Insert: {
+          awarded_at?: string | null
+          created_at?: string
+          id?: string
+          referred_signup_id: string
+          referrer_signup_id: string
+          status?: string
+        }
+        Update: {
+          awarded_at?: string | null
+          created_at?: string
+          id?: string
+          referred_signup_id?: string
+          referrer_signup_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referral_credits_referred_signup_id_fkey"
+            columns: ["referred_signup_id"]
+            isOneToOne: true
+            referencedRelation: "early_access_signups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referral_credits_referrer_signup_id_fkey"
+            columns: ["referrer_signup_id"]
+            isOneToOne: false
+            referencedRelation: "early_access_signups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      referral_notification_outbox: {
+        Row: {
+          attempts: number
+          claimed_at: string | null
+          created_at: string
+          id: string
+          last_error: string | null
+          provider_accepted_at: string | null
+          provider_message_id: string | null
+          recipient_signup_id: string
+          referral_credit_id: string
+          sent_at: string | null
+          status: string
+        }
+        Insert: {
+          attempts?: number
+          claimed_at?: string | null
+          created_at?: string
+          id?: string
+          last_error?: string | null
+          provider_accepted_at?: string | null
+          provider_message_id?: string | null
+          recipient_signup_id: string
+          referral_credit_id: string
+          sent_at?: string | null
+          status?: string
+        }
+        Update: {
+          attempts?: number
+          claimed_at?: string | null
+          created_at?: string
+          id?: string
+          last_error?: string | null
+          provider_accepted_at?: string | null
+          provider_message_id?: string | null
+          recipient_signup_id?: string
+          referral_credit_id?: string
+          sent_at?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referral_notification_outbox_recipient_signup_id_fkey"
+            columns: ["recipient_signup_id"]
+            isOneToOne: false
+            referencedRelation: "early_access_signups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referral_notification_outbox_referral_credit_id_fkey"
+            columns: ["referral_credit_id"]
+            isOneToOne: true
+            referencedRelation: "referral_credits"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       suppressed_emails: {
         Row: {
@@ -717,6 +825,44 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      claim_referral_notifications: {
+        Args: { p_limit?: number }
+        Returns: {
+          attempts: number
+          outbox_id: string
+          provider_accepted_at: string
+          recipient_signup_id: string
+          referral_credit_id: string
+        }[]
+      }
+      confirm_email_and_award: {
+        Args: { p_token_hash: string }
+        Returns: {
+          credit_awarded: boolean
+          outcome: string
+          referral_code: string
+        }[]
+      }
+      confirm_email_status: { Args: { p_token_hash: string }; Returns: string }
+      create_or_get_signup: {
+        Args: {
+          p_confirm_token_expires_at: string
+          p_confirm_token_hash: string
+          p_consent_policy_version: string
+          p_consent_source: string
+          p_email: string
+          p_referred_by: string
+          p_role: string
+          p_source: string
+        }
+        Returns: {
+          confirm_token_stored: boolean
+          email_verified: boolean
+          referral_code: string
+          signup_id: string
+          was_inserted: boolean
+        }[]
+      }
       delete_email: {
         Args: { message_id: number; queue_name: string }
         Returns: boolean
@@ -734,6 +880,16 @@ export type Database = {
         Returns: boolean
       }
       is_admin: { Args: never; Returns: boolean }
+      mark_referral_notification: {
+        Args: {
+          p_accepted?: boolean
+          p_error?: string
+          p_outbox_id: string
+          p_provider_message_id?: string
+          p_status: string
+        }
+        Returns: undefined
+      }
       move_to_dlq: {
         Args: {
           dlq_name: string
