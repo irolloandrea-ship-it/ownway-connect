@@ -24,8 +24,11 @@ interface WaitlistConfirmationProps {
   referralCode?: string
   referralUrl?: string
   waitlistUrl?: string
+  confirmUrl?: string
+  needsConfirmation?: boolean
   alreadyIn?: boolean
 }
+
 
 const SITE_URL_FALLBACK = 'https://ownway.app'
 
