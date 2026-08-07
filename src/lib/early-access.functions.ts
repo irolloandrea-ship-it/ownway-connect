@@ -83,7 +83,8 @@ export const submitEarlyAccess = createServerFn({ method: "POST" })
       p_consent_source: data.consent_source ?? data.source ?? null,
       p_confirm_token_hash: tokenHash,
       p_confirm_token_expires_at: expiresAt,
-    });
+    } as any);
+
     if (rpcError) throw new Error(rpcError.message);
 
     const result = (rows as any[])?.[0];
