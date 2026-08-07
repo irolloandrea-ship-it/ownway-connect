@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { submitEarlyAccess } from "@/lib/early-access.functions";
 import { CONSENT_POLICY_VERSION, trackAnalyticsEvent } from "@/lib/cookie-consent";
+import { captureReferralCode, clearReferralCode, getStoredReferralCode } from "@/lib/referral-code";
 import { trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
 
 type Role = "explorer" | "waymaker";
@@ -58,6 +59,10 @@ export function JoinEarlyAccess({
   }, [intendedRole]);
 
   useEffect(() => {
+    captureReferralCode(referredBy);
+  }, [referredBy]);
+
+  useEffect(() => {
     if (open) {
       trackAnalyticsEvent("waitlist_form_viewed", { location });
     }
@@ -85,12 +90,13 @@ export function JoinEarlyAccess({
           email: email.trim(),
           role: role as Role,
           source: typeof document !== "undefined" ? document.referrer || "direct" : "direct",
-          referred_by: referredBy || null,
+          referred_by: getStoredReferralCode() ?? captureReferralCode(referredBy) ?? null,
           consent_marketing: true,
           consent_policy_version: CONSENT_POLICY_VERSION,
           consent_source: location,
         },
       });
+      clearReferralCode();
       void trackPrelaunchEvent("email_signup", { metadata: { location } });
       trackAnalyticsEvent("waitlist_form_submitted", { location });
       setDone(true);

@@ -76,14 +76,9 @@ export function captureSourceOnce(): UtmData {
   return data;
 }
 
-function normalizeEmail(email: string) {
-  return email.trim().toLowerCase();
-}
-
 type ExtraPayload = {
   button_text?: string;
   button_location?: string;
-  email?: string;
   metadata?: Record<string, any>;
 };
 
@@ -101,8 +96,6 @@ export async function trackPrelaunchEvent(
       referrer: src.referrer,
       button_text: payload.button_text ?? null,
       button_location: payload.button_location ?? null,
-      email: payload.email ?? null,
-      email_normalized: payload.email ? normalizeEmail(payload.email) : null,
       utm_source: src.utm_source,
       utm_medium: src.utm_medium,
       utm_campaign: src.utm_campaign,

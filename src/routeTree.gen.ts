@@ -15,6 +15,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as LegalNoticeRouteImport } from './routes/legal-notice'
 import { Route as FindAWaymakerRouteImport } from './routes/find-a-waymaker'
+import { Route as ConfirmEmailRouteImport } from './routes/confirm-email'
 import { Route as BecomeAWaymakerRouteImport } from './routes/become-a-waymaker'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -39,6 +40,7 @@ import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/l
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
+import { Route as ApiPublicHooksReferralNotificationsRouteImport } from './routes/api/public/hooks/referral-notifications'
 
 const UnsubscribeRoute = UnsubscribeRouteImport.update({
   id: '/unsubscribe',
@@ -68,6 +70,11 @@ const LegalNoticeRoute = LegalNoticeRouteImport.update({
 const FindAWaymakerRoute = FindAWaymakerRouteImport.update({
   id: '/find-a-waymaker',
   path: '/find-a-waymaker',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfirmEmailRoute = ConfirmEmailRouteImport.update({
+  id: '/confirm-email',
+  path: '/confirm-email',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BecomeAWaymakerRoute = BecomeAWaymakerRouteImport.update({
@@ -196,12 +203,19 @@ const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
   path: '/lovable/email/auth/preview',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicHooksReferralNotificationsRoute =
+  ApiPublicHooksReferralNotificationsRouteImport.update({
+    id: '/api/public/hooks/referral-notifications',
+    path: '/api/public/hooks/referral-notifications',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/become-a-waymaker': typeof BecomeAWaymakerRoute
+  '/confirm-email': typeof ConfirmEmailRoute
   '/find-a-waymaker': typeof FindAWaymakerRoute
   '/legal-notice': typeof LegalNoticeRoute
   '/mcp': typeof McpRoute
@@ -223,6 +237,7 @@ export interface FileRoutesByFullPath {
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
   '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
+  '/api/public/hooks/referral-notifications': typeof ApiPublicHooksReferralNotificationsRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
@@ -234,6 +249,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/become-a-waymaker': typeof BecomeAWaymakerRoute
+  '/confirm-email': typeof ConfirmEmailRoute
   '/find-a-waymaker': typeof FindAWaymakerRoute
   '/legal-notice': typeof LegalNoticeRoute
   '/mcp': typeof McpRoute
@@ -255,6 +271,7 @@ export interface FileRoutesByTo {
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
   '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
+  '/api/public/hooks/referral-notifications': typeof ApiPublicHooksReferralNotificationsRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
@@ -267,6 +284,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/become-a-waymaker': typeof BecomeAWaymakerRoute
+  '/confirm-email': typeof ConfirmEmailRoute
   '/find-a-waymaker': typeof FindAWaymakerRoute
   '/legal-notice': typeof LegalNoticeRoute
   '/mcp': typeof McpRoute
@@ -288,6 +306,7 @@ export interface FileRoutesById {
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
   '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
+  '/api/public/hooks/referral-notifications': typeof ApiPublicHooksReferralNotificationsRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
@@ -301,6 +320,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/become-a-waymaker'
+    | '/confirm-email'
     | '/find-a-waymaker'
     | '/legal-notice'
     | '/mcp'
@@ -322,6 +342,7 @@ export interface FileRouteTypes {
     | '/lovable/email/suppression'
     | '/trip/$token/feedback'
     | '/trip/confirmation/$token'
+    | '/api/public/hooks/referral-notifications'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/queue/process'
@@ -333,6 +354,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/become-a-waymaker'
+    | '/confirm-email'
     | '/find-a-waymaker'
     | '/legal-notice'
     | '/mcp'
@@ -354,6 +376,7 @@ export interface FileRouteTypes {
     | '/lovable/email/suppression'
     | '/trip/$token/feedback'
     | '/trip/confirmation/$token'
+    | '/api/public/hooks/referral-notifications'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/queue/process'
@@ -365,6 +388,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/become-a-waymaker'
+    | '/confirm-email'
     | '/find-a-waymaker'
     | '/legal-notice'
     | '/mcp'
@@ -386,6 +410,7 @@ export interface FileRouteTypes {
     | '/lovable/email/suppression'
     | '/trip/$token/feedback'
     | '/trip/confirmation/$token'
+    | '/api/public/hooks/referral-notifications'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/queue/process'
@@ -398,6 +423,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   AuthRoute: typeof AuthRoute
   BecomeAWaymakerRoute: typeof BecomeAWaymakerRoute
+  ConfirmEmailRoute: typeof ConfirmEmailRoute
   FindAWaymakerRoute: typeof FindAWaymakerRoute
   LegalNoticeRoute: typeof LegalNoticeRoute
   McpRoute: typeof McpRoute
@@ -417,6 +443,7 @@ export interface RootRouteChildren {
   ApiPublicBootstrapAdminRoute: typeof ApiPublicBootstrapAdminRoute
   LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
   TripConfirmationTokenRoute: typeof TripConfirmationTokenRoute
+  ApiPublicHooksReferralNotificationsRoute: typeof ApiPublicHooksReferralNotificationsRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
@@ -466,6 +493,13 @@ declare module '@tanstack/react-router' {
       path: '/find-a-waymaker'
       fullPath: '/find-a-waymaker'
       preLoaderRoute: typeof FindAWaymakerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/confirm-email': {
+      id: '/confirm-email'
+      path: '/confirm-email'
+      fullPath: '/confirm-email'
+      preLoaderRoute: typeof ConfirmEmailRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/become-a-waymaker': {
@@ -636,6 +670,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailAuthPreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/referral-notifications': {
+      id: '/api/public/hooks/referral-notifications'
+      path: '/api/public/hooks/referral-notifications'
+      fullPath: '/api/public/hooks/referral-notifications'
+      preLoaderRoute: typeof ApiPublicHooksReferralNotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -666,6 +707,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   AuthRoute: AuthRoute,
   BecomeAWaymakerRoute: BecomeAWaymakerRoute,
+  ConfirmEmailRoute: ConfirmEmailRoute,
   FindAWaymakerRoute: FindAWaymakerRoute,
   LegalNoticeRoute: LegalNoticeRoute,
   McpRoute: McpRoute,
@@ -686,6 +728,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicBootstrapAdminRoute: ApiPublicBootstrapAdminRoute,
   LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
   TripConfirmationTokenRoute: TripConfirmationTokenRoute,
+  ApiPublicHooksReferralNotificationsRoute:
+    ApiPublicHooksReferralNotificationsRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,

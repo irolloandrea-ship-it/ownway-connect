@@ -24,8 +24,11 @@ interface WaitlistConfirmationProps {
   referralCode?: string
   referralUrl?: string
   waitlistUrl?: string
+  confirmUrl?: string
+  needsConfirmation?: boolean
   alreadyIn?: boolean
 }
+
 
 const SITE_URL_FALLBACK = 'https://ownway.app'
 
@@ -45,13 +48,17 @@ const WaitlistConfirmationEmail = ({
   referralCode = 'ABCDEFG',
   referralUrl,
   waitlistUrl,
+  confirmUrl,
+  needsConfirmation = false,
   alreadyIn = false,
 }: WaitlistConfirmationProps) => {
   const wl = waitlistUrl ?? `${siteUrl}/waitlist/${referralCode}`
   const maskedEmail = maskEmail(email)
-  const previewText = alreadyIn
-    ? `You're already on the OwnWay waitlist — spot #${position}`
-    : `You're on the OwnWay waitlist — spot #${position}`
+  const previewText = needsConfirmation
+    ? 'Confirm your email to secure your place on the OwnWay waitlist'
+    : alreadyIn
+      ? `You're already on the OwnWay waitlist — spot #${position}`
+      : `You're on the OwnWay waitlist — spot #${position}`
 
   return (
     <Html lang="en" dir="ltr">
@@ -64,23 +71,46 @@ const WaitlistConfirmationEmail = ({
           </Section>
 
           <Container style={card}>
-            <Text style={eyebrow}>Early access · confirmed</Text>
+            <Text style={eyebrow}>
+              {needsConfirmation ? 'Early access · one step left' : 'Early access · confirmed'}
+            </Text>
             <Heading style={h1}>
-              {alreadyIn ? "You're already on the list." : "You're on the list."}
+              {needsConfirmation
+                ? 'Confirm your email.'
+                : alreadyIn
+                  ? "You're already on the list."
+                  : "You're on the list."}
             </Heading>
             <Text style={lede}>
-              {alreadyIn
-                ? `This email is already on the OwnWay early access list. Your spot and referral link are below.`
-                : `Thanks for joining OwnWay early access. We'll be in touch as soon as your spot opens.`}
+              {needsConfirmation
+                ? `Confirming secures your place on the OwnWay waitlist. Until then your place isn't reserved.`
+                : alreadyIn
+                  ? `This email is already on the OwnWay early access list. Your spot and referral link are below.`
+                  : `Thanks for joining OwnWay early access. We'll be in touch as soon as your spot opens.`}
             </Text>
 
-            <Section style={positionCard}>
-              <Text style={positionLabel}>Your waitlist position</Text>
-              <Text style={positionNumber}>#{position}</Text>
-              <Text style={positionMeta}>
-                Reserved for <span style={emailStrong}>{maskedEmail}</span>
-              </Text>
-            </Section>
+            {needsConfirmation && confirmUrl ? (
+              <>
+                <Section style={{ textAlign: 'center', margin: '20px 0 8px' }}>
+                  <Button style={button} href={confirmUrl}>
+                    Confirm and secure my place
+                  </Button>
+                </Section>
+                <Text style={helperText}>
+                  This link is valid for 14 days and works once, for{' '}
+                  <span style={emailStrong}>{maskedEmail}</span>.
+                </Text>
+              </>
+            ) : (
+              <Section style={positionCard}>
+                <Text style={positionLabel}>Your waitlist position</Text>
+                <Text style={positionNumber}>#{position}</Text>
+                <Text style={positionMeta}>
+                  Reserved for <span style={emailStrong}>{maskedEmail}</span>
+                </Text>
+              </Section>
+            )}
+
 
             <Hr style={hr} />
 
@@ -139,7 +169,9 @@ export default WaitlistConfirmationEmail
 export const template = {
   component: WaitlistConfirmationEmail,
   subject: (data: Record<string, any>) =>
-    data?.alreadyIn
+    data?.needsConfirmation
+      ? 'Confirm your email to secure your OwnWay waitlist place'
+      : data?.alreadyIn
       ? `You're already on the OwnWay waitlist — spot #${data?.position ?? ''}`.trim()
       : `You're on the OwnWay waitlist — spot #${data?.position ?? ''}`.trim(),
   displayName: 'Waitlist confirmation',
@@ -150,6 +182,8 @@ export const template = {
     referralCode: 'ABCDEFG',
     referralUrl: `${SITE_URL_FALLBACK}/?ref=ABCDEFG`,
     waitlistUrl: `${SITE_URL_FALLBACK}/waitlist/ABCDEFG`,
+    confirmUrl: `${SITE_URL_FALLBACK}/confirm-email?t=example-token`,
+    needsConfirmation: true,
     alreadyIn: false,
   },
 } satisfies TemplateEntry

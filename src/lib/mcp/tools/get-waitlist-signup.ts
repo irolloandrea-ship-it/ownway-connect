@@ -30,7 +30,7 @@ export default defineTool({
       )
       .limit(1);
     query = email
-      ? query.eq("email", email.toLowerCase())
+      ? query.eq("email_normalized", email.trim().toLowerCase())
       : query.eq("referral_code", referral_code!.toUpperCase());
 
     const { data, error } = await query;
