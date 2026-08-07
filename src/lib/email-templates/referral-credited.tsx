@@ -41,7 +41,7 @@ const ReferralCreditedEmail = ({
   waitlistUrl,
   referralUrl,
 }: ReferralCreditedProps) => {
-  const wl = waitlistUrl ?? `${siteUrl}/wl`
+  const wl = waitlistUrl ?? `${siteUrl}`
   const sentence = `Your invite was credited. You now have ${count} confirmed invites and are currently #${position}.`
 
   return (
@@ -111,7 +111,7 @@ export const template = {
     siteUrl: SITE_URL_FALLBACK,
     count: 2,
     position: 118,
-    waitlistUrl: `${SITE_URL_FALLBACK}/wl/ABCDEFG`,
+    waitlistUrl: `${SITE_URL_FALLBACK}/waitlist/ABCDEFG`,
     referralUrl: `${SITE_URL_FALLBACK}/?ref=ABCDEFG`,
   },
 } satisfies TemplateEntry

@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { submitEarlyAccess } from "@/lib/early-access.functions";
 import { trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
 import { CONSENT_POLICY_VERSION, trackAnalyticsEvent } from "@/lib/cookie-consent";
+import { captureReferralCode, clearReferralCode, getStoredReferralCode } from "@/lib/referral-code";
 
 export function EmailCapture({
   referredBy,
@@ -69,14 +70,14 @@ export function EmailCapture({
           email,
           role,
           source: typeof window !== "undefined" ? document.referrer || "direct" : "direct",
-          referred_by: referredBy || null,
+          referred_by: getStoredReferralCode() ?? captureReferralCode(referredBy) ?? null,
           consent_marketing: true,
           consent_policy_version: CONSENT_POLICY_VERSION,
           consent_source: location,
         },
       });
+      clearReferralCode();
       void trackPrelaunchEvent("email_signup", {
-        email,
         metadata: { role, already: res.already ?? false, location },
       });
       trackAnalyticsEvent("waitlist_form_submitted", { role, location });

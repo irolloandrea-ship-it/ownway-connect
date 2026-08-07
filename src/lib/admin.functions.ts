@@ -314,7 +314,7 @@ export const adminPrelaunchAnalytics = createServerFn({ method: "GET" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data, error } = await supabaseAdmin
       .from("prelaunch_analytics_events")
-      .select("event_name, source, utm_campaign, button_text, button_location, email_normalized, created_at")
+      .select("event_name, source, utm_campaign, button_text, button_location, created_at")
       .order("created_at", { ascending: false })
       .limit(2000);
     if (error) throw new Error(error.message);

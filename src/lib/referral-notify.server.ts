@@ -87,7 +87,7 @@ export async function drainReferralNotifications(limit = 20) {
           siteUrl: SITE_URL,
           count: recipient.referral_count ?? 0,
           position,
-          waitlistUrl: `${SITE_URL}/wl/${recipient.referral_code}`,
+          waitlistUrl: `${SITE_URL}/waitlist/${recipient.referral_code}`,
           referralUrl: `${SITE_URL}/?ref=${recipient.referral_code}`,
         },
       });

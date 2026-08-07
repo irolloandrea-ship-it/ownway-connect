@@ -181,7 +181,7 @@ export const template = {
     position: 128,
     referralCode: 'ABCDEFG',
     referralUrl: `${SITE_URL_FALLBACK}/?ref=ABCDEFG`,
-    waitlistUrl: `${SITE_URL_FALLBACK}/wl/ABCDEFG`,
+    waitlistUrl: `${SITE_URL_FALLBACK}/waitlist/ABCDEFG`,
     confirmUrl: `${SITE_URL_FALLBACK}/confirm-email?t=example-token`,
     needsConfirmation: true,
     alreadyIn: false,
