@@ -15,6 +15,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as LegalNoticeRouteImport } from './routes/legal-notice'
 import { Route as FindAWaymakerRouteImport } from './routes/find-a-waymaker'
+import { Route as ConfirmEmailRouteImport } from './routes/confirm-email'
 import { Route as BecomeAWaymakerRouteImport } from './routes/become-a-waymaker'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -68,6 +69,11 @@ const LegalNoticeRoute = LegalNoticeRouteImport.update({
 const FindAWaymakerRoute = FindAWaymakerRouteImport.update({
   id: '/find-a-waymaker',
   path: '/find-a-waymaker',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfirmEmailRoute = ConfirmEmailRouteImport.update({
+  id: '/confirm-email',
+  path: '/confirm-email',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BecomeAWaymakerRoute = BecomeAWaymakerRouteImport.update({
@@ -202,6 +208,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/become-a-waymaker': typeof BecomeAWaymakerRoute
+  '/confirm-email': typeof ConfirmEmailRoute
   '/find-a-waymaker': typeof FindAWaymakerRoute
   '/legal-notice': typeof LegalNoticeRoute
   '/mcp': typeof McpRoute
@@ -234,6 +241,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/become-a-waymaker': typeof BecomeAWaymakerRoute
+  '/confirm-email': typeof ConfirmEmailRoute
   '/find-a-waymaker': typeof FindAWaymakerRoute
   '/legal-notice': typeof LegalNoticeRoute
   '/mcp': typeof McpRoute
@@ -267,6 +275,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/become-a-waymaker': typeof BecomeAWaymakerRoute
+  '/confirm-email': typeof ConfirmEmailRoute
   '/find-a-waymaker': typeof FindAWaymakerRoute
   '/legal-notice': typeof LegalNoticeRoute
   '/mcp': typeof McpRoute
@@ -301,6 +310,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/become-a-waymaker'
+    | '/confirm-email'
     | '/find-a-waymaker'
     | '/legal-notice'
     | '/mcp'
@@ -333,6 +343,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/become-a-waymaker'
+    | '/confirm-email'
     | '/find-a-waymaker'
     | '/legal-notice'
     | '/mcp'
@@ -365,6 +376,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/become-a-waymaker'
+    | '/confirm-email'
     | '/find-a-waymaker'
     | '/legal-notice'
     | '/mcp'
@@ -398,6 +410,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   AuthRoute: typeof AuthRoute
   BecomeAWaymakerRoute: typeof BecomeAWaymakerRoute
+  ConfirmEmailRoute: typeof ConfirmEmailRoute
   FindAWaymakerRoute: typeof FindAWaymakerRoute
   LegalNoticeRoute: typeof LegalNoticeRoute
   McpRoute: typeof McpRoute
@@ -466,6 +479,13 @@ declare module '@tanstack/react-router' {
       path: '/find-a-waymaker'
       fullPath: '/find-a-waymaker'
       preLoaderRoute: typeof FindAWaymakerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/confirm-email': {
+      id: '/confirm-email'
+      path: '/confirm-email'
+      fullPath: '/confirm-email'
+      preLoaderRoute: typeof ConfirmEmailRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/become-a-waymaker': {
@@ -666,6 +686,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   AuthRoute: AuthRoute,
   BecomeAWaymakerRoute: BecomeAWaymakerRoute,
+  ConfirmEmailRoute: ConfirmEmailRoute,
   FindAWaymakerRoute: FindAWaymakerRoute,
   LegalNoticeRoute: LegalNoticeRoute,
   McpRoute: McpRoute,
