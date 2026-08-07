@@ -40,6 +40,7 @@ import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/l
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
+import { Route as ApiPublicHooksReferralNotificationsRouteImport } from './routes/api/public/hooks/referral-notifications'
 
 const UnsubscribeRoute = UnsubscribeRouteImport.update({
   id: '/unsubscribe',
@@ -202,6 +203,12 @@ const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
   path: '/lovable/email/auth/preview',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicHooksReferralNotificationsRoute =
+  ApiPublicHooksReferralNotificationsRouteImport.update({
+    id: '/api/public/hooks/referral-notifications',
+    path: '/api/public/hooks/referral-notifications',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -230,6 +237,7 @@ export interface FileRoutesByFullPath {
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
   '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
+  '/api/public/hooks/referral-notifications': typeof ApiPublicHooksReferralNotificationsRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
@@ -263,6 +271,7 @@ export interface FileRoutesByTo {
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
   '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
+  '/api/public/hooks/referral-notifications': typeof ApiPublicHooksReferralNotificationsRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
@@ -297,6 +306,7 @@ export interface FileRoutesById {
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/trip/$token/feedback': typeof TripTokenFeedbackRoute
   '/trip/confirmation/$token': typeof TripConfirmationTokenRoute
+  '/api/public/hooks/referral-notifications': typeof ApiPublicHooksReferralNotificationsRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
@@ -332,6 +342,7 @@ export interface FileRouteTypes {
     | '/lovable/email/suppression'
     | '/trip/$token/feedback'
     | '/trip/confirmation/$token'
+    | '/api/public/hooks/referral-notifications'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/queue/process'
@@ -365,6 +376,7 @@ export interface FileRouteTypes {
     | '/lovable/email/suppression'
     | '/trip/$token/feedback'
     | '/trip/confirmation/$token'
+    | '/api/public/hooks/referral-notifications'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/queue/process'
@@ -398,6 +410,7 @@ export interface FileRouteTypes {
     | '/lovable/email/suppression'
     | '/trip/$token/feedback'
     | '/trip/confirmation/$token'
+    | '/api/public/hooks/referral-notifications'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/queue/process'
@@ -430,6 +443,7 @@ export interface RootRouteChildren {
   ApiPublicBootstrapAdminRoute: typeof ApiPublicBootstrapAdminRoute
   LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
   TripConfirmationTokenRoute: typeof TripConfirmationTokenRoute
+  ApiPublicHooksReferralNotificationsRoute: typeof ApiPublicHooksReferralNotificationsRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
@@ -656,6 +670,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailAuthPreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/referral-notifications': {
+      id: '/api/public/hooks/referral-notifications'
+      path: '/api/public/hooks/referral-notifications'
+      fullPath: '/api/public/hooks/referral-notifications'
+      preLoaderRoute: typeof ApiPublicHooksReferralNotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -707,6 +728,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicBootstrapAdminRoute: ApiPublicBootstrapAdminRoute,
   LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
   TripConfirmationTokenRoute: TripConfirmationTokenRoute,
+  ApiPublicHooksReferralNotificationsRoute:
+    ApiPublicHooksReferralNotificationsRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
