@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { openCookieSettings, getMeasurementId } from "@/lib/cookie-consent";
 
 export const Route = createFileRoute("/legal-notice")({
   head: () => ({
@@ -31,6 +32,7 @@ export const Route = createFileRoute("/legal-notice")({
 
 function LegalNoticePage() {
   const year = new Date().getFullYear();
+  const hasAnalytics = getMeasurementId() !== null;
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
@@ -47,7 +49,7 @@ function LegalNoticePage() {
             <p className="text-xs uppercase tracking-[0.25em] text-accent">Legal</p>
             <h1 className="mt-3 text-4xl leading-[1.1] md:text-5xl">Legal Notice</h1>
             <p className="mt-4 text-sm text-muted-foreground">
-              Last updated: 26/07/2026
+              Last updated: 26 July 2026
             </p>
           </header>
 
@@ -55,6 +57,9 @@ function LegalNoticePage() {
             <h2 className="font-display text-2xl text-ink md:text-3xl">Operator</h2>
             <p>
               This website is operated by <strong>Andrea Irollo</strong>.
+            </p>
+            <p>
+              Address: Via Rosso Fiorentino 118, 51100 Pistoia (PT), Italy
             </p>
             <p>
               Contact email:{" "}
@@ -103,6 +108,28 @@ function LegalNoticePage() {
               .
             </p>
           </section>
+
+          {hasAnalytics && (
+            <section className="mt-10 space-y-3 text-[15px] leading-relaxed text-foreground/85">
+              <h2 className="font-display text-2xl text-ink md:text-3xl">Cookies</h2>
+              <p>
+                This website uses analytics cookies only after you accept them.
+                Details are in the{" "}
+                <Link to="/privacy" hash="analytics" className="text-accent hover:underline">
+                  Cookie and Analytics section of the Privacy Policy
+                </Link>
+                . You can change your choice at any time:{" "}
+                <button
+                  type="button"
+                  onClick={openCookieSettings}
+                  className="text-accent hover:underline"
+                >
+                  Cookie settings
+                </button>
+                .
+              </p>
+            </section>
+          )}
 
           <div className="mt-12 border-t border-border/60 pt-6">
             <Link

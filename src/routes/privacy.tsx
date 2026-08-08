@@ -36,7 +36,7 @@ export const Route = createFileRoute("/privacy")({
 // what a user agreed to at signup time. It is also written server-side into
 // the consent record for every waitlist submission.
 const POLICY_VERSION = "2026-07-26";
-const EFFECTIVE_DATE = "26 July 2026";
+const LAST_UPDATED = "9 July 2026";
 
 function Section({
   n,
@@ -80,7 +80,7 @@ function PrivacyPage() {
             <p className="text-xs uppercase tracking-[0.25em] text-accent">Legal</p>
             <h1 className="mt-3 text-4xl leading-[1.1] md:text-5xl">Privacy Policy</h1>
             <p className="mt-4 text-sm text-muted-foreground">
-              Effective date: {EFFECTIVE_DATE} · Version {POLICY_VERSION}
+              Last updated: {LAST_UPDATED} · Version {POLICY_VERSION}
             </p>
             <p className="mt-4 text-muted-foreground">
               This Privacy Policy explains how OwnWay collects and processes
@@ -93,11 +93,13 @@ function PrivacyPage() {
           </header>
 
           <Section n={1} title="Data Controller">
-            <p>The Data Controller is:</p>
             <p>
-              Andrea Irollo
+              <strong>Data Controller:</strong> Andrea Irollo
               <br />
-              Contact email:{" "}
+              <strong>Address:</strong> Via Rosso Fiorentino 118, 51100 Pistoia
+              (PT), Italy
+              <br />
+              <strong>Contact email:</strong>{" "}
               <a
                 href="mailto:theownwayapp@gmail.com"
                 className="text-accent hover:underline"
@@ -161,6 +163,14 @@ function PrivacyPage() {
               We rely on your <strong>explicit consent</strong> for early-access
               and launch email communications. You give this consent by ticking
               the dedicated checkbox above the submit button when signing up.
+            </p>
+            <p className="rounded-lg border border-dashed border-border/70 bg-card/50 p-4 text-sm text-muted-foreground">
+              The checkbox is separate, unticked by default, and reads: “I agree
+              to receive OwnWay early-access and launch updates by email. I can
+              withdraw my consent at any time. Read the Privacy Policy.” We
+              store proof of this consent: the consent flag, the policy version
+              you agreed to, the form/page you submitted from, and the
+              timestamp.
             </p>
             <p>
               Security and anti-abuse processing may rely on our{" "}
