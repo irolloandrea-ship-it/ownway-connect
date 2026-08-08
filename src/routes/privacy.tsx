@@ -93,11 +93,13 @@ function PrivacyPage() {
           </header>
 
           <Section n={1} title="Data Controller">
-            <p>The Data Controller is:</p>
             <p>
-              Andrea Irollo
+              <strong>Data Controller:</strong> Andrea Irollo
               <br />
-              Contact email:{" "}
+              <strong>Address:</strong> Via Rosso Fiorentino 118, 51100 Pistoia
+              (PT), Italy
+              <br />
+              <strong>Contact email:</strong>{" "}
               <a
                 href="mailto:theownwayapp@gmail.com"
                 className="text-accent hover:underline"
