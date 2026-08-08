@@ -32,6 +32,7 @@ export const Route = createFileRoute("/legal-notice")({
 
 function LegalNoticePage() {
   const year = new Date().getFullYear();
+  const hasAnalytics = getMeasurementId() !== null;
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />

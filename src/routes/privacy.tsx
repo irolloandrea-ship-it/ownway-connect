@@ -80,7 +80,7 @@ function PrivacyPage() {
             <p className="text-xs uppercase tracking-[0.25em] text-accent">Legal</p>
             <h1 className="mt-3 text-4xl leading-[1.1] md:text-5xl">Privacy Policy</h1>
             <p className="mt-4 text-sm text-muted-foreground">
-              Effective date: {EFFECTIVE_DATE} · Version {POLICY_VERSION}
+              Last updated: {LAST_UPDATED} · Version {POLICY_VERSION}
             </p>
             <p className="mt-4 text-muted-foreground">
               This Privacy Policy explains how OwnWay collects and processes
