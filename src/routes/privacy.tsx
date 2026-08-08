@@ -164,6 +164,14 @@ function PrivacyPage() {
               and launch email communications. You give this consent by ticking
               the dedicated checkbox above the submit button when signing up.
             </p>
+            <p className="rounded-lg border border-dashed border-border/70 bg-card/50 p-4 text-sm text-muted-foreground">
+              The checkbox is separate, unticked by default, and reads: “I agree
+              to receive OwnWay early-access and launch updates by email. I can
+              withdraw my consent at any time. Read the Privacy Policy.” We
+              store proof of this consent: the consent flag, the policy version
+              you agreed to, the form/page you submitted from, and the
+              timestamp.
+            </p>
             <p>
               Security and anti-abuse processing may rely on our{" "}
               <strong>legitimate interest</strong> in keeping the website safe
