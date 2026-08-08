@@ -36,7 +36,7 @@ export const Route = createFileRoute("/privacy")({
 // what a user agreed to at signup time. It is also written server-side into
 // the consent record for every waitlist submission.
 const POLICY_VERSION = "2026-07-26";
-const EFFECTIVE_DATE = "26 July 2026";
+const LAST_UPDATED = "9 July 2026";
 
 function Section({
   n,

@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { openCookieSettings, getMeasurementId } from "@/lib/cookie-consent";
 
 export const Route = createFileRoute("/legal-notice")({
   head: () => ({
@@ -106,6 +107,28 @@ function LegalNoticePage() {
               .
             </p>
           </section>
+
+          {hasAnalytics && (
+            <section className="mt-10 space-y-3 text-[15px] leading-relaxed text-foreground/85">
+              <h2 className="font-display text-2xl text-ink md:text-3xl">Cookies</h2>
+              <p>
+                This website uses analytics cookies only after you accept them.
+                Details are in the{" "}
+                <Link to="/privacy" hash="analytics" className="text-accent hover:underline">
+                  Cookie and Analytics section of the Privacy Policy
+                </Link>
+                . You can change your choice at any time:{" "}
+                <button
+                  type="button"
+                  onClick={openCookieSettings}
+                  className="text-accent hover:underline"
+                >
+                  Cookie settings
+                </button>
+                .
+              </p>
+            </section>
+          )}
 
           <div className="mt-12 border-t border-border/60 pt-6">
             <Link
