@@ -47,7 +47,7 @@ function LegalNoticePage() {
             <p className="text-xs uppercase tracking-[0.25em] text-accent">Legal</p>
             <h1 className="mt-3 text-4xl leading-[1.1] md:text-5xl">Legal Notice</h1>
             <p className="mt-4 text-sm text-muted-foreground">
-              Last updated: 26/07/2026
+              Last updated: 26 July 2026
             </p>
           </header>
 
@@ -55,6 +55,9 @@ function LegalNoticePage() {
             <h2 className="font-display text-2xl text-ink md:text-3xl">Operator</h2>
             <p>
               This website is operated by <strong>Andrea Irollo</strong>.
+            </p>
+            <p>
+              Address: Via Rosso Fiorentino 118, 51100 Pistoia (PT), Italy
             </p>
             <p>
               Contact email:{" "}
