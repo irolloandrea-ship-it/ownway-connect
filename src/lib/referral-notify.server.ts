@@ -15,16 +15,16 @@ import { sendTransactionalEmailInternal } from "@/lib/email/send-internal.server
 
 const SITE_URL = "https://ownway.app";
 
-async function computeVerifiedPosition(priority_score: number, base_position: number) {
-  const { count } = await supabaseAdmin
-    .from("early_access_signups")
-    .select("id", { count: "exact", head: true })
-    .not("email_verified_at", "is", null)
-    .or(
-      `priority_score.lt.${priority_score},and(priority_score.eq.${priority_score},base_position.lt.${base_position})`,
-    );
-  return (count ?? 0) + 1;
+// Single source of truth for queue ordering:
+// priority_score ASC, base_position ASC NULLS LAST, created_at ASC, id ASC.
+async function computeVerifiedPosition(signupId: string) {
+  const { data, error } = await supabaseAdmin.rpc("waitlist_position", {
+    p_signup_id: signupId,
+  });
+  if (error) throw new Error(error.message);
+  return (data as number) ?? 0;
 }
+
 
 export async function drainReferralNotifications(limit = 20) {
   const { data: claimed, error } = await supabaseAdmin.rpc(
@@ -73,10 +73,8 @@ export async function drainReferralNotifications(limit = 20) {
         continue;
       }
 
-      const position = await computeVerifiedPosition(
-        recipient.priority_score ?? 0,
-        recipient.base_position ?? 0,
-      );
+      const position = await computeVerifiedPosition(job.recipient_signup_id as string);
+
 
       const res = await sendTransactionalEmailInternal({
         templateName: "referral-credited",
