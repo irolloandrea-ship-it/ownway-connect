@@ -112,7 +112,7 @@ export const requestLeaveLink = createServerFn({ method: "POST" })
       p_referral_code: data.referral_code,
       p_token_hash: await hashToken(token),
       p_expires_at: expiresAt,
-      p_ip_hmac: ipHmac,
+      p_ip_hmac: ipHmac as unknown as string,
     });
 
     const row = (rows as any[])?.[0];

@@ -16,4 +16,5 @@ export interface TemplateEntry {
 export const TEMPLATES: Record<string, TemplateEntry> = {
   'waitlist-confirmation': waitlistConfirmationTemplate,
   'referral-credited': referralCreditedTemplate,
+  'leave-waitlist-link': leaveWaitlistLinkTemplate,
 }
