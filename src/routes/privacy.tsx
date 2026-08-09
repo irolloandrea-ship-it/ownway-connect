@@ -246,7 +246,7 @@ function PrivacyPage() {
           </Section>
 
 
-          <Section n={6} title="Service providers and recipients">
+          <Section n={7} title="Service providers and recipients">
             <p>
               We do <strong>not sell</strong> your personal data. We share it
               only with service providers that help us operate the website and
@@ -279,7 +279,7 @@ function PrivacyPage() {
 
           </Section>
 
-          <Section n={7} title="International transfers">
+          <Section n={8} title="International transfers">
             <p>
               Some of the providers listed above may process data outside the
               European Economic Area (for example in the United States). Where
@@ -290,7 +290,7 @@ function PrivacyPage() {
             </p>
           </Section>
 
-          <Section n={8} title="Cookies and Google Analytics" id="analytics">
+          <Section n={9} title="Cookies and Google Analytics" id="analytics">
             <p>
               OwnWay uses <strong>Google Analytics 4</strong> only to
               understand aggregate use of the website and improve it. When you
@@ -344,7 +344,7 @@ function PrivacyPage() {
             )}
           </Section>
 
-          <Section n={9} title="Your rights">
+          <Section n={10} title="Your rights">
             <p>You have the right to:</p>
             <ul className="list-disc space-y-1 pl-6">
               <li>access your personal data;</li>
@@ -382,7 +382,7 @@ function PrivacyPage() {
             </p>
           </Section>
 
-          <Section n={10} title="Providing your data is optional">
+          <Section n={11} title="Providing your data is optional">
             <p>
               Providing your email address and marketing consent is optional.
               Without them we cannot add you to the waitlist or send you
@@ -391,7 +391,7 @@ function PrivacyPage() {
             </p>
           </Section>
 
-          <Section n={11} title="Changes to this Privacy Policy">
+          <Section n={12} title="Changes to this Privacy Policy">
             <p>
               We may update this Privacy Policy over time — for example to
               reflect changes to the service, new service providers, or
