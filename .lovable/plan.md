@@ -53,26 +53,31 @@ The token travels in a URL fragment, so it is not part of the HTTP request line 
 ## Application changes
 
 - `src/lib/leave-waitlist.functions.ts`
-  - `getLeaveStatus` (GET, read-only) → token state + masked email. The browser passes the raw token to this trusted server handler only; hashing happens server-side. No hash is ever computed in or returned to client code.
+  - `getLeaveStatus` (POST, read-only) → token state + masked email. The browser passes the raw token to this trusted server handler only; hashing happens server-side. No hash is ever computed in or returned to client code.
   - `performLeaveWaitlist` (POST) → hashes server-side, calls the delete RPC
   - `requestLeaveLink` (POST, by referral code) → mints a new token (which immediately invalidates the previous one by overwriting the stored hash), emails the leave link to the address on file; always returns a neutral result, never an email address or an account-existence signal
-- `src/routes/leave-waitlist.tsx` — three states: confirm (with the exact warning wording), success ("You've left the OwnWay waitlist. Your waitlist data has been deleted."), and invalid/expired with a way to request a fresh link. `noindex`.
-- `src/lib/email-templates/waitlist-confirmation.tsx` — quiet secondary line under the footer content: "Changed your mind? Leave the waitlist" linking to `/leave-waitlist?t=…`. Token minted in `submitEarlyAccess` alongside the confirmation token.
+- `src/routes/leave-waitlist.tsx` — reads the token from `location.hash`, immediately rewrites the URL to `/leave-waitlist` via `history.replaceState`, keeps the token in memory only. Three states: confirm (with the exact warning wording), success ("You've left the OwnWay waitlist. Your waitlist data has been deleted."), and invalid/expired with a way to request a fresh link. `noindex`.
+- `src/routes/confirm-email.tsx` — same fragment handling applied to the existing confirmation flow, with `?t=` still accepted for links already delivered.
+- `src/lib/email-templates/waitlist-confirmation.tsx` — quiet secondary line under the footer content: "Changed your mind? Leave the waitlist" linking to `/leave-waitlist#t=…`; the confirmation button moves to `/confirm-email#t=…`. Tokens minted in `submitEarlyAccess`.
 - New small template `leave-waitlist-link.tsx` for the "send me a leave link" request.
 - `src/routes/waitlist.$code.tsx` — muted text link at the bottom that triggers `requestLeaveLink`.
-- `src/routes/privacy.tsx` — a short factual section: how to leave, and exactly what is deleted from the live database (waitlist entry, referral credits, notification records, email send logs, unsubscribe tokens, suppression rows, queued unsent emails). It will state plainly that OwnWay cannot recall email already delivered to an inbox, and that provider-side logs and backup retention are reported separately rather than claimed as erased.
+- `src/routes/privacy.tsx` — a short factual section: how to leave, and exactly what is deleted from the live database (waitlist entry, referral credits, notification records, email send logs, unsubscribe tokens, suppression rows, rate-limit records, queued unsent emails). It will state plainly that OwnWay cannot recall email already delivered to an inbox, and that provider-side logs and backup retention are reported separately rather than claimed as erased.
 
 ## Token leakage protection
 
-- `src/lib/prelaunch-analytics.ts` and the GA4 page-view wiring: both `/leave-waitlist` and `/confirm-email` are excluded from analytics, or reported as a fixed path with no query string. The token, the full URL, and the referrer never reach GA4, analytics rows, server logs, or error reporting.
-- Error reporting (`src/lib/error-capture.ts`, `lovable-error-reporting.ts`) strips the `t` parameter from any captured URL.
-- Both token routes send `Cache-Control: no-store` and `Referrer-Policy: no-referrer` response headers, and the pages avoid outbound links that would carry a referrer.
+- Tokens travel in URL fragments, so they never appear in hosting/proxy access logs, `Referer` headers, or browser history sent to the server. No claim is made about query-string safety.
+- `src/lib/prelaunch-analytics.ts` and the GA4 page-view wiring: both `/leave-waitlist` and `/confirm-email` are excluded from analytics, or reported as a fixed path with no query string or fragment.
+- Error reporting (`src/lib/error-capture.ts`, `lovable-error-reporting.ts`) strips both the `t` parameter and any fragment from captured URLs.
+- Both token routes send `Cache-Control: no-store` and `Referrer-Policy: no-referrer`, and avoid outbound links that would carry a referrer.
 - No server function logs the token or its hash on any code path, including error branches.
 
 ## Rate limiting for leave-link requests
 
-- One leave email per signup per 15 minutes, plus an hourly per-IP cap, enforced server-side in the database (a small `leave_link_requests` table with signup id, hashed IP, timestamp; checked and written inside the same SECURITY DEFINER function). IP is read via `getRequestIP` and stored only as a hash.
-- Exceeding a limit returns the same neutral response as success — no address, no existence signal, no differing timing branch beyond what the database naturally does.
+- One leave email per signup per 15 minutes, plus an hourly per-IP cap, enforced server-side in a small `leave_link_requests` table (signup id, HMAC of the IP, timestamp), checked and written inside the same SECURITY DEFINER function. IP is read via `getRequestIP` and stored only as a keyed HMAC-SHA256 using a server-only secret — never an unsalted hash.
+- Rows expire automatically after 24 hours: every call to the function first purges rows older than that window, so nothing lingers beyond its useful life.
+- `leave_link_requests` is personal data. `delete_waitlist_signup` hard-deletes all rows for the departing signup in the same transaction, and the table is included in the final audit and acceptance test.
+- Exceeding a limit returns the same neutral response as success — no address, no existence signal, no differing branch beyond what the database naturally does.
+
 
 ## Cancelling claimed-but-unsent notifications
 
