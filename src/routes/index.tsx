@@ -211,7 +211,7 @@ function LandingPage() {
                 width={1280}
                 height={1600}
                 sizes="(min-width: 1024px) 45vw, 100vw"
-                className="aspect-[4/3] w-full rounded-3xl object-cover object-center shadow-card sm:aspect-[3/2] lg:absolute lg:inset-y-16 lg:-left-28 lg:aspect-auto lg:h-[calc(100%-8rem)] lg:w-[86%]"
+                className="aspect-[4/3] w-full rounded-3xl object-cover object-center shadow-card sm:aspect-[3/2] lg:absolute lg:inset-y-16 lg:-left-10 lg:aspect-auto lg:h-[calc(100%-8rem)] lg:w-[78%]"
               />
 
               <div className="mt-10 flex justify-center lg:mt-0 lg:absolute lg:right-0 lg:top-0 lg:origin-top-right lg:scale-[0.94]">
