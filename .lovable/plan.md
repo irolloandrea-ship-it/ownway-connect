@@ -44,7 +44,7 @@ Presentation: bottom sheet on mobile (rounded top, anchored to the bottom, scrol
 
 ## Phone preview — preserved
 
-`OwnWayPhoneCarousel` keeps its frame, both journey screen sets, the Traveller/WayMaker switch (Traveller default, switch stays outside the phone), arrows, dots, active-screen logic, auto-advance, swipe and aria labels. Only the surrounding section — heading, spacing, background band, responsive framing — is restyled, plus a subtle fade on role change.
+`OwnWayPhoneCarousel` keeps its frame, both journey screen sets, the Traveller/WayMaker switch (Traveller default, switch stays outside the phone), arrows, dots, active-screen logic, auto-advance, swipe and aria labels. Only its placement and surrounding framing change — it moves into the hero's visual composition on desktop and below the hero copy on tablet/mobile — plus a subtle fade on role change.
 
 ## Header
 
@@ -63,4 +63,4 @@ Tokens in `src/styles.css` are nudged to the stated palette: background `#FFF8F0
 
 ## Verification
 
-Playwright passes at 390px, 834px and 1440px: hero fits as a first screen, CTA opens the dialog, role cards select and submit the existing values, email + consent validation still block submission, Privacy and Cookie Settings links resolve, rejecting analytics still loads no GA4, both preview journeys render without clipping, no horizontal overflow and no console errors. Production build must pass.
+Must be verified before completion at 390px, 768px, 834px and 1440px: the real iPhone carousel renders populated screens — never a blank frame — at every breakpoint and in both Traveller and WayMaker states; the hero fits as a coherent first screen; the CTA opens the dialog; role cards select and submit the existing values; email + consent validation still block submission; Privacy and Cookie Settings links resolve; rejecting analytics still loads no GA4; no horizontal overflow, clipped text or console errors. Production build must pass.
