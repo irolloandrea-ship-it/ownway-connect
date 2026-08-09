@@ -28,22 +28,17 @@ const statusSchema = z.object({
 /**
  * Waitlist position counts CONFIRMED members only. Unverified signups do not
  * appear in the queue and do not shift anyone else's position.
- * Ordering: priority_score, then base_position (deterministic, never by UUID).
+ * Ordering is computed by a single database function so every surface agrees:
+ * priority_score ASC, base_position ASC NULLS LAST, created_at ASC, id ASC.
  */
-async function computePosition(
-  supabaseAdmin: any,
-  priority_score: number,
-  base_position: number,
-) {
-  const { count } = await supabaseAdmin
-    .from("early_access_signups")
-    .select("id", { count: "exact", head: true })
-    .not("email_verified_at", "is", null)
-    .or(
-      `priority_score.lt.${priority_score},and(priority_score.eq.${priority_score},base_position.lt.${base_position})`,
-    );
-  return (count ?? 0) + 1;
+async function computePosition(supabaseAdmin: any, signupId: string) {
+  const { data, error } = await supabaseAdmin.rpc("waitlist_position", {
+    p_signup_id: signupId,
+  });
+  if (error) throw new Error(error.message);
+  return (data as number) ?? 0;
 }
+
 
 function generateConfirmToken() {
   const bytes = new Uint8Array(32);
