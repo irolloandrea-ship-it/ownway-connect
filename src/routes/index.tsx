@@ -3,29 +3,14 @@ import { useEffect, useRef, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Plus, Minus } from "lucide-react";
+import { ArrowRight, Plus, Minus, Compass, HeartHandshake, MessagesSquare } from "lucide-react";
 import { captureSourceOnce, trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
 import { motion, AnimatePresence } from "framer-motion";
 import { OwnWayPhoneCarousel } from "@/components/ui/ownway-phone-carousel";
-import screen9 from "@/assets/screen-9.png.asset.json";
-import screen10 from "@/assets/screen-10.png.asset.json";
-import screen11 from "@/assets/screen-11.png.asset.json";
-import screen12 from "@/assets/screen-12.png.asset.json";
-import screen13 from "@/assets/screen-13.png.asset.json";
-import screen14 from "@/assets/screen-14.png.asset.json";
-import screen15 from "@/assets/screen-15.png.asset.json";
+import { ProofCard } from "@/components/ui/proof-card";
+import heroImage from "@/assets/hero-florence.jpg.asset.json";
 import { JoinEarlyAccess } from "@/components/JoinEarlyAccess";
 import { captureReferralCode } from "@/lib/referral-code";
-
-const APP_SCREENS = [
-  { src: screen13.url, alt: "OwnWay — Discover curated journeys" },
-  { src: screen10.url, alt: "OwnWay — Choose your destination" },
-  { src: screen9.url, alt: "OwnWay — Pick your travel dates" },
-  { src: screen11.url, alt: "OwnWay — Select your travel style" },
-  { src: screen12.url, alt: "OwnWay — Finding WayMakers for your trip" },
-  { src: screen15.url, alt: "OwnWay — Suggested WayMakers for Florence" },
-  { src: screen14.url, alt: "OwnWay — My Journeys dashboard" },
-];
 
 type Search = { ref?: string; role?: "explorer" | "waymaker" };
 
@@ -36,15 +21,33 @@ export const Route = createFileRoute("/")({
   }),
   head: () => ({
     meta: [
-      { title: "OwnWay — One right tip can change the whole trip" },
-      { name: "description", content: "Join the OwnWay waitlist. Get matched with locals who know a destination deeply and can help you experience it your way." },
-      { property: "og:title", content: "OwnWay — One right tip can change the whole trip" },
-      { property: "og:description", content: "Join the OwnWay waitlist. Get matched with locals who know a destination deeply and can help you experience it your way." },
+      { title: "OwnWay — Travel deeper with someone who knows the place" },
+      {
+        name: "description",
+        content:
+          "Join OwnWay early access. Real connections with locals who know a destination deeply, so every trip means more. Starting city by city.",
+      },
+      { property: "og:title", content: "OwnWay — Travel deeper with someone who knows the place" },
+      {
+        property: "og:description",
+        content:
+          "Join OwnWay early access. Real connections with locals who know a destination deeply, so every trip means more.",
+      },
+      { property: "og:type", content: "website" },
       { property: "og:url", content: "https://ownway.app/" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: LandingPage,
 });
+
+/* ---------------- How it works ---------------- */
+
+const STEPS = [
+  { icon: Compass, title: "Tell us about your trip" },
+  { icon: HeartHandshake, title: "We match you with someone who knows the place" },
+  { icon: MessagesSquare, title: "Chat, get advice, and travel with confidence" },
+];
 
 /* ---------------- FAQ ---------------- */
 
@@ -97,7 +100,7 @@ function FAQSection() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    transition={{ duration: 0.22, ease: "easeOut" }}
                     className="overflow-hidden"
                   >
                     <p className="px-6 pb-6 text-muted-foreground md:px-8">{item.a}</p>
@@ -151,86 +154,113 @@ function LandingPage() {
 
       <main>
         {/* Hero */}
-        <section className="container-page pt-12 pb-20 md:pt-20 md:pb-28">
-          <div ref={heroFormRef} id="join" className="mx-auto max-w-xl text-center md:max-w-2xl">
-            <p className="text-[11px] uppercase tracking-[0.28em] text-accent md:text-xs">
-              Travel deeper. Share what you know
-            </p>
-            <h1 className="mt-5 text-[2rem] leading-[1.12] md:text-5xl">
-              One right tip can change the whole trip
-            </h1>
-            <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
-              OwnWay connects travellers who want to experience a destination more deeply
-              with local experts ready to share what they know.
-            </p>
-            <div className="mt-8 flex flex-col items-center">
-              <JoinEarlyAccess
-                referredBy={search.ref}
-                intendedRole={intendedRole}
-                location="hero_section"
-                open={joinOpen}
-                onOpenChange={(next) => {
-                  setJoinOpen(next);
-                  if (!next && window.location.hash === "#join") {
-                    window.history.replaceState(null, "", window.location.pathname + window.location.search);
-                  }
-                }}
-              >
-                <Button size="lg" className="h-12 w-full rounded-full px-8 text-base sm:w-auto">
-                  Join early access <ArrowRight className="ml-1.5 size-4" />
-                </Button>
-              </JoinEarlyAccess>
-
-              <p className="mt-3 text-sm text-muted-foreground">
-                Early access for travellers and local experts.
+        <section className="container-page pt-10 pb-16 md:pt-16 md:pb-24">
+          <div className="grid items-center gap-12 lg:grid-cols-[55fr_45fr] lg:gap-10">
+            {/* Copy */}
+            <div ref={heroFormRef} id="join" className="max-w-xl">
+              <p className="text-[11px] uppercase tracking-[0.26em] text-accent md:text-xs">
+                For curious travellers &amp; locals
               </p>
-            </div>
-          </div>
-        </section>
+              <h1 className="mt-4 text-[2.15rem] leading-[1.08] md:text-5xl lg:text-[3.4rem]">
+                Travel deeper with someone who knows the place.
+              </h1>
+              <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
+                Real connections. Local knowledge. More meaning in every trip.
+              </p>
 
-        {/* How OwnWay works */}
-        <section className="border-t border-border/60 py-20 md:py-28">
-          <div className="container-page">
-            <p className="text-center text-xs uppercase tracking-[0.25em] text-accent">
-              How OwnWay works
-            </p>
-            <h2 className="mx-auto mt-3 max-w-2xl text-center text-3xl md:text-5xl">
-              A more personal way to travel.
-            </h2>
-
-            <div className="mt-14 grid items-center gap-14 md:grid-cols-2 md:gap-16">
-              <div className="order-2 space-y-6 md:order-1">
-                {[
-                  "Tell us what matters to you",
-                  "Meet someone who knows the destination",
-                  "Travel with a plan that feels yours",
-                ].map((step, i) => (
-                  <div
-                    key={step}
-                    className="flex items-start gap-4 rounded-3xl bg-card/70 px-6 py-6"
+              <div className="mt-8 flex flex-col items-start">
+                <JoinEarlyAccess
+                  referredBy={search.ref}
+                  intendedRole={intendedRole}
+                  location="hero_section"
+                  open={joinOpen}
+                  onOpenChange={(next) => {
+                    setJoinOpen(next);
+                    if (!next && window.location.hash === "#join") {
+                      window.history.replaceState(
+                        null,
+                        "",
+                        window.location.pathname + window.location.search,
+                      );
+                    }
+                  }}
+                >
+                  <Button
+                    size="lg"
+                    className="h-12 w-full rounded-full px-8 text-base sm:w-auto"
+                    onClick={() =>
+                      trackPrelaunchEvent("cta_click", {
+                        button_text: "Join early access",
+                        button_location: "hero",
+                      })
+                    }
                   >
-                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/10 text-sm text-accent">
-                      {i + 1}
-                    </span>
-                    <p className="font-display text-xl leading-snug text-ink md:text-2xl">
-                      {step}
-                    </p>
-                  </div>
-                ))}
+                    Join early access <ArrowRight className="ml-1.5 size-4" />
+                  </Button>
+                </JoinEarlyAccess>
+
+                <p className="mt-3 text-sm text-muted-foreground">Starting city by city.</p>
               </div>
-              <div className="order-1 md:order-2 md:pl-4">
+            </div>
+
+            {/* Visual composition: photo + the real app preview overlapping it on desktop */}
+            <div className="relative lg:min-h-[780px]">
+              <img
+                src={heroImage.url}
+                alt="A local and a traveller talking on a sunlit street in Florence, with the Duomo behind them"
+                width={1280}
+                height={1600}
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                className="aspect-[4/3] w-full rounded-3xl object-cover object-center shadow-card sm:aspect-[3/2] lg:absolute lg:inset-y-14 lg:left-0 lg:aspect-auto lg:h-[calc(100%-7rem)] lg:w-[72%]"
+              />
+
+              <div className="mt-10 flex justify-center lg:mt-0 lg:absolute lg:right-0 lg:top-0 lg:origin-top-right lg:scale-[0.94]">
                 <OwnWayPhoneCarousel />
               </div>
             </div>
           </div>
         </section>
 
+        {/* How it works */}
+        <section className="border-t border-border/60 py-16 md:py-24">
+          <div className="container-page">
+            <p className="text-center text-xs uppercase tracking-[0.25em] text-accent">
+              How it works
+            </p>
+            <h2 className="mx-auto mt-3 max-w-2xl text-center text-3xl md:text-4xl">
+              A more personal way to travel.
+            </h2>
 
+            <ol className="mt-12 grid gap-6 md:grid-cols-3">
+              {STEPS.map((step, i) => (
+                <li
+                  key={step.title}
+                  className="rounded-3xl border border-border bg-card p-6 shadow-card"
+                >
+                  <div className="flex items-center gap-3">
+                    <step.icon className="size-6 text-accent" strokeWidth={1.4} aria-hidden />
+                    <span className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                      Step {i + 1}
+                    </span>
+                  </div>
+                  <p className="mt-4 font-display text-xl leading-snug text-ink">{step.title}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* Proof card */}
+        <section className="py-4 md:py-8">
+          <div className="container-page">
+            <ProofCard />
+          </div>
+        </section>
 
         {/* Traveler / WayMaker */}
-        <section className="bg-secondary/40 py-20 md:py-28">
+        <section className="mt-16 bg-secondary/50 py-20 md:mt-24 md:py-28">
           <div className="container-page grid gap-6 md:grid-cols-2">
-            <div className="flex flex-col rounded-3xl border border-border/60 bg-card p-8 shadow-card">
+            <div className="flex flex-col rounded-3xl border border-border bg-card p-8 shadow-card">
               <p className="text-xs uppercase tracking-[0.25em] text-accent">For Travelers</p>
               <h3 className="mt-3 font-display text-3xl">Planning a trip?</h3>
               <p className="mt-3 text-muted-foreground">
@@ -242,7 +272,7 @@ function LandingPage() {
                 </Link>
               </Button>
             </div>
-            <div className="flex flex-col rounded-3xl border border-border/60 bg-card p-8 shadow-card">
+            <div className="flex flex-col rounded-3xl border border-border bg-card p-8 shadow-card">
               <p className="text-xs uppercase tracking-[0.25em] text-accent">For WayMakers</p>
               <h3 className="mt-3 font-display text-3xl">Know a place deeply?</h3>
               <p className="mt-3 text-muted-foreground">
