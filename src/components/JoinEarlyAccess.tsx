@@ -122,7 +122,11 @@ export function JoinEarlyAccess({
   return (
     <Dialog open={open} onOpenChange={reset}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="flex h-[100dvh] max-w-none flex-col justify-center rounded-none border-0 bg-background px-6 py-10 sm:h-auto sm:max-w-md sm:rounded-3xl sm:border sm:px-8 sm:py-10">
+      <DialogContent className="bottom-0 top-auto max-h-[92dvh] max-w-none translate-y-0 overflow-y-auto rounded-t-3xl border-x-0 border-b-0 bg-background px-5 pb-8 pt-7 sm:bottom-auto sm:top-1/2 sm:max-w-md sm:-translate-y-1/2 sm:rounded-3xl sm:border sm:px-8 sm:py-10">
+        <span
+          aria-hidden
+          className="mx-auto mb-2 h-1.5 w-10 rounded-full bg-border sm:hidden"
+        />
         {done ? (
           <div className="text-center">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-accent/12 text-accent">
