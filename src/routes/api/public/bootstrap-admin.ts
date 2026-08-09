@@ -21,6 +21,14 @@ export const Route = createFileRoute("/api/public/bootstrap-admin")({
         const existing = list?.users?.find((u) => u.email?.toLowerCase() === email.toLowerCase());
         if (existing) {
           userId = existing.id;
+          // Keep the account in sync with the configured credentials (idempotent reset).
+          const { error: updateErr } = await supabaseAdmin.auth.admin.updateUserById(userId, {
+            password,
+            email_confirm: true,
+          });
+          if (updateErr) {
+            return new Response(`Password sync failed: ${updateErr.message}`, { status: 500 });
+          }
         } else {
           const { data: created, error: createErr } = await supabaseAdmin.auth.admin.createUser({
             email,
