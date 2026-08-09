@@ -75,6 +75,22 @@ export async function drainReferralNotifications(limit = 20) {
 
       const position = await computeVerifiedPosition(job.recipient_signup_id as string);
 
+      // Final eligibility re-check immediately before handing the message to
+      // the provider: a leave request between claim and send deletes the credit
+      // and the outbox row, and nothing must go out after that.
+      const { data: stillLive } = await supabaseAdmin
+        .from("referral_notification_outbox")
+        .select("id, referral_credit_id, referral_credits!inner(id, status)")
+        .eq("id", job.outbox_id)
+        .maybeSingle();
+      if (!stillLive) {
+        // Row is gone (recipient left) — discard the work without sending.
+        suppressed++;
+        continue;
+      }
+
+
+
 
       const res = await sendTransactionalEmailInternal({
         templateName: "referral-credited",
