@@ -36,11 +36,13 @@ email ──"Changed your mind? Leave the waitlist"──> /leave-waitlist?t=<to
      - hard-delete the `early_access_signups` row
      - recompute the affected referrer's `referral_count` from remaining awarded credits and let the existing trigger recompute `priority_score`; position is derived by `waitlist_position()` so it updates automatically
    - hard-delete `email_unsubscribe_tokens` for that email
-   - hard-delete `email_send_log` rows for that email (this is the only other store of the raw address)
-   - purge any queued `pgmq` message whose payload targets that email (unsent jobs only)
-   - **no** `suppressed_emails` row is added — the person can rejoin later. Any existing bounce/complaint suppression row for that address is left untouched only if it predates the request; otherwise nothing is written.
+   - hard-delete `email_send_log` rows for that email (raw `recipient_email`, plus any address embedded in `error_message` or `metadata`)
+   - hard-delete matching `suppressed_emails` rows — no raw-email suppression record is retained, and the person may sign up again later
+   - purge any queued `pgmq` message whose payload targets that email (unsent jobs only), including template data carrying the address
+   - before reporting completion, re-audit every application-owned table for any remaining raw-email column or JSON field (`early_access_signups`, `email_send_log`, `email_unsubscribe_tokens`, `suppressed_emails`, `prelaunch_analytics_events.metadata`, `explorer_trip_requests`, `waymaker_applications`, `trip_feedback`, both pgmq queues and their archives) and delete or irreversibly redact anything found
    - returns `deleted | expired | already_used | invalid`
 4. `REVOKE EXECUTE` on both functions from `anon` and `authenticated`; server-only credentials call them. Referred people who signed up independently stay on the list; no dangling FKs remain because every referencing row is removed first.
+
 
 ## Application changes
 
