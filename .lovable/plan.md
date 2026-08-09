@@ -12,15 +12,21 @@
 ## Flow
 
 ```text
-email ──"Changed your mind? Leave the waitlist"──> /leave-waitlist?t=<token>
-        (GET, read-only: shows warning, no writes)
+email ──"Changed your mind? Leave the waitlist"──> /leave-waitlist#t=<token>
+        (fragment, never sent in the HTTP request)
+                    │
+        page load: read fragment, replace URL with /leave-waitlist,
+        POST raw token to trusted server handler (read-only status check)
                     │
                     └── explicit POST "Leave waitlist and delete my data"
                                     │
-                                    └── delete_waitlist_signup(token_hash)  [atomic]
+                                    └── server hashes token → delete_waitlist_signup(hash) [atomic]
                                                     │
                                                     └── "You've left the OwnWay waitlist."
 ```
+
+The token travels in a URL fragment, so it is not part of the HTTP request line and cannot land in hosting or proxy access logs. I will not claim query-string tokens are safe from those logs — that is unverified at platform level, which is exactly why the fragment form is used. The same review is applied to `/confirm-email`: it moves to `#t=<token>` with the same read-fragment-then-replace-URL handling, keeping the existing read-only status check and explicit-POST confirmation semantics intact (old `?t=` links continue to work for tokens already in inboxes).
+
 
 `/waitlist/<code>` gets a quiet text link "Leave the waitlist" (small, muted, below the main content — not a button, not competing with "Share your invite"). It does **not** delete: it emails a fresh leave link to the address already on file. The 7-character referral code alone never authorises deletion.
 
@@ -47,26 +53,31 @@ email ──"Changed your mind? Leave the waitlist"──> /leave-waitlist?t=<to
 ## Application changes
 
 - `src/lib/leave-waitlist.functions.ts`
-  - `getLeaveStatus` (GET, read-only) → token state + masked email. The browser passes the raw token to this trusted server handler only; hashing happens server-side. No hash is ever computed in or returned to client code.
+  - `getLeaveStatus` (POST, read-only) → token state + masked email. The browser passes the raw token to this trusted server handler only; hashing happens server-side. No hash is ever computed in or returned to client code.
   - `performLeaveWaitlist` (POST) → hashes server-side, calls the delete RPC
   - `requestLeaveLink` (POST, by referral code) → mints a new token (which immediately invalidates the previous one by overwriting the stored hash), emails the leave link to the address on file; always returns a neutral result, never an email address or an account-existence signal
-- `src/routes/leave-waitlist.tsx` — three states: confirm (with the exact warning wording), success ("You've left the OwnWay waitlist. Your waitlist data has been deleted."), and invalid/expired with a way to request a fresh link. `noindex`.
-- `src/lib/email-templates/waitlist-confirmation.tsx` — quiet secondary line under the footer content: "Changed your mind? Leave the waitlist" linking to `/leave-waitlist?t=…`. Token minted in `submitEarlyAccess` alongside the confirmation token.
+- `src/routes/leave-waitlist.tsx` — reads the token from `location.hash`, immediately rewrites the URL to `/leave-waitlist` via `history.replaceState`, keeps the token in memory only. Three states: confirm (with the exact warning wording), success ("You've left the OwnWay waitlist. Your waitlist data has been deleted."), and invalid/expired with a way to request a fresh link. `noindex`.
+- `src/routes/confirm-email.tsx` — same fragment handling applied to the existing confirmation flow, with `?t=` still accepted for links already delivered.
+- `src/lib/email-templates/waitlist-confirmation.tsx` — quiet secondary line under the footer content: "Changed your mind? Leave the waitlist" linking to `/leave-waitlist#t=…`; the confirmation button moves to `/confirm-email#t=…`. Tokens minted in `submitEarlyAccess`.
 - New small template `leave-waitlist-link.tsx` for the "send me a leave link" request.
 - `src/routes/waitlist.$code.tsx` — muted text link at the bottom that triggers `requestLeaveLink`.
-- `src/routes/privacy.tsx` — a short factual section: how to leave, and exactly what is deleted from the live database (waitlist entry, referral credits, notification records, email send logs, unsubscribe tokens, suppression rows, queued unsent emails). It will state plainly that OwnWay cannot recall email already delivered to an inbox, and that provider-side logs and backup retention are reported separately rather than claimed as erased.
+- `src/routes/privacy.tsx` — a short factual section: how to leave, and exactly what is deleted from the live database (waitlist entry, referral credits, notification records, email send logs, unsubscribe tokens, suppression rows, rate-limit records, queued unsent emails). It will state plainly that OwnWay cannot recall email already delivered to an inbox, and that provider-side logs and backup retention are reported separately rather than claimed as erased.
 
 ## Token leakage protection
 
-- `src/lib/prelaunch-analytics.ts` and the GA4 page-view wiring: both `/leave-waitlist` and `/confirm-email` are excluded from analytics, or reported as a fixed path with no query string. The token, the full URL, and the referrer never reach GA4, analytics rows, server logs, or error reporting.
-- Error reporting (`src/lib/error-capture.ts`, `lovable-error-reporting.ts`) strips the `t` parameter from any captured URL.
-- Both token routes send `Cache-Control: no-store` and `Referrer-Policy: no-referrer` response headers, and the pages avoid outbound links that would carry a referrer.
+- Tokens travel in URL fragments, so they never appear in hosting/proxy access logs, `Referer` headers, or browser history sent to the server. No claim is made about query-string safety.
+- `src/lib/prelaunch-analytics.ts` and the GA4 page-view wiring: both `/leave-waitlist` and `/confirm-email` are excluded from analytics, or reported as a fixed path with no query string or fragment.
+- Error reporting (`src/lib/error-capture.ts`, `lovable-error-reporting.ts`) strips both the `t` parameter and any fragment from captured URLs.
+- Both token routes send `Cache-Control: no-store` and `Referrer-Policy: no-referrer`, and avoid outbound links that would carry a referrer.
 - No server function logs the token or its hash on any code path, including error branches.
 
 ## Rate limiting for leave-link requests
 
-- One leave email per signup per 15 minutes, plus an hourly per-IP cap, enforced server-side in the database (a small `leave_link_requests` table with signup id, hashed IP, timestamp; checked and written inside the same SECURITY DEFINER function). IP is read via `getRequestIP` and stored only as a hash.
-- Exceeding a limit returns the same neutral response as success — no address, no existence signal, no differing timing branch beyond what the database naturally does.
+- One leave email per signup per 15 minutes, plus an hourly per-IP cap, enforced server-side in a small `leave_link_requests` table (signup id, HMAC of the IP, timestamp), checked and written inside the same SECURITY DEFINER function. IP is read via `getRequestIP` and stored only as a keyed HMAC-SHA256 using a server-only secret — never an unsalted hash.
+- Rows expire automatically after 24 hours: every call to the function first purges rows older than that window, so nothing lingers beyond its useful life.
+- `leave_link_requests` is personal data. `delete_waitlist_signup` hard-deletes all rows for the departing signup in the same transaction, and the table is included in the final audit and acceptance test.
+- Exceeding a limit returns the same neutral response as success — no address, no existence signal, no differing branch beyond what the database naturally does.
+
 
 ## Cancelling claimed-but-unsent notifications
 
@@ -76,16 +87,17 @@ email ──"Changed your mind? Leave the waitlist"──> /leave-waitlist?t=<to
 
 All destructive work runs in a separate staging Cloud project with synthetic addresses. Nothing is created and deleted in production or preview. Acceptance tests to run there, with captured evidence (query output and export contents, not code review):
 
-1. Repeated GET on `/leave-waitlist?t=…` changes nothing.
+1. Repeated GET / repeated status reads on `/leave-waitlist` change nothing.
 2. Only the explicit POST deletes.
 3. Expired, used, and invalid tokens cannot delete.
-4. The address is absent from every audited table and from the admin CSV/Excel export.
+4. The address is absent from every audited table (including `leave_link_requests`, `suppressed_emails`, `email_send_log`, `email_unsubscribe_tokens`, both pgmq queues) and from the admin CSV/Excel export.
 5. A referred person leaving recalculates the referrer's `referral_count`, `priority_score`, and position atomically.
 6. A referrer leaving keeps referred people on the waitlist with no dangling references.
 7. Concurrent confirm + delete produces no stale credit and no post-deletion email.
 8. Deletion after a notification is claimed but before it is sent results in no send.
-9. Leave-link rate limits hold per signup and per IP; a new token invalidates the old one.
-10. No token or query string appears in analytics rows, GA4 payloads, or logs for either token route.
+9. Leave-link rate limits hold per signup and per IP; a new token invalidates the old one; rows older than 24h are purged and all rows for a departing signup are deleted.
+10. No token appears in analytics rows, GA4 payloads, request logs, or error reports for either token route, and the URL is rewritten to a bare path on load.
+
 
 Before implementation starts I need the staging project — tell me when it exists (or link it) and I'll run the whole suite there.
 
