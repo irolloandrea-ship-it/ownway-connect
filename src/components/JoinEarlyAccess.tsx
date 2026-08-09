@@ -122,7 +122,11 @@ export function JoinEarlyAccess({
   return (
     <Dialog open={open} onOpenChange={reset}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="flex h-[100dvh] max-w-none flex-col justify-center rounded-none border-0 bg-background px-6 py-10 sm:h-auto sm:max-w-md sm:rounded-3xl sm:border sm:px-8 sm:py-10">
+      <DialogContent className="bottom-0 top-auto max-h-[92dvh] max-w-none translate-y-0 overflow-y-auto rounded-t-3xl border-x-0 border-b-0 bg-background px-5 pb-8 pt-7 sm:bottom-auto sm:top-1/2 sm:max-w-md sm:-translate-y-1/2 sm:rounded-3xl sm:border sm:px-8 sm:py-10">
+        <span
+          aria-hidden
+          className="mx-auto mb-2 h-1.5 w-10 rounded-full bg-border sm:hidden"
+        />
         {done ? (
           <div className="text-center">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-accent/12 text-accent">
@@ -155,32 +159,38 @@ export function JoinEarlyAccess({
 
             <fieldset className="space-y-2">
               <legend className="text-sm font-medium text-foreground/80">I'm joining as</legend>
-              <div
-                role="radiogroup"
-                aria-label="Join as"
-                className="grid grid-cols-2 gap-1 rounded-full border border-border/70 bg-card p-1"
-              >
+              <div role="radiogroup" aria-label="Join as" className="grid gap-3 sm:grid-cols-2">
                 {(
                   [
-                    ["explorer", "Traveller"],
-                    ["waymaker", "WayMaker"],
+                    ["explorer", "Planning a trip", "Get advice that fits your journey."],
+                    ["waymaker", "Know this city", "Help travellers experience it more deeply."],
                   ] as const
-                ).map(([value, label]) => (
-                  <button
-                    key={value}
-                    type="button"
-                    role="radio"
-                    aria-checked={role === value}
-                    onClick={() => selectRole(value)}
-                    className={`h-11 rounded-full text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                      role === value
-                        ? "bg-ink text-background"
-                        : "text-foreground/70 hover:text-foreground"
-                    }`}
-                  >
-                    {label}
-                  </button>
-                ))}
+                ).map(([value, label, hint]) => {
+                  const selected = role === value;
+                  return (
+                    <button
+                      key={value}
+                      type="button"
+                      role="radio"
+                      aria-checked={selected}
+                      onClick={() => selectRole(value)}
+                      className={`min-h-[92px] rounded-2xl border p-4 text-left transition-[background-color,border-color,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
+                        selected
+                          ? "border-ink bg-ink text-background shadow-card"
+                          : "border-border bg-card hover:border-accent/60"
+                      }`}
+                    >
+                      <span className="font-display text-lg leading-tight">{label}</span>
+                      <span
+                        className={`mt-1.5 block text-sm leading-snug ${
+                          selected ? "text-background/75" : "text-muted-foreground"
+                        }`}
+                      >
+                        {hint}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
               {errors.role && (
                 <p role="alert" className="text-xs text-destructive">
