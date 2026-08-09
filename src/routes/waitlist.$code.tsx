@@ -41,7 +41,7 @@ function WaitlistPage() {
   // one-time leave link sent to the address already on file.
   const leave = async () => {
     try {
-      await askLeaveLink({ data: { code } });
+      await askLeaveLink({ data: { referral_code: code } });
     } catch {
       /* neutral response either way */
     }
