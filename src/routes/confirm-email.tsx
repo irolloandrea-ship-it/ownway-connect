@@ -9,6 +9,21 @@ import { confirmEmail, getConfirmEmailStatus } from "@/lib/confirm-email.functio
 
 type Search = { t?: string };
 
+/** Map RPC outcomes to the UI states rendered below. */
+function normalize(status: string) {
+  switch (status) {
+    case "valid":
+      return "pending";
+    case "confirmed":
+    case "already_used":
+      return "already";
+    case "expired":
+      return "expired";
+    default:
+      return "invalid";
+  }
+}
+
 export const Route = createFileRoute("/confirm-email")({
   validateSearch: (s: Record<string, unknown>): Search => ({
     t: typeof s.t === "string" ? s.t : undefined,
@@ -50,7 +65,7 @@ function ConfirmEmailPage() {
     }
     // GET only — reading the link never confirms anything (scanner-safe).
     readStatus({ data: { token: t } })
-      .then((r) => setStatus(r.status))
+      .then((r) => setStatus(normalize(r.status)))
       .catch(() => setStatus("invalid"))
       .finally(() => setLoading(false));
   }, [t]);
@@ -60,7 +75,7 @@ function ConfirmEmailPage() {
     setSubmitting(true);
     try {
       const r = await doConfirm({ data: { token: t } });
-      setStatus(r.status === "confirmed" || r.status === "already" ? "already" : r.status);
+      setStatus(normalize(r.status));
       setCode(r.referral_code);
     } catch {
       setStatus("invalid");
