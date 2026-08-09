@@ -82,6 +82,9 @@ export type Database = {
           email_normalized: string | null
           email_verified_at: string | null
           id: string
+          membership_provenance:
+            | Database["public"]["Enums"]["membership_provenance"]
+            | null
           priority_score: number | null
           referral_code: string
           referral_count: number
@@ -106,6 +109,9 @@ export type Database = {
           email_normalized?: string | null
           email_verified_at?: string | null
           id?: string
+          membership_provenance?:
+            | Database["public"]["Enums"]["membership_provenance"]
+            | null
           priority_score?: number | null
           referral_code: string
           referral_count?: number
@@ -130,6 +136,9 @@ export type Database = {
           email_normalized?: string | null
           email_verified_at?: string | null
           id?: string
+          membership_provenance?:
+            | Database["public"]["Enums"]["membership_provenance"]
+            | null
           priority_score?: number | null
           referral_code?: string
           referral_count?: number
@@ -907,9 +916,11 @@ export type Database = {
           read_ct: number
         }[]
       }
+      waitlist_position: { Args: { p_signup_id: string }; Returns: number }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
+      membership_provenance: "legacy_grandfathered" | "email_link_confirmed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1038,6 +1049,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "moderator", "user"],
+      membership_provenance: ["legacy_grandfathered", "email_link_confirmed"],
     },
   },
 } as const
