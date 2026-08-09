@@ -12,15 +12,21 @@
 ## Flow
 
 ```text
-email ──"Changed your mind? Leave the waitlist"──> /leave-waitlist?t=<token>
-        (GET, read-only: shows warning, no writes)
+email ──"Changed your mind? Leave the waitlist"──> /leave-waitlist#t=<token>
+        (fragment, never sent in the HTTP request)
+                    │
+        page load: read fragment, replace URL with /leave-waitlist,
+        POST raw token to trusted server handler (read-only status check)
                     │
                     └── explicit POST "Leave waitlist and delete my data"
                                     │
-                                    └── delete_waitlist_signup(token_hash)  [atomic]
+                                    └── server hashes token → delete_waitlist_signup(hash) [atomic]
                                                     │
                                                     └── "You've left the OwnWay waitlist."
 ```
+
+The token travels in a URL fragment, so it is not part of the HTTP request line and cannot land in hosting or proxy access logs. I will not claim query-string tokens are safe from those logs — that is unverified at platform level, which is exactly why the fragment form is used. The same review is applied to `/confirm-email`: it moves to `#t=<token>` with the same read-fragment-then-replace-URL handling, keeping the existing read-only status check and explicit-POST confirmation semantics intact (old `?t=` links continue to work for tokens already in inboxes).
+
 
 `/waitlist/<code>` gets a quiet text link "Leave the waitlist" (small, muted, below the main content — not a button, not competing with "Share your invite"). It does **not** delete: it emails a fresh leave link to the address already on file. The 7-character referral code alone never authorises deletion.
 
