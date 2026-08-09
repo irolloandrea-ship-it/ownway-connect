@@ -82,6 +82,9 @@ export type Database = {
           email_normalized: string | null
           email_verified_at: string | null
           id: string
+          leave_token_expires_at: string | null
+          leave_token_hash: string | null
+          leave_token_used_at: string | null
           membership_provenance:
             | Database["public"]["Enums"]["membership_provenance"]
             | null
@@ -109,6 +112,9 @@ export type Database = {
           email_normalized?: string | null
           email_verified_at?: string | null
           id?: string
+          leave_token_expires_at?: string | null
+          leave_token_hash?: string | null
+          leave_token_used_at?: string | null
           membership_provenance?:
             | Database["public"]["Enums"]["membership_provenance"]
             | null
@@ -136,6 +142,9 @@ export type Database = {
           email_normalized?: string | null
           email_verified_at?: string | null
           id?: string
+          leave_token_expires_at?: string | null
+          leave_token_hash?: string | null
+          leave_token_used_at?: string | null
           membership_provenance?:
             | Database["public"]["Enums"]["membership_provenance"]
             | null
@@ -346,6 +355,35 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      leave_link_requests: {
+        Row: {
+          created_at: string
+          id: string
+          ip_hmac: string | null
+          signup_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ip_hmac?: string | null
+          signup_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ip_hmac?: string | null
+          signup_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leave_link_requests_signup_id_fkey"
+            columns: ["signup_id"]
+            isOneToOne: false
+            referencedRelation: "early_access_signups"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       matched_waymakers: {
         Row: {
@@ -876,6 +914,10 @@ export type Database = {
         Args: { message_id: number; queue_name: string }
         Returns: boolean
       }
+      delete_waitlist_signup: {
+        Args: { p_token_hash: string }
+        Returns: string
+      }
       email_queue_dispatch: { Args: never; Returns: undefined }
       enqueue_email: {
         Args: { payload: Json; queue_name: string }
@@ -889,6 +931,13 @@ export type Database = {
         Returns: boolean
       }
       is_admin: { Args: never; Returns: boolean }
+      leave_token_status: {
+        Args: { p_token_hash: string }
+        Returns: {
+          email: string
+          status: string
+        }[]
+      }
       mark_referral_notification: {
         Args: {
           p_accepted?: boolean
@@ -915,6 +964,26 @@ export type Database = {
           msg_id: number
           read_ct: number
         }[]
+      }
+      request_leave_link: {
+        Args: {
+          p_expires_at: string
+          p_ip_hmac: string
+          p_referral_code: string
+          p_token_hash: string
+        }
+        Returns: {
+          allowed: boolean
+          email: string
+        }[]
+      }
+      set_leave_token: {
+        Args: {
+          p_expires_at: string
+          p_signup_id: string
+          p_token_hash: string
+        }
+        Returns: undefined
       }
       waitlist_position: { Args: { p_signup_id: string }; Returns: number }
     }
