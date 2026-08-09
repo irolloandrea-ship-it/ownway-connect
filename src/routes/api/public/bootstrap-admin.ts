@@ -30,15 +30,32 @@ export const Route = createFileRoute("/api/public/bootstrap-admin")({
             return new Response(`Password sync failed: ${updateErr.message}`, { status: 500 });
           }
         } else {
-          const { data: created, error: createErr } = await supabaseAdmin.auth.admin.createUser({
-            email,
-            password,
-            email_confirm: true,
-          });
-          if (createErr || !created?.user) {
-            return new Response(`Create failed: ${createErr?.message ?? "unknown"}`, { status: 500 });
+          // No account on the configured email. If a single existing admin account
+          // is present, rename it instead of creating a duplicate admin.
+          const { data: admins } = await supabaseAdmin.from("user_roles").select("user_id").eq("role", "admin");
+          const soleAdminId = admins?.length === 1 ? admins[0]!.user_id : undefined;
+
+          if (soleAdminId) {
+            const { error: renameErr } = await supabaseAdmin.auth.admin.updateUserById(soleAdminId, {
+              email,
+              password,
+              email_confirm: true,
+            });
+            if (renameErr) {
+              return new Response(`Email/password update failed: ${renameErr.message}`, { status: 500 });
+            }
+            userId = soleAdminId;
+          } else {
+            const { data: created, error: createErr } = await supabaseAdmin.auth.admin.createUser({
+              email,
+              password,
+              email_confirm: true,
+            });
+            if (createErr || !created?.user) {
+              return new Response(`Create failed: ${createErr?.message ?? "unknown"}`, { status: 500 });
+            }
+            userId = created.user.id;
           }
-          userId = created.user.id;
         }
 
         // Grant admin role (idempotent)
