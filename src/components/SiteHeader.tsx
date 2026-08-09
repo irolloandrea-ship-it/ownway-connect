@@ -6,11 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
 
-const NAV = [
+const NAV: { to: "/" | "/find-a-waymaker" | "/become-a-waymaker"; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
   { to: "/find-a-waymaker", label: "Find a WayMaker" },
   { to: "/become-a-waymaker", label: "Become a WayMaker" },
-] as const;
+];
 
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
