@@ -47,28 +47,49 @@ email ──"Changed your mind? Leave the waitlist"──> /leave-waitlist?t=<to
 ## Application changes
 
 - `src/lib/leave-waitlist.functions.ts`
-  - `getLeaveStatus` (GET, read-only) → token state + masked email
-  - `performLeaveWaitlist` (POST) → calls the delete RPC
-  - `requestLeaveLink` (POST, by referral code) → mints a new token, stores only the hash, emails the leave link to the address on file; always returns a neutral result so the code cannot be used to probe addresses
+  - `getLeaveStatus` (GET, read-only) → token state + masked email. The browser passes the raw token to this trusted server handler only; hashing happens server-side. No hash is ever computed in or returned to client code.
+  - `performLeaveWaitlist` (POST) → hashes server-side, calls the delete RPC
+  - `requestLeaveLink` (POST, by referral code) → mints a new token (which immediately invalidates the previous one by overwriting the stored hash), emails the leave link to the address on file; always returns a neutral result, never an email address or an account-existence signal
 - `src/routes/leave-waitlist.tsx` — three states: confirm (with the exact warning wording), success ("You've left the OwnWay waitlist. Your waitlist data has been deleted."), and invalid/expired with a way to request a fresh link. `noindex`.
 - `src/lib/email-templates/waitlist-confirmation.tsx` — quiet secondary line under the footer content: "Changed your mind? Leave the waitlist" linking to `/leave-waitlist?t=…`. Token minted in `submitEarlyAccess` alongside the confirmation token.
 - New small template `leave-waitlist-link.tsx` for the "send me a leave link" request.
 - `src/routes/waitlist.$code.tsx` — muted text link at the bottom that triggers `requestLeaveLink`.
-- `src/routes/privacy.tsx` — a short factual section: how to leave, and exactly what is deleted from the live database (waitlist entry, referral credits, notification records, email send logs, unsubscribe tokens, queued unsent emails). It will state plainly that OwnWay cannot recall email already delivered to an inbox, and that provider-side logs and backup retention are covered separately rather than claiming erasure.
+- `src/routes/privacy.tsx` — a short factual section: how to leave, and exactly what is deleted from the live database (waitlist entry, referral credits, notification records, email send logs, unsubscribe tokens, suppression rows, queued unsent emails). It will state plainly that OwnWay cannot recall email already delivered to an inbox, and that provider-side logs and backup retention are reported separately rather than claimed as erased.
 
-## Security
+## Token leakage protection
 
-Same standards as the confirmation flow: high-entropy 32-byte token, SHA-256 hash stored only, single-use, expiring (14 days), constant-time comparison performed by hash equality inside the database, SECURITY DEFINER with pinned `search_path`, execute revoked from client roles, RLS unchanged (no client delete permission anywhere), and no token or hash written to logs.
+- `src/lib/prelaunch-analytics.ts` and the GA4 page-view wiring: both `/leave-waitlist` and `/confirm-email` are excluded from analytics, or reported as a fixed path with no query string. The token, the full URL, and the referrer never reach GA4, analytics rows, server logs, or error reporting.
+- Error reporting (`src/lib/error-capture.ts`, `lovable-error-reporting.ts`) strips the `t` parameter from any captured URL.
+- Both token routes send `Cache-Control: no-store` and `Referrer-Policy: no-referrer` response headers, and the pages avoid outbound links that would carry a referrer.
+- No server function logs the token or its hash on any code path, including error branches.
 
-## Testing — needs your decision
+## Rate limiting for leave-link requests
 
-Destructive acceptance tests must not run against production or preview, and this project has no second Cloud backend. I cannot provision one from here. Options:
+- One leave email per signup per 15 minutes, plus an hourly per-IP cap, enforced server-side in the database (a small `leave_link_requests` table with signup id, hashed IP, timestamp; checked and written inside the same SECURITY DEFINER function). IP is read via `getRequestIP` and stored only as a hash.
+- Exceeding a limit returns the same neutral response as success — no address, no existence signal, no differing timing branch beyond what the database naturally does.
 
-1. You create a separate staging Lovable Cloud project and I run the full suite there with synthetic addresses (repeated GET does nothing, only POST deletes, expired/used/invalid rejected, email gone from every audited table and the CSV export, referrer recalculation, referrer deletion leaves referred users intact, concurrent confirm+delete).
-2. I ship the flow with the SQL logic verified by reasoning and static checks only, and you run the acceptance suite yourself before announcing it.
+## Cancelling claimed-but-unsent notifications
 
-Tell me which and I'll proceed accordingly.
+`drainReferralNotifications` re-checks, immediately before each send, that the recipient signup, the outbox row, and the referral credit still exist and are eligible. If a leave request removed them, the job is discarded/marked instead of sent. An email already accepted by the provider cannot be recalled — that will be stated explicitly in the report and in the privacy wording.
+
+## Staging-only execution
+
+All destructive work runs in a separate staging Cloud project with synthetic addresses. Nothing is created and deleted in production or preview. Acceptance tests to run there, with captured evidence (query output and export contents, not code review):
+
+1. Repeated GET on `/leave-waitlist?t=…` changes nothing.
+2. Only the explicit POST deletes.
+3. Expired, used, and invalid tokens cannot delete.
+4. The address is absent from every audited table and from the admin CSV/Excel export.
+5. A referred person leaving recalculates the referrer's `referral_count`, `priority_score`, and position atomically.
+6. A referrer leaving keeps referred people on the waitlist with no dangling references.
+7. Concurrent confirm + delete produces no stale credit and no post-deletion email.
+8. Deletion after a notification is claimed but before it is sent results in no send.
+9. Leave-link rate limits hold per signup and per IP; a new token invalidates the old one.
+10. No token or query string appears in analytics rows, GA4 payloads, or logs for either token route.
+
+Before implementation starts I need the staging project — tell me when it exists (or link it) and I'll run the whole suite there.
 
 ## Final report I will produce
 
-Tables audited and their treatment (hard-delete vs. redact vs. untouched), what remains outside OwnWay's control (Mailgun provider logs, Supabase point-in-time backups — retention windows currently unverified), and an explicit production-readiness statement.
+The exact tables audited with hard-delete vs. redact vs. untouched, evidence output for each destructive test, external-provider retention facts still unverified (Mailgun send/event logs, Supabase point-in-time backups), and an explicit production-readiness statement.
+
