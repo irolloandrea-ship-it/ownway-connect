@@ -162,7 +162,7 @@ export const getWaitlistStatus = createServerFn({ method: "POST" })
     const verified = Boolean(row.email_verified_at);
     // Unverified signups have no visible position and do not affect the queue.
     const position = verified
-      ? await computePosition(supabaseAdmin, row.priority_score ?? 0, row.base_position ?? 0)
+      ? await computePosition(supabaseAdmin, row.id as string)
       : 0;
 
     return {
