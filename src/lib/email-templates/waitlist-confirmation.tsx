@@ -50,6 +50,7 @@ const WaitlistConfirmationEmail = ({
   referralUrl,
   waitlistUrl,
   confirmUrl,
+  leaveUrl,
   needsConfirmation = false,
   alreadyIn = false,
 }: WaitlistConfirmationProps) => {
@@ -141,7 +142,17 @@ const WaitlistConfirmationEmail = ({
               </Link>{' '}
               anytime to check your position or update your details.
             </Text>
+            {leaveUrl ? (
+              <Text style={quietLine}>
+                Changed your mind?{' '}
+                <Link href={leaveUrl} style={quietLink}>
+                  Leave the waitlist
+                </Link>
+              </Text>
+            ) : null}
           </Container>
+
+
 
           <Section style={footerWrap}>
             <Text style={footer}>
