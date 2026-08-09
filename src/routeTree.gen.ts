@@ -15,6 +15,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as LegalNoticeRouteImport } from './routes/legal-notice'
 import { Route as FindAWaymakerRouteImport } from './routes/find-a-waymaker'
+import { Route as CookiePolicyRouteImport } from './routes/cookie-policy'
 import { Route as ConfirmEmailRouteImport } from './routes/confirm-email'
 import { Route as BecomeAWaymakerRouteImport } from './routes/become-a-waymaker'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -70,6 +71,11 @@ const LegalNoticeRoute = LegalNoticeRouteImport.update({
 const FindAWaymakerRoute = FindAWaymakerRouteImport.update({
   id: '/find-a-waymaker',
   path: '/find-a-waymaker',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookiePolicyRoute = CookiePolicyRouteImport.update({
+  id: '/cookie-policy',
+  path: '/cookie-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConfirmEmailRoute = ConfirmEmailRouteImport.update({
@@ -216,6 +222,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/become-a-waymaker': typeof BecomeAWaymakerRoute
   '/confirm-email': typeof ConfirmEmailRoute
+  '/cookie-policy': typeof CookiePolicyRoute
   '/find-a-waymaker': typeof FindAWaymakerRoute
   '/legal-notice': typeof LegalNoticeRoute
   '/mcp': typeof McpRoute
@@ -250,6 +257,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/become-a-waymaker': typeof BecomeAWaymakerRoute
   '/confirm-email': typeof ConfirmEmailRoute
+  '/cookie-policy': typeof CookiePolicyRoute
   '/find-a-waymaker': typeof FindAWaymakerRoute
   '/legal-notice': typeof LegalNoticeRoute
   '/mcp': typeof McpRoute
@@ -285,6 +293,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/become-a-waymaker': typeof BecomeAWaymakerRoute
   '/confirm-email': typeof ConfirmEmailRoute
+  '/cookie-policy': typeof CookiePolicyRoute
   '/find-a-waymaker': typeof FindAWaymakerRoute
   '/legal-notice': typeof LegalNoticeRoute
   '/mcp': typeof McpRoute
@@ -321,6 +330,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/become-a-waymaker'
     | '/confirm-email'
+    | '/cookie-policy'
     | '/find-a-waymaker'
     | '/legal-notice'
     | '/mcp'
@@ -355,6 +365,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/become-a-waymaker'
     | '/confirm-email'
+    | '/cookie-policy'
     | '/find-a-waymaker'
     | '/legal-notice'
     | '/mcp'
@@ -389,6 +400,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/become-a-waymaker'
     | '/confirm-email'
+    | '/cookie-policy'
     | '/find-a-waymaker'
     | '/legal-notice'
     | '/mcp'
@@ -424,6 +436,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   BecomeAWaymakerRoute: typeof BecomeAWaymakerRoute
   ConfirmEmailRoute: typeof ConfirmEmailRoute
+  CookiePolicyRoute: typeof CookiePolicyRoute
   FindAWaymakerRoute: typeof FindAWaymakerRoute
   LegalNoticeRoute: typeof LegalNoticeRoute
   McpRoute: typeof McpRoute
@@ -493,6 +506,13 @@ declare module '@tanstack/react-router' {
       path: '/find-a-waymaker'
       fullPath: '/find-a-waymaker'
       preLoaderRoute: typeof FindAWaymakerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cookie-policy': {
+      id: '/cookie-policy'
+      path: '/cookie-policy'
+      fullPath: '/cookie-policy'
+      preLoaderRoute: typeof CookiePolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/confirm-email': {
@@ -708,6 +728,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   BecomeAWaymakerRoute: BecomeAWaymakerRoute,
   ConfirmEmailRoute: ConfirmEmailRoute,
+  CookiePolicyRoute: CookiePolicyRoute,
   FindAWaymakerRoute: FindAWaymakerRoute,
   LegalNoticeRoute: LegalNoticeRoute,
   McpRoute: McpRoute,

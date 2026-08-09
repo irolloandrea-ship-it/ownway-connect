@@ -122,7 +122,15 @@ export function CookieConsent() {
             <DialogTitle>Cookie preferences</DialogTitle>
             <DialogDescription>
               Choose which optional cookies OwnWay may use. You can change this
-              at any time from the footer.
+              at any time from the footer. Read our{" "}
+              <Link
+                to="/cookie-policy"
+                className="text-accent underline-offset-2 hover:underline"
+                onClick={() => setPrefsOpen(false)}
+              >
+                Cookie Policy
+              </Link>
+              .
             </DialogDescription>
           </DialogHeader>
 

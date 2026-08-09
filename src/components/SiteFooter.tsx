@@ -20,6 +20,7 @@ export function SiteFooter() {
           <Link to="/" hash="how-it-works" className="hover:text-foreground">How it works</Link>
           <Link to="/privacy" className="hover:text-foreground">Privacy Policy</Link>
           <Link to="/legal-notice" className="hover:text-foreground">Legal Notice</Link>
+          <Link to="/cookie-policy" className="hover:text-foreground">Cookie Policy</Link>
           {hasAnalytics && (
             <button
               type="button"
