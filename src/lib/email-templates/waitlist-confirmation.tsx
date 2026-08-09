@@ -25,6 +25,7 @@ interface WaitlistConfirmationProps {
   referralUrl?: string
   waitlistUrl?: string
   confirmUrl?: string
+  leaveUrl?: string
   needsConfirmation?: boolean
   alreadyIn?: boolean
 }
