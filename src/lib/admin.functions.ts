@@ -309,9 +309,13 @@ export const adminListWaitlist = createServerFn({ method: "GET" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data, error } = await supabaseAdmin
       .from("early_access_signups")
-      .select("email, role, destination, referral_code, referred_by, referral_count, priority_score, base_position, consent_to_updates, source, created_at")
+      .select("email, role, destination, referral_code, referred_by, referral_count, priority_score, base_position, consent_to_updates, source, created_at, email_verified_at, membership_provenance")
+      // Canonical queue ordering.
       .order("priority_score", { ascending: true })
+      .order("base_position", { ascending: true, nullsFirst: false })
+      .order("created_at", { ascending: true })
       .order("id", { ascending: true });
+
     if (error) throw new Error(error.message);
     return data ?? [];
   });
