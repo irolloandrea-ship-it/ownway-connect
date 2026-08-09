@@ -79,6 +79,11 @@ function WaitlistPanel() {
   const { data = [], isLoading, refetch, isFetching } = useQuery({
     queryKey: ["admin-waitlist"],
     queryFn: () => listFn(),
+    staleTime: 0,
+    refetchInterval: 15000,
+    refetchIntervalInBackground: false,
+    refetchOnWindowFocus: true,
+    refetchOnMount: "always",
   });
   const [busy, setBusy] = useState(false);
 
