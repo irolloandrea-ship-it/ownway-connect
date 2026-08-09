@@ -82,17 +82,26 @@ type ExtraPayload = {
   metadata?: Record<string, any>;
 };
 
+/**
+ * Routes whose URL can carry a bearer token. They are never reported to
+ * analytics, and no query string or fragment from them is ever stored.
+ */
+const TOKEN_ROUTES = ["/leave-waitlist", "/confirm-email"];
+
 export async function trackPrelaunchEvent(
   eventName: "page_view" | "cta_click" | "email_signup",
   payload: ExtraPayload = {},
 ) {
   if (typeof window === "undefined") return;
+  if (TOKEN_ROUTES.some((p) => window.location.pathname.startsWith(p))) return;
   try {
     const src = readStored() ?? captureSourceOnce();
     const row = {
       event_name: eventName,
-      page_url: window.location.href,
+      // Path only — never the query string or fragment.
+      page_url: `${window.location.origin}${window.location.pathname}`,
       page_path: window.location.pathname,
+
       referrer: src.referrer,
       button_text: payload.button_text ?? null,
       button_location: payload.button_location ?? null,
