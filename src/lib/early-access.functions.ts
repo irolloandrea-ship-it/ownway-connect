@@ -91,17 +91,9 @@ export const submitEarlyAccess = createServerFn({ method: "POST" })
 
     let position = 0;
     if (verified) {
-      const { data: row } = await supabaseAdmin
-        .from("early_access_signups")
-        .select("priority_score, base_position")
-        .eq("id", result.signup_id)
-        .maybeSingle();
-      position = await computePosition(
-        supabaseAdmin,
-        row?.priority_score ?? 0,
-        row?.base_position ?? 0,
-      );
+      position = await computePosition(supabaseAdmin, result.signup_id as string);
     }
+
 
     try {
       await sendTransactionalEmailInternal({
