@@ -206,6 +206,46 @@ function PrivacyPage() {
             </p>
           </Section>
 
+          <Section n={6} title="Leaving the waitlist and deletion">
+            <p>
+              You can leave the waitlist at any time. Every OwnWay waitlist
+              email contains a quiet{" "}
+              <strong>&ldquo;Changed your mind? Leave the waitlist&rdquo;</strong>{" "}
+              link, and your personal waitlist page has a{" "}
+              <strong>&ldquo;Leave the waitlist&rdquo;</strong> option that emails
+              you a fresh, single-use link. Opening the link never deletes
+              anything: it shows a confirmation page, and deletion happens only
+              when you press <strong>&ldquo;Leave waitlist and delete my
+              data&rdquo;</strong>.
+            </p>
+            <p>
+              When you confirm, we hard-delete from our live database, in a
+              single transaction: your waitlist entry (email address, role,
+              destination, referral code, position and consent record), your
+              referral credits and any pending referral notifications, your
+              email delivery log entries, your unsubscribe tokens, any
+              suppression record holding your address, and the rate-limit
+              records for your leave requests. We do not keep a raw-email
+              suppression entry afterwards, so you are free to sign up again
+              later.
+            </p>
+            <p>
+              If somebody had referred you, their referral count and waitlist
+              position are recalculated in the same transaction, and they are
+              never told who left. If you had referred other people, they stay
+              on the waitlist independently.
+            </p>
+            <p>
+              What deletion cannot cover: emails already delivered to an inbox
+              cannot be recalled, and copies may persist in our email
+              provider&rsquo;s own delivery logs and in routine encrypted
+              infrastructure backups until they age out under those providers&rsquo;
+              retention schedules, which we do not control. Deletion applies to
+              OwnWay&rsquo;s live database.
+            </p>
+          </Section>
+
+
           <Section n={6} title="Service providers and recipients">
             <p>
               We do <strong>not sell</strong> your personal data. We share it
