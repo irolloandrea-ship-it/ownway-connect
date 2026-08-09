@@ -204,14 +204,14 @@ function LandingPage() {
             </div>
 
             {/* Visual composition: photo + the real app preview overlapping it on desktop */}
-            <div className="relative lg:min-h-[780px]">
+            <div className="relative lg:min-h-[720px]">
               <img
                 src={heroImage.url}
                 alt="A local and a traveller talking on a sunlit street in Florence, with the Duomo behind them"
                 width={1280}
                 height={1600}
-                sizes="(min-width: 1024px) 40vw, 100vw"
-                className="aspect-[4/3] w-full rounded-3xl object-cover object-center shadow-card sm:aspect-[3/2] lg:absolute lg:inset-y-14 lg:left-0 lg:aspect-auto lg:h-[calc(100%-7rem)] lg:w-[72%]"
+                sizes="(min-width: 1024px) 45vw, 100vw"
+                className="aspect-[4/3] w-full rounded-3xl object-cover object-center shadow-card sm:aspect-[3/2] lg:absolute lg:inset-y-16 lg:-left-28 lg:aspect-auto lg:h-[calc(100%-8rem)] lg:w-[86%]"
               />
 
               <div className="mt-10 flex justify-center lg:mt-0 lg:absolute lg:right-0 lg:top-0 lg:origin-top-right lg:scale-[0.94]">
