@@ -87,16 +87,17 @@ The token travels in a URL fragment, so it is not part of the HTTP request line 
 
 All destructive work runs in a separate staging Cloud project with synthetic addresses. Nothing is created and deleted in production or preview. Acceptance tests to run there, with captured evidence (query output and export contents, not code review):
 
-1. Repeated GET on `/leave-waitlist?t=…` changes nothing.
+1. Repeated GET / repeated status reads on `/leave-waitlist` change nothing.
 2. Only the explicit POST deletes.
 3. Expired, used, and invalid tokens cannot delete.
-4. The address is absent from every audited table and from the admin CSV/Excel export.
+4. The address is absent from every audited table (including `leave_link_requests`, `suppressed_emails`, `email_send_log`, `email_unsubscribe_tokens`, both pgmq queues) and from the admin CSV/Excel export.
 5. A referred person leaving recalculates the referrer's `referral_count`, `priority_score`, and position atomically.
 6. A referrer leaving keeps referred people on the waitlist with no dangling references.
 7. Concurrent confirm + delete produces no stale credit and no post-deletion email.
 8. Deletion after a notification is claimed but before it is sent results in no send.
-9. Leave-link rate limits hold per signup and per IP; a new token invalidates the old one.
-10. No token or query string appears in analytics rows, GA4 payloads, or logs for either token route.
+9. Leave-link rate limits hold per signup and per IP; a new token invalidates the old one; rows older than 24h are purged and all rows for a departing signup are deleted.
+10. No token appears in analytics rows, GA4 payloads, request logs, or error reports for either token route, and the URL is rewritten to a bare path on load.
+
 
 Before implementation starts I need the staging project — tell me when it exists (or link it) and I'll run the whole suite there.
 
