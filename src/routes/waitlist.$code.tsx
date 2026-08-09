@@ -224,9 +224,22 @@ function WaitlistPage() {
 
               </div>
 
+              {/* Deliberately quiet — must not compete with the invite CTA. */}
+              <p className="mt-10 text-center text-xs text-muted-foreground">
+                <button
+                  type="button"
+                  onClick={leave}
+                  disabled={leaveSent}
+                  className="underline underline-offset-2 hover:text-foreground disabled:no-underline"
+                >
+                  {leaveSent ? "Check your email for the leave link" : "Leave the waitlist"}
+                </button>
+              </p>
+
             </>
 
           )}
+
         </div>
       </section>
       <SiteFooter />
