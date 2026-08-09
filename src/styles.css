@@ -64,41 +64,41 @@
 :root {
   --radius: 0.9rem;
 
-  /* Warm cream base with a whisper of coral */
-  --background: oklch(0.98 0.02 70);
-  --foreground: oklch(0.24 0.03 200);
-  --ink: oklch(0.24 0.03 200);
-  --sand: oklch(0.95 0.035 65);
-  --olive: oklch(0.55 0.06 130);
-  --terracotta: oklch(0.65 0.15 40);
+  /* Warm cream base */
+  --background: #fff8f0;
+  --foreground: #163428;
+  --ink: #163428;
+  --sand: #e9d8c6;
+  --olive: #4a6350;
+  --terracotta: #f26c4f;
 
-  --card: oklch(0.995 0.008 70);
+  --card: #ffffff;
   --card-foreground: var(--foreground);
-  --popover: oklch(1 0 0);
+  --popover: #ffffff;
   --popover-foreground: var(--foreground);
 
-  /* Primary = deep teal ink */
-  --primary: oklch(0.28 0.05 200);
-  --primary-foreground: oklch(0.98 0.015 80);
+  /* Primary = deep forest green */
+  --primary: #163428;
+  --primary-foreground: #fff8f0;
 
-  /* Secondary = warm peach wash for section bands */
-  --secondary: oklch(0.94 0.04 55);
+  /* Secondary = muted sand band */
+  --secondary: #f3e6d8;
   --secondary-foreground: var(--foreground);
 
-  --muted: oklch(0.94 0.025 65);
-  --muted-foreground: oklch(0.45 0.03 200);
+  --muted: #f3e6d8;
+  --muted-foreground: #5b6f63;
 
-  /* Accent = terracotta orange */
-  --accent: oklch(0.65 0.15 40);
-  --accent-foreground: oklch(0.99 0.01 80);
+  /* Accent = restrained coral */
+  --accent: #f26c4f;
+  --accent-foreground: #fffaf4;
 
   --destructive: oklch(0.58 0.22 27);
   --destructive-foreground: oklch(0.99 0.01 80);
 
-  /* Warm beige borders that echo the accent */
-  --border: oklch(0.88 0.035 55);
-  --input: oklch(0.9 0.03 60);
-  --ring: oklch(0.65 0.15 40);
+  /* Warm sand borders */
+  --border: #ecdccb;
+  --input: #e3d2bf;
+  --ring: #f26c4f;
 }
 
 
