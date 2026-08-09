@@ -144,8 +144,11 @@ export function trackAnalyticsEvent(name: string, params?: Record<string, string
   gtag("event", name, params ?? {});
 }
 
-// Manual page_view. Sends only the path — never query strings, which may
-// contain referral codes or other identifiers.
+// Manual page_view. Sends only the path — never query strings or fragments,
+// which may contain referral codes or one-time bearer tokens. Pages whose URL
+// can carry a token are skipped entirely.
+const TOKEN_ROUTES = ["/leave-waitlist", "/confirm-email"];
+
 export function trackPageView(pathOverride?: string) {
   if (typeof window === "undefined") return;
   const measurementId = getMeasurementId();
@@ -155,6 +158,8 @@ export function trackPageView(pathOverride?: string) {
   const gtag = window.gtag;
   if (!gtag) return;
   const page_path = pathOverride ?? window.location.pathname;
+  if (TOKEN_ROUTES.some((p) => page_path.startsWith(p))) return;
+
   gtag("event", "page_view", {
     page_path,
     page_location: `${window.location.origin}${page_path}`,

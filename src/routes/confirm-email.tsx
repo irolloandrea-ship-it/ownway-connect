@@ -28,6 +28,10 @@ export const Route = createFileRoute("/confirm-email")({
   validateSearch: (s: Record<string, unknown>): Search => ({
     t: typeof s.t === "string" ? s.t : undefined,
   }),
+  headers: () => ({
+    "cache-control": "no-store, no-cache, must-revalidate, private",
+    "referrer-policy": "no-referrer",
+  }),
   head: () => ({
     meta: [
       { title: "Confirm your email — OwnWay" },
@@ -42,33 +46,45 @@ export const Route = createFileRoute("/confirm-email")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "robots", content: "noindex" },
+      { name: "robots", content: "noindex, nofollow" },
+      { name: "referrer", content: "no-referrer" },
     ],
   }),
   component: ConfirmEmailPage,
 });
 
 function ConfirmEmailPage() {
-  const { t } = Route.useSearch();
+  const search = Route.useSearch();
   const readStatus = useServerFn(getConfirmEmailStatus);
   const doConfirm = useServerFn(confirmEmail);
 
+  const [t, setT] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState<string>("invalid");
   const [submitting, setSubmitting] = useState(false);
   const [code, setCode] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!t) {
+    // Token arrives in the URL fragment (never sent in the HTTP request);
+    // `?t=` stays supported for links already delivered.
+    let raw: string | null = search.t ?? null;
+    if (typeof window !== "undefined") {
+      const fromHash = new URLSearchParams(window.location.hash.replace(/^#/, "")).get("t");
+      if (fromHash) raw = fromHash;
+      if (fromHash || search.t) window.history.replaceState(null, "", "/confirm-email");
+    }
+    if (!raw) {
       setLoading(false);
       return;
     }
-    // GET only — reading the link never confirms anything (scanner-safe).
-    readStatus({ data: { token: t } })
+    setT(raw);
+    // Read-only — reading the link never confirms anything (scanner-safe).
+    readStatus({ data: { token: raw } })
       .then((r) => setStatus(normalize(r.status)))
       .catch(() => setStatus("invalid"))
       .finally(() => setLoading(false));
-  }, [t]);
+  }, []);
+
 
   const onConfirm = async () => {
     if (!t) return;

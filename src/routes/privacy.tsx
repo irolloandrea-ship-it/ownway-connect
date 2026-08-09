@@ -206,7 +206,47 @@ function PrivacyPage() {
             </p>
           </Section>
 
-          <Section n={6} title="Service providers and recipients">
+          <Section n={6} title="Leaving the waitlist and deletion">
+            <p>
+              You can leave the waitlist at any time. Every OwnWay waitlist
+              email contains a quiet{" "}
+              <strong>&ldquo;Changed your mind? Leave the waitlist&rdquo;</strong>{" "}
+              link, and your personal waitlist page has a{" "}
+              <strong>&ldquo;Leave the waitlist&rdquo;</strong> option that emails
+              you a fresh, single-use link. Opening the link never deletes
+              anything: it shows a confirmation page, and deletion happens only
+              when you press <strong>&ldquo;Leave waitlist and delete my
+              data&rdquo;</strong>.
+            </p>
+            <p>
+              When you confirm, we hard-delete from our live database, in a
+              single transaction: your waitlist entry (email address, role,
+              destination, referral code, position and consent record), your
+              referral credits and any pending referral notifications, your
+              email delivery log entries, your unsubscribe tokens, any
+              suppression record holding your address, and the rate-limit
+              records for your leave requests. We do not keep a raw-email
+              suppression entry afterwards, so you are free to sign up again
+              later.
+            </p>
+            <p>
+              If somebody had referred you, their referral count and waitlist
+              position are recalculated in the same transaction, and they are
+              never told who left. If you had referred other people, they stay
+              on the waitlist independently.
+            </p>
+            <p>
+              What deletion cannot cover: emails already delivered to an inbox
+              cannot be recalled, and copies may persist in our email
+              provider&rsquo;s own delivery logs and in routine encrypted
+              infrastructure backups until they age out under those providers&rsquo;
+              retention schedules, which we do not control. Deletion applies to
+              OwnWay&rsquo;s live database.
+            </p>
+          </Section>
+
+
+          <Section n={7} title="Service providers and recipients">
             <p>
               We do <strong>not sell</strong> your personal data. We share it
               only with service providers that help us operate the website and
@@ -239,7 +279,7 @@ function PrivacyPage() {
 
           </Section>
 
-          <Section n={7} title="International transfers">
+          <Section n={8} title="International transfers">
             <p>
               Some of the providers listed above may process data outside the
               European Economic Area (for example in the United States). Where
@@ -250,7 +290,7 @@ function PrivacyPage() {
             </p>
           </Section>
 
-          <Section n={8} title="Cookies and Google Analytics" id="analytics">
+          <Section n={9} title="Cookies and Google Analytics" id="analytics">
             <p>
               OwnWay uses <strong>Google Analytics 4</strong> only to
               understand aggregate use of the website and improve it. When you
@@ -304,7 +344,7 @@ function PrivacyPage() {
             )}
           </Section>
 
-          <Section n={9} title="Your rights">
+          <Section n={10} title="Your rights">
             <p>You have the right to:</p>
             <ul className="list-disc space-y-1 pl-6">
               <li>access your personal data;</li>
@@ -342,7 +382,7 @@ function PrivacyPage() {
             </p>
           </Section>
 
-          <Section n={10} title="Providing your data is optional">
+          <Section n={11} title="Providing your data is optional">
             <p>
               Providing your email address and marketing consent is optional.
               Without them we cannot add you to the waitlist or send you
@@ -351,7 +391,7 @@ function PrivacyPage() {
             </p>
           </Section>
 
-          <Section n={11} title="Changes to this Privacy Policy">
+          <Section n={12} title="Changes to this Privacy Policy">
             <p>
               We may update this Privacy Policy over time — for example to
               reflect changes to the service, new service providers, or

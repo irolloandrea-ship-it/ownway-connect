@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { getWaitlistStatus, updateSignup } from "@/lib/early-access.functions";
+import { requestLeaveLink } from "@/lib/leave-waitlist.functions";
 import { Check, Copy, Link as LinkIcon, Share2 } from "lucide-react";
 
 type Search = { role?: "explorer" | "waymaker"; already?: boolean };
@@ -33,6 +34,21 @@ function WaitlistPage() {
   const search = useSearch({ from: "/waitlist/$code" });
   const fetchStatus = useServerFn(getWaitlistStatus);
   const saveSignup = useServerFn(updateSignup);
+  const askLeaveLink = useServerFn(requestLeaveLink);
+  const [leaveSent, setLeaveSent] = useState(false);
+
+  // The 7-char referral code never authorises deletion: it can only trigger a
+  // one-time leave link sent to the address already on file.
+  const leave = async () => {
+    try {
+      await askLeaveLink({ data: { referral_code: code } });
+    } catch {
+      /* neutral response either way */
+    }
+    setLeaveSent(true);
+    toast.success("If that waitlist entry exists, we've emailed a leave link.");
+  };
+
 
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState<Awaited<ReturnType<typeof getWaitlistStatus>> | null>(null);
@@ -224,9 +240,22 @@ function WaitlistPage() {
 
               </div>
 
+              {/* Deliberately quiet — must not compete with the invite CTA. */}
+              <p className="mt-10 text-center text-xs text-muted-foreground">
+                <button
+                  type="button"
+                  onClick={leave}
+                  disabled={leaveSent}
+                  className="underline underline-offset-2 hover:text-foreground disabled:no-underline"
+                >
+                  {leaveSent ? "Check your email for the leave link" : "Leave the waitlist"}
+                </button>
+              </p>
+
             </>
 
           )}
+
         </div>
       </section>
       <SiteFooter />

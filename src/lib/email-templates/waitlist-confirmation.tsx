@@ -25,6 +25,7 @@ interface WaitlistConfirmationProps {
   referralUrl?: string
   waitlistUrl?: string
   confirmUrl?: string
+  leaveUrl?: string
   needsConfirmation?: boolean
   alreadyIn?: boolean
 }
@@ -49,6 +50,7 @@ const WaitlistConfirmationEmail = ({
   referralUrl,
   waitlistUrl,
   confirmUrl,
+  leaveUrl,
   needsConfirmation = false,
   alreadyIn = false,
 }: WaitlistConfirmationProps) => {
@@ -140,7 +142,17 @@ const WaitlistConfirmationEmail = ({
               </Link>{' '}
               anytime to check your position or update your details.
             </Text>
+            {leaveUrl ? (
+              <Text style={quietLine}>
+                Changed your mind?{' '}
+                <Link href={leaveUrl} style={quietLink}>
+                  Leave the waitlist
+                </Link>
+              </Text>
+            ) : null}
           </Container>
+
+
 
           <Section style={footerWrap}>
             <Text style={footer}>
@@ -182,7 +194,8 @@ export const template = {
     referralCode: 'ABCDEFG',
     referralUrl: `${SITE_URL_FALLBACK}/?ref=ABCDEFG`,
     waitlistUrl: `${SITE_URL_FALLBACK}/waitlist/ABCDEFG`,
-    confirmUrl: `${SITE_URL_FALLBACK}/confirm-email?t=example-token`,
+    confirmUrl: `${SITE_URL_FALLBACK}/confirm-email#t=example-token`,
+    leaveUrl: `${SITE_URL_FALLBACK}/leave-waitlist#t=example-token`,
     needsConfirmation: true,
     alreadyIn: false,
   },
@@ -331,6 +344,19 @@ const footer = {
   margin: '0 0 6px',
 }
 const footerLink = {
+  color: textMuted,
+  textDecoration: 'underline',
+}
+// Deliberately quiet: must not compete with the invite CTA.
+const quietLine = {
+  fontFamily: 'Arial, Helvetica, sans-serif',
+  fontSize: '12px',
+  lineHeight: 1.5,
+  color: textMuted,
+  textAlign: 'center' as const,
+  margin: '18px 0 0',
+}
+const quietLink = {
   color: textMuted,
   textDecoration: 'underline',
 }

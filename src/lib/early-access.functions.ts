@@ -94,6 +94,19 @@ export const submitEarlyAccess = createServerFn({ method: "POST" })
       position = await computePosition(supabaseAdmin, result.signup_id as string);
     }
 
+    // One-time leave token. Stored as a hash only; delivered in a URL fragment
+    // so it never appears in an HTTP request line or access log.
+    const leaveToken = generateConfirmToken();
+    const leaveExpires = new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString();
+    try {
+      await supabaseAdmin.rpc("set_leave_token", {
+        p_signup_id: result.signup_id as string,
+        p_token_hash: await hashToken(leaveToken),
+        p_expires_at: leaveExpires,
+      });
+    } catch (err) {
+      console.error("Could not store leave token");
+    }
 
     try {
       await sendTransactionalEmailInternal({
@@ -109,7 +122,8 @@ export const submitEarlyAccess = createServerFn({ method: "POST" })
           referralCode: referral_code,
           referralUrl: `${SITE_URL}/?ref=${referral_code}`,
           waitlistUrl: `${SITE_URL}/waitlist/${referral_code}`,
-          confirmUrl: `${SITE_URL}/confirm-email?t=${token}`,
+          confirmUrl: `${SITE_URL}/confirm-email#t=${token}`,
+          leaveUrl: `${SITE_URL}/leave-waitlist#t=${leaveToken}`,
           needsConfirmation,
           alreadyIn: !result.was_inserted,
         },
@@ -118,6 +132,7 @@ export const submitEarlyAccess = createServerFn({ method: "POST" })
       // Never break signup on email failure
       console.error("Waitlist confirmation email failed", err);
     }
+
 
     return {
       referral_code,

@@ -1,5 +1,6 @@
 import type { ComponentType } from 'react'
 
+import { template as leaveWaitlistLinkTemplate } from './leave-waitlist-link'
 import { template as referralCreditedTemplate } from './referral-credited'
 import { template as waitlistConfirmationTemplate } from './waitlist-confirmation'
 
@@ -15,4 +16,5 @@ export interface TemplateEntry {
 export const TEMPLATES: Record<string, TemplateEntry> = {
   'waitlist-confirmation': waitlistConfirmationTemplate,
   'referral-credited': referralCreditedTemplate,
+  'leave-waitlist-link': leaveWaitlistLinkTemplate,
 }
