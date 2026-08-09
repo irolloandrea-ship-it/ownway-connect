@@ -73,10 +73,8 @@ export async function drainReferralNotifications(limit = 20) {
         continue;
       }
 
-      const position = await computeVerifiedPosition(
-        recipient.priority_score ?? 0,
-        recipient.base_position ?? 0,
-      );
+      const position = await computeVerifiedPosition(job.recipient_signup_id as string);
+
 
       const res = await sendTransactionalEmailInternal({
         templateName: "referral-credited",
