@@ -162,7 +162,7 @@ function LandingPage() {
                 For curious travellers &amp; locals
               </p>
               <h1 className="mt-4 text-[2.15rem] leading-[1.08] md:text-5xl lg:text-[3.4rem]">
-                Travel deeper with someone who knows the place.
+                Plan smarter and travel deeper with someone who knows the place.
               </h1>
               <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
                 Real connections. Local knowledge. More meaning in every trip.
