@@ -64,41 +64,41 @@
 :root {
   --radius: 0.9rem;
 
-  /* Warm cream base */
-  --background: #fff8f0;
+  /* Pale sage base */
+  --background: #e8ede6;
   --foreground: #163428;
   --ink: #163428;
-  --sand: #e9d8c6;
+  --sand: #dce5d4;
   --olive: #4a6350;
-  --terracotta: #f26c4f;
+  --terracotta: #a8b5a0;
 
-  --card: #ffffff;
+  --card: #f4f7f2;
   --card-foreground: var(--foreground);
-  --popover: #ffffff;
+  --popover: #f4f7f2;
   --popover-foreground: var(--foreground);
 
   /* Primary = deep forest green */
   --primary: #163428;
-  --primary-foreground: #fff8f0;
+  --primary-foreground: #e8ede6;
 
-  /* Secondary = muted sand band */
-  --secondary: #f3e6d8;
+  /* Secondary = muted sage band */
+  --secondary: #dce5d4;
   --secondary-foreground: var(--foreground);
 
-  --muted: #f3e6d8;
-  --muted-foreground: #5b6f63;
+  --muted: #dce5d4;
+  --muted-foreground: #4a6350;
 
-  /* Accent = restrained coral */
-  --accent: #f26c4f;
-  --accent-foreground: #fffaf4;
+  /* Accent = soft sage */
+  --accent: #a8b5a0;
+  --accent-foreground: #163428;
 
   --destructive: oklch(0.58 0.22 27);
   --destructive-foreground: oklch(0.99 0.01 80);
 
-  /* Warm sand borders */
-  --border: #ecdccb;
-  --input: #e3d2bf;
-  --ring: #f26c4f;
+  /* Sage borders */
+  --border: #c9d4c3;
+  --input: #c9d4c3;
+  --ring: #a8b5a0;
 }
 
 
