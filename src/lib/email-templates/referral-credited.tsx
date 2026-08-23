@@ -197,7 +197,7 @@ const positionMeta = {
 }
 const button = {
   backgroundColor: primaryGreen,
-  color: '#FFFDF8',
+  color: '#f4f7f2',
   fontFamily: 'Arial, Helvetica, sans-serif',
   fontSize: '14px',
   fontWeight: 700 as const,
