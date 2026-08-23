@@ -1,23 +1,23 @@
 /**
  * Palette for the in-phone OwnWay app preview screens.
- * These are the *product UI* colors from the Google AI Studio journey handoff,
- * intentionally scoped to the mockup only (they are not landing-page tokens).
+ * Aligned with the Forest & Sage landing-page palette:
+ * pale sage backgrounds, deep forest green, soft sage accents.
  */
 export const APP = {
-  bg: "#fafaf5",
-  surface: "#ffffff",
-  surfaceMuted: "#f4f4ef",
-  chip: "#eeeee9",
-  line: "#eeeee4",
-  border: "#dadad6",
+  bg: "#e8ede6",
+  surface: "#f4f7f2",
+  surfaceMuted: "#dce5d4",
+  chip: "#d5e0cf",
+  line: "#c9d4c3",
+  border: "#b8c6b1",
   ink: "#1a1c19",
   inkMuted: "#424844",
-  inkFaint: "#727974",
+  inkFaint: "#5f6f5f",
   green: "#163428",
   greenSoft: "#2d4b3e",
-  greenTint: "#c8ead8",
+  greenTint: "#c5d6be",
   greenText: "#99baa9",
-  clay: "#7d562d",
-  clayTint: "#fceada",
-  apricot: "#ffca98",
+  clay: "#4a6350",
+  clayTint: "#dce5d4",
+  apricot: "#a8b5a0",
 } as const;
