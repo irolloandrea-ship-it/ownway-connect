@@ -25,8 +25,6 @@ interface ReferralCreditedProps {
 
 const SITE_URL_FALLBACK = 'https://ownway.app'
 
-// OwnWay palette
-const pageBg = '#FFF6EA'
 // OwnWay palette — Forest & Sage
 const pageBg = '#e8ede6'
 const cardBg = '#f4f7f2'
@@ -146,7 +144,7 @@ const eyebrow = {
   fontSize: '11px',
   letterSpacing: '0.22em',
   textTransform: 'uppercase' as const,
-  color: coral,
+  color: accent,
   margin: '0 0 10px',
   fontWeight: 700 as const,
 }
@@ -219,7 +217,7 @@ const linkBlock = {
   margin: '0 0 4px',
 }
 const linkStyle = {
-  color: coral,
+  color: accent,
   textDecoration: 'underline',
   fontWeight: 700 as const,
 }

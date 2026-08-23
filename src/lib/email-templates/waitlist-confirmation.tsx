@@ -229,7 +229,7 @@ const eyebrow = {
   fontSize: '11px',
   letterSpacing: '0.22em',
   textTransform: 'uppercase' as const,
-  color: coral,
+  color: accent,
   margin: '0 0 10px',
   fontWeight: 700 as const,
 }
@@ -331,7 +331,7 @@ const linkBlock = {
   margin: '0 0 16px',
 }
 const linkStyle = {
-  color: coral,
+  color: accent,
   textDecoration: 'underline',
   fontWeight: 700 as const,
 }
