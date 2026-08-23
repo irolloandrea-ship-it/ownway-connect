@@ -224,8 +224,8 @@ export function OwnWayPhoneCarousel(_: OwnWayPhoneCarouselProps) {
               className={cn(
                 "h-2 rounded-full transition-all",
                 activeIndex === index
-                  ? "w-8 bg-[#E26F4F]"
-                  : "w-2 bg-[#E8D7C5] hover:bg-[#F7BE8A]"
+                  ? "w-8 bg-[#a8b5a0]"
+                  : "w-2 bg-[#dce5d4] hover:bg-[#a8b5a0]"
               )}
             />
           ))}

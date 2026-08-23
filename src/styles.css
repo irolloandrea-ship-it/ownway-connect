@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * OwnWay design system — warm, travel-inspired, premium.
- * Palette: soft sand background, deep teal ink, terracotta accent, muted olive.
+ * OwnWay design system — calm, botanical, premium.
+ * Palette: pale sage background, deep forest ink, soft sage accent, muted olive.
  */
 
 @theme inline {
@@ -52,78 +52,78 @@
   --color-gold-foreground: var(--accent-foreground);
   --color-cream: var(--sand);
 
-  --shadow-warm: 0 20px 60px -30px oklch(0.65 0.15 40 / 0.35);
-  --shadow-card: 0 1px 2px oklch(0.55 0.12 40 / 0.06), 0 10px 30px -14px oklch(0.55 0.12 40 / 0.14);
-  --shadow-soft: 0 4px 24px -8px oklch(0.55 0.12 40 / 0.12);
-  --shadow-glow: 0 0 0 1px oklch(0.65 0.15 40 / 0.15), 0 20px 50px -20px oklch(0.65 0.15 40 / 0.35);
+  --shadow-warm: 0 20px 60px -30px oklch(0.55 0.06 140 / 0.35);
+  --shadow-card: 0 1px 2px oklch(0.55 0.05 140 / 0.06), 0 10px 30px -14px oklch(0.55 0.05 140 / 0.14);
+  --shadow-soft: 0 4px 24px -8px oklch(0.55 0.05 140 / 0.12);
+  --shadow-glow: 0 0 0 1px oklch(0.65 0.06 140 / 0.15), 0 20px 50px -20px oklch(0.65 0.06 140 / 0.35);
 
-  --gradient-warm: linear-gradient(135deg, oklch(0.72 0.16 45), oklch(0.62 0.17 30));
-  --gradient-cream: linear-gradient(180deg, oklch(0.985 0.018 70), oklch(0.96 0.03 60));
+  --gradient-warm: linear-gradient(135deg, oklch(0.72 0.06 140), oklch(0.62 0.07 130));
+  --gradient-cream: linear-gradient(180deg, oklch(0.985 0.01 140), oklch(0.96 0.02 130));
 }
 
 :root {
   --radius: 0.9rem;
 
-  /* Warm cream base */
-  --background: #fff8f0;
+  /* Pale sage base */
+  --background: #e8ede6;
   --foreground: #163428;
   --ink: #163428;
-  --sand: #e9d8c6;
+  --sand: #dce5d4;
   --olive: #4a6350;
-  --terracotta: #f26c4f;
+  --terracotta: #a8b5a0;
 
-  --card: #ffffff;
+  --card: #f4f7f2;
   --card-foreground: var(--foreground);
-  --popover: #ffffff;
+  --popover: #f4f7f2;
   --popover-foreground: var(--foreground);
 
   /* Primary = deep forest green */
   --primary: #163428;
-  --primary-foreground: #fff8f0;
+  --primary-foreground: #e8ede6;
 
-  /* Secondary = muted sand band */
-  --secondary: #f3e6d8;
+  /* Secondary = muted sage band */
+  --secondary: #dce5d4;
   --secondary-foreground: var(--foreground);
 
-  --muted: #f3e6d8;
-  --muted-foreground: #5b6f63;
+  --muted: #dce5d4;
+  --muted-foreground: #4a6350;
 
-  /* Accent = restrained coral */
-  --accent: #f26c4f;
-  --accent-foreground: #fffaf4;
+  /* Accent = soft sage */
+  --accent: #a8b5a0;
+  --accent-foreground: #163428;
 
   --destructive: oklch(0.58 0.22 27);
   --destructive-foreground: oklch(0.99 0.01 80);
 
-  /* Warm sand borders */
-  --border: #ecdccb;
-  --input: #e3d2bf;
-  --ring: #f26c4f;
+  /* Sage borders */
+  --border: #c9d4c3;
+  --input: #c9d4c3;
+  --ring: #a8b5a0;
 }
 
 
 .dark {
-  --background: oklch(0.2 0.02 200);
-  --foreground: oklch(0.96 0.02 75);
-  --ink: oklch(0.96 0.02 75);
-  --sand: oklch(0.25 0.02 200);
-  --card: oklch(0.24 0.02 200);
-  --card-foreground: oklch(0.96 0.02 75);
-  --popover: oklch(0.24 0.02 200);
-  --popover-foreground: oklch(0.96 0.02 75);
-  --primary: oklch(0.96 0.02 75);
-  --primary-foreground: oklch(0.2 0.02 200);
-  --secondary: oklch(0.28 0.02 200);
-  --secondary-foreground: oklch(0.96 0.02 75);
-  --muted: oklch(0.28 0.02 200);
-  --muted-foreground: oklch(0.7 0.02 75);
-  --accent: oklch(0.7 0.15 40);
-  --accent-foreground: oklch(0.2 0.02 200);
+  --background: oklch(0.2 0.02 150);
+  --foreground: oklch(0.96 0.02 85);
+  --ink: oklch(0.96 0.02 85);
+  --sand: oklch(0.25 0.02 150);
+  --card: oklch(0.24 0.02 150);
+  --card-foreground: oklch(0.96 0.02 85);
+  --popover: oklch(0.24 0.02 150);
+  --popover-foreground: oklch(0.96 0.02 85);
+  --primary: oklch(0.96 0.02 85);
+  --primary-foreground: oklch(0.2 0.02 150);
+  --secondary: oklch(0.28 0.02 150);
+  --secondary-foreground: oklch(0.96 0.02 85);
+  --muted: oklch(0.28 0.02 150);
+  --muted-foreground: oklch(0.7 0.02 85);
+  --accent: oklch(0.7 0.08 140);
+  --accent-foreground: oklch(0.2 0.02 150);
   --destructive: oklch(0.65 0.2 27);
   --destructive-foreground: oklch(0.99 0 0);
   --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.7 0.15 40);
+  --ring: oklch(0.7 0.08 140);
 }
 
 @layer base {

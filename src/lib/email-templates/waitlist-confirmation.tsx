@@ -33,14 +33,14 @@ interface WaitlistConfirmationProps {
 
 const SITE_URL_FALLBACK = 'https://ownway.app'
 
-// OwnWay palette
-const pageBg = '#FFF6EA'
-const cardBg = '#FFFDF8'
-const primaryGreen = '#003033'
-const textMain = '#0B2425'
-const textMuted = '#425B5C'
-const border = '#EBD2C2'
-const coral = '#D96A42'
+// OwnWay palette — Forest & Sage
+const pageBg = '#e8ede6'
+const cardBg = '#f4f7f2'
+const primaryGreen = '#163428'
+const textMain = '#163428'
+const textMuted = '#4a6350'
+const border = '#c9d4c3'
+const accent = '#a8b5a0'
 
 const WaitlistConfirmationEmail = ({
   siteUrl = SITE_URL_FALLBACK,
@@ -229,7 +229,7 @@ const eyebrow = {
   fontSize: '11px',
   letterSpacing: '0.22em',
   textTransform: 'uppercase' as const,
-  color: coral,
+  color: accent,
   margin: '0 0 10px',
   fontWeight: 700 as const,
 }
@@ -303,7 +303,7 @@ const hr = {
 }
 const button = {
   backgroundColor: primaryGreen,
-  color: '#FFFDF8',
+  color: '#f4f7f2',
   fontFamily: 'Arial, Helvetica, sans-serif',
   fontSize: '14px',
   fontWeight: 700 as const,
@@ -331,7 +331,7 @@ const linkBlock = {
   margin: '0 0 16px',
 }
 const linkStyle = {
-  color: coral,
+  color: accent,
   textDecoration: 'underline',
   fontWeight: 700 as const,
 }
