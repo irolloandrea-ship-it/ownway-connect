@@ -52,13 +52,13 @@
   --color-gold-foreground: var(--accent-foreground);
   --color-cream: var(--sand);
 
-  --shadow-warm: 0 20px 60px -30px oklch(0.65 0.15 40 / 0.35);
-  --shadow-card: 0 1px 2px oklch(0.55 0.12 40 / 0.06), 0 10px 30px -14px oklch(0.55 0.12 40 / 0.14);
-  --shadow-soft: 0 4px 24px -8px oklch(0.55 0.12 40 / 0.12);
-  --shadow-glow: 0 0 0 1px oklch(0.65 0.15 40 / 0.15), 0 20px 50px -20px oklch(0.65 0.15 40 / 0.35);
+  --shadow-warm: 0 20px 60px -30px oklch(0.55 0.06 140 / 0.35);
+  --shadow-card: 0 1px 2px oklch(0.55 0.05 140 / 0.06), 0 10px 30px -14px oklch(0.55 0.05 140 / 0.14);
+  --shadow-soft: 0 4px 24px -8px oklch(0.55 0.05 140 / 0.12);
+  --shadow-glow: 0 0 0 1px oklch(0.65 0.06 140 / 0.15), 0 20px 50px -20px oklch(0.65 0.06 140 / 0.35);
 
-  --gradient-warm: linear-gradient(135deg, oklch(0.72 0.16 45), oklch(0.62 0.17 30));
-  --gradient-cream: linear-gradient(180deg, oklch(0.985 0.018 70), oklch(0.96 0.03 60));
+  --gradient-warm: linear-gradient(135deg, oklch(0.72 0.06 140), oklch(0.62 0.07 130));
+  --gradient-cream: linear-gradient(180deg, oklch(0.985 0.01 140), oklch(0.96 0.02 130));
 }
 
 :root {
