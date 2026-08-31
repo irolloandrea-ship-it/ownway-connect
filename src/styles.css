@@ -48,7 +48,7 @@
   --color-ink: var(--ink);
 
   /* Backward-compat aliases (previously "gold" / "cream") mapped to new palette */
-  --color-gold: var(--terracotta);
+  --color-gold: var(--olive);
   --color-gold-foreground: var(--accent-foreground);
   --color-cream: var(--sand);
 
@@ -107,6 +107,8 @@
   --foreground: oklch(0.96 0.02 85);
   --ink: oklch(0.96 0.02 85);
   --sand: oklch(0.25 0.02 150);
+  --olive: oklch(0.82 0.06 140);
+  --terracotta: oklch(0.82 0.06 140);
   --card: oklch(0.24 0.02 150);
   --card-foreground: oklch(0.96 0.02 85);
   --popover: oklch(0.24 0.02 150);
