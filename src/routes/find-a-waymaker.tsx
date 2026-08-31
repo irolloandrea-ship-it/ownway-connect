@@ -12,7 +12,11 @@ export const Route = createFileRoute("/find-a-waymaker")({
       { name: "description", content: "Find a WayMaker who knows your destination and get practical, human advice for your real trip." },
       { property: "og:title", content: "Find a WayMaker — OwnWay" },
       { property: "og:description", content: "Get personal travel advice from a local WayMaker who knows your destination." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://ownway.app/find-a-waymaker" },
+      { name: "twitter:card", content: "summary" },
     ],
+    links: [{ rel: "canonical", href: "https://ownway.app/find-a-waymaker" }],
   }),
   component: FindAWayMakerPage,
 });

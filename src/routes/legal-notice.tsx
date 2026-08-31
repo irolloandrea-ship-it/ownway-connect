@@ -25,7 +25,9 @@ export const Route = createFileRoute("/legal-notice")({
         name: "twitter:description",
         content: "Operator and contact information for the OwnWay website.",
       },
+      { property: "og:url", content: "https://ownway.app/legal-notice" },
     ],
+    links: [{ rel: "canonical", href: "https://ownway.app/legal-notice" }],
   }),
   component: LegalNoticePage,
 });

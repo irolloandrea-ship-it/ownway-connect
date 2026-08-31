@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 
-const BASE_URL = "https://ownway-connect.lovable.app";
+const BASE_URL = "https://ownway.app";
 
 interface SitemapEntry {
   path: string;
@@ -18,6 +18,11 @@ export const Route = createFileRoute("/sitemap.xml")({
         // and carry `robots: noindex`.
         const entries: SitemapEntry[] = [
           { path: "/", changefreq: "weekly", priority: "1.0" },
+          { path: "/find-a-waymaker", changefreq: "monthly", priority: "0.8" },
+          { path: "/become-a-waymaker", changefreq: "monthly", priority: "0.8" },
+          { path: "/privacy", changefreq: "yearly", priority: "0.3" },
+          { path: "/cookie-policy", changefreq: "yearly", priority: "0.3" },
+          { path: "/legal-notice", changefreq: "yearly", priority: "0.3" },
         ];
 
         const urls = entries.map((e) =>

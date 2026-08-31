@@ -28,7 +28,9 @@ export const Route = createFileRoute("/cookie-policy")({
         content:
           "Cookies and similar technologies used on OwnWay, and how to manage your analytics consent.",
       },
+      { property: "og:url", content: "https://ownway.app/cookie-policy" },
     ],
+    links: [{ rel: "canonical", href: "https://ownway.app/cookie-policy" }],
   }),
   component: CookiePolicyPage,
 });
