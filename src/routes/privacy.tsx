@@ -27,7 +27,9 @@ export const Route = createFileRoute("/privacy")({
         name: "twitter:description",
         content: "How OwnWay collects, uses, and protects your personal data.",
       },
+      { property: "og:url", content: "https://ownway.app/privacy" },
     ],
+    links: [{ rel: "canonical", href: "https://ownway.app/privacy" }],
   }),
   component: PrivacyPage,
 });
