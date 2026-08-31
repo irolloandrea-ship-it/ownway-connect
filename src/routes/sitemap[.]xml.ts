@@ -18,6 +18,11 @@ export const Route = createFileRoute("/sitemap.xml")({
         // and carry `robots: noindex`.
         const entries: SitemapEntry[] = [
           { path: "/", changefreq: "weekly", priority: "1.0" },
+          { path: "/find-a-waymaker", changefreq: "monthly", priority: "0.8" },
+          { path: "/become-a-waymaker", changefreq: "monthly", priority: "0.8" },
+          { path: "/privacy", changefreq: "yearly", priority: "0.3" },
+          { path: "/cookie-policy", changefreq: "yearly", priority: "0.3" },
+          { path: "/legal-notice", changefreq: "yearly", priority: "0.3" },
         ];
 
         const urls = entries.map((e) =>
