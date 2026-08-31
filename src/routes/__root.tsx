@@ -104,14 +104,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@graph": [
             {
               "@type": "Organization",
+              "@id": "https://ownway.app/#organization",
               name: "OwnWay",
-              url: "https://ownway-connect.lovable.app",
-              logo: "https://ownway-connect.lovable.app/favicon.ico",
+              url: "https://ownway.app",
+              logo: "https://ownway.app/favicon.ico",
             },
             {
               "@type": "WebSite",
+              "@id": "https://ownway.app/#website",
               name: "OwnWay",
-              url: "https://ownway-connect.lovable.app",
+              url: "https://ownway.app",
+              publisher: { "@id": "https://ownway.app/#organization" },
             },
           ],
         }),
