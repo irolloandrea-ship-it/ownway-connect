@@ -34,7 +34,7 @@ const variants = {
   exit: (direction: number) => ({ x: direction > 0 ? -60 : 60, opacity: 0 }),
 };
 
-export function OwnWayPhoneCarousel(_: OwnWayPhoneCarouselProps) {
+export function OwnWayPhoneCarousel({ className, locale = "en" }: OwnWayPhoneCarouselProps & { locale?: "it" | "en" }) {
   const [audience, setAudience] = useState<Audience>("traveller");
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0);
@@ -95,11 +95,11 @@ export function OwnWayPhoneCarousel(_: OwnWayPhoneCarouselProps) {
   const current = APP_SCREENS[Math.min(activeIndex, total - 1)];
 
   return (
-    <div className={cn("group relative mx-auto flex flex-col items-center", _.className)}>
+    <div className={cn("group relative mx-auto flex flex-col items-center", className)}>
       {/* Audience switch */}
       <div
         role="tablist"
-        aria-label="Choose which OwnWay journey to preview"
+        aria-label={locale === "it" ? "Scegli quale percorso OwnWay vedere" : "Choose which OwnWay journey to preview"}
         className="mb-6 inline-flex items-center gap-1 rounded-full border border-border bg-card p-1 shadow-sm"
       >
         {AUDIENCES.map((a) => {
@@ -118,7 +118,7 @@ export function OwnWayPhoneCarousel(_: OwnWayPhoneCarouselProps) {
                   : "text-muted-foreground hover:text-ink"
               )}
             >
-              {a.label}
+              {locale === "it" ? (a.key === "traveller" ? "Per viaggiatori" : "Per WayMaker") : a.label}
             </button>
           );
         })}
@@ -188,7 +188,7 @@ export function OwnWayPhoneCarousel(_: OwnWayPhoneCarouselProps) {
         <button
           type="button"
           onClick={handlePrev}
-          aria-label="Previous app screen"
+          aria-label={locale === "it" ? "Schermata precedente" : "Previous app screen"}
           className="absolute left-[-56px] top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card text-ink opacity-0 shadow-sm transition hover:bg-sand/60 md:flex group-hover:opacity-100"
         >
           <ChevronLeft className="h-4 w-4" />
@@ -196,7 +196,7 @@ export function OwnWayPhoneCarousel(_: OwnWayPhoneCarouselProps) {
         <button
           type="button"
           onClick={handleNext}
-          aria-label="Next app screen"
+          aria-label={locale === "it" ? "Schermata successiva" : "Next app screen"}
           className="absolute right-[-56px] top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card text-ink opacity-0 shadow-sm transition hover:bg-sand/60 md:flex group-hover:opacity-100"
         >
           <ChevronRight className="h-4 w-4" />
@@ -208,7 +208,7 @@ export function OwnWayPhoneCarousel(_: OwnWayPhoneCarouselProps) {
         <button
           type="button"
           onClick={handlePrev}
-          aria-label="Previous app screen"
+          aria-label={locale === "it" ? "Schermata precedente" : "Previous app screen"}
           className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-ink shadow-sm transition hover:bg-sand/60 md:hidden"
         >
           <ChevronLeft className="h-4 w-4" />
@@ -220,7 +220,7 @@ export function OwnWayPhoneCarousel(_: OwnWayPhoneCarouselProps) {
               key={s.key}
               type="button"
               onClick={() => handleDot(index)}
-              aria-label={`Show ${s.label} screen`}
+               aria-label={locale === "it" ? `Mostra la schermata ${s.label}` : `Show ${s.label} screen`}
               className={cn(
                 "h-2 rounded-full transition-all",
                 activeIndex === index
@@ -234,7 +234,7 @@ export function OwnWayPhoneCarousel(_: OwnWayPhoneCarouselProps) {
         <button
           type="button"
           onClick={handleNext}
-          aria-label="Next app screen"
+          aria-label={locale === "it" ? "Schermata successiva" : "Next app screen"}
           className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-ink shadow-sm transition hover:bg-sand/60 md:hidden"
         >
           <ChevronRight className="h-4 w-4" />

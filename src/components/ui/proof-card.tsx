@@ -5,7 +5,8 @@ import { cn } from "@/lib/utils";
  * Illustrative example of the kind of advice a WayMaker could give.
  * Explicitly labelled as an example — not a review, testimonial or real interaction.
  */
-export function ProofCard({ className }: { className?: string }) {
+export function ProofCard({ className, locale = "en" }: { className?: string; locale?: "it" | "en" }) {
+  const it = locale === "it";
   return (
     <figure
       className={cn(
@@ -14,12 +15,12 @@ export function ProofCard({ className }: { className?: string }) {
       )}
     >
       <figcaption className="text-[11px] uppercase tracking-[0.22em] text-accent">
-        An example of the kind of local advice you could receive
+        {it ? "Un esempio del tipo di consiglio locale che potresti ricevere" : "An example of the kind of local advice you could receive"}
       </figcaption>
 
       <div className="mt-6 grid gap-6 md:grid-cols-[1fr_auto_1.2fr] md:items-start md:gap-8">
         <p className="font-display text-2xl leading-snug text-ink md:text-[1.75rem]">
-          “Where should I eat on a quiet Tuesday?”
+          {it ? "“Dove potrei mangiare un martedì tranquillo?”" : "“Where should I eat on a quiet Tuesday?”"}
         </p>
 
         <span
@@ -30,14 +31,15 @@ export function ProofCard({ className }: { className?: string }) {
         <blockquote className="flex gap-3">
           <Quote className="mt-1 size-5 shrink-0 text-accent" strokeWidth={1.5} aria-hidden />
           <p className="text-base leading-relaxed text-muted-foreground">
-            Try a small local trattoria after 8pm, when the neighbourhood comes alive.
+            {it ? "Prova una piccola trattoria locale dopo le 20, quando il quartiere prende vita." : "Try a small local trattoria after 8pm, when the neighbourhood comes alive."}
           </p>
         </blockquote>
       </div>
 
       <p className="mt-6 text-sm text-muted-foreground">
-        Illustrative example. OwnWay is in pre-launch, so this is not a real conversation,
-        review or rating.
+        {it
+          ? "Esempio illustrativo. OwnWay è in fase di pre-lancio: non si tratta di una conversazione, recensione o valutazione reale."
+          : "Illustrative example. OwnWay is in pre-launch, so this is not a real conversation, review or rating."}
       </p>
     </figure>
   );
