@@ -13,6 +13,9 @@ import { JoinEarlyAccess } from "@/components/JoinEarlyAccess";
 import { captureReferralCode } from "@/lib/referral-code";
 
 type Search = { ref?: string; role?: "explorer" | "waymaker" };
+type Locale = "it" | "en";
+
+const LANGUAGE_STORAGE_KEY = "ownway_language";
 
 export const Route = createFileRoute("/")({
   validateSearch: (s: Record<string, unknown>): Search => ({
@@ -21,17 +24,17 @@ export const Route = createFileRoute("/")({
   }),
   head: () => ({
     meta: [
-      { title: "OwnWay — Travel deeper with someone who knows the place" },
+      { title: "OwnWay — Consigli di viaggio su misura" },
       {
         name: "description",
         content:
-          "Join OwnWay early access. Real connections with locals who know a destination deeply, so every trip means more. Starting city by city.",
+          "OwnWay trova la persona locale giusta da cui ricevere consigli adatti al tuo viaggio. Richiedi l’accesso anticipato.",
       },
-      { property: "og:title", content: "OwnWay — Travel deeper with someone who knows the place" },
+      { property: "og:title", content: "OwnWay — Consigli di viaggio su misura" },
       {
         property: "og:description",
         content:
-          "Join OwnWay early access. Real connections with locals who know a destination deeply, so every trip means more.",
+          "Trova la persona locale giusta da cui ricevere consigli adatti al tuo viaggio.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://ownway.app/" },
@@ -95,16 +98,25 @@ const FAQS = [
   },
 ];
 
-function FAQSection() {
+function FAQSection({ locale }: { locale: Locale }) {
   const [open, setOpen] = useState<number | null>(0);
+  const it = locale === "it";
+  const faqs = it
+    ? [
+        { q: "Cos’è OwnWay?", a: "OwnWay mette in contatto i viaggiatori con persone locali fidate, capaci di offrire consigli personalizzati per una destinazione, uno stile di viaggio e un tipo di esperienza specifici." },
+        { q: "A chi è rivolto OwnWay?", a: "OwnWay è per chi cerca consigli di viaggio autentici e personalizzati e per persone locali e operatori che desiderano condividere il meglio della propria destinazione." },
+        { q: "Chi sono i WayMaker?", a: "I WayMaker sono persone locali o esperte di una destinazione che aiutano i viaggiatori a scoprire zone migliori, evitare le trappole per turisti e fare scelte più consapevoli." },
+        { q: "OwnWay è già disponibile?", a: "OwnWay è attualmente in fase di pre-lancio. Puoi iscriverti alla lista d’attesa per ottenere l’accesso anticipato all’apertura della prima versione beta." },
+      ]
+    : FAQS;
   return (
     <section className="container-page border-t border-border/60 py-20 md:py-28">
       <p className="text-center text-xs uppercase tracking-[0.25em] text-accent">FAQ</p>
       <h2 className="mx-auto mt-3 max-w-2xl text-center text-4xl md:text-5xl">
-        Questions, answered.
+        {it ? "Le risposte alle tue domande." : "Questions, answered."}
       </h2>
       <div className="mx-auto mt-10 max-w-3xl divide-y divide-border rounded-3xl border border-border bg-card shadow-card">
-        {FAQS.map((item, i) => {
+        {faqs.map((item, i) => {
           const isOpen = open === i;
           return (
             <div key={item.q}>
@@ -147,6 +159,33 @@ function LandingPage() {
   const heroFormRef = useRef<HTMLDivElement>(null);
   const [intendedRole, setIntendedRole] = useState<"explorer" | "waymaker" | undefined>(search.role);
   const [joinOpen, setJoinOpen] = useState(false);
+  const [locale, setLocale] = useState<Locale>("it");
+  const it = locale === "it";
+
+  useEffect(() => {
+    try {
+      const stored = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+      if (stored === "it" || stored === "en") setLocale(stored);
+    } catch {
+      // Italian remains the privacy-safe default when storage is unavailable.
+    }
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.lang = locale;
+    return () => {
+      document.documentElement.lang = "en";
+    };
+  }, [locale]);
+
+  const changeLocale = (next: Locale) => {
+    setLocale(next);
+    try {
+      window.localStorage.setItem(LANGUAGE_STORAGE_KEY, next);
+    } catch {
+      // The switch still works for the current visit.
+    }
+  };
 
   useEffect(() => {
     captureReferralCode();
@@ -175,7 +214,7 @@ function LandingPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <SiteHeader />
+      <SiteHeader locale={locale} onLocaleChange={changeLocale} />
 
       <main>
         {/* Hero */}
@@ -184,13 +223,17 @@ function LandingPage() {
             {/* Copy */}
             <div ref={heroFormRef} id="join" className="max-w-xl">
               <p className="text-[11px] uppercase tracking-[0.26em] text-accent md:text-xs">
-                For curious travellers &amp; locals
+                 {it ? "Per viaggiatori curiosi e persone locali" : "For curious travellers & locals"}
               </p>
               <h1 className="mt-4 text-[2.15rem] leading-[1.08] md:text-5xl lg:text-[3.4rem]">
-                Plan smarter and travel deeper with someone who knows the place.
+                {it
+                  ? "Internet ti dà migliaia di consigli. OwnWay ti aiuta a trovare quello giusto per te."
+                  : "Plan smarter and travel deeper with someone who knows the place."}
               </h1>
               <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
-                Real connections. Local knowledge. More meaning in every trip.
+                {it
+                  ? "Per i viaggiatori che non vogliono affidarsi a liste e recensioni generiche, OwnWay trova la persona locale giusta da cui ricevere consigli adatti al proprio viaggio."
+                  : "For travellers who don’t want to rely on generic lists and reviews, OwnWay finds the right local person to give advice tailored to their trip."}
               </p>
 
               <div className="mt-8 flex flex-col items-start">
@@ -209,6 +252,7 @@ function LandingPage() {
                       );
                     }
                   }}
+                  locale={locale}
                 >
                   <Button
                     size="lg"
@@ -220,11 +264,11 @@ function LandingPage() {
                       })
                     }
                   >
-                    Join early access <ArrowRight className="ml-1.5 size-4" />
+                     {it ? "Richiedi l’accesso" : "Join early access"} <ArrowRight className="ml-1.5 size-4" />
                   </Button>
                 </JoinEarlyAccess>
 
-                <p className="mt-3 text-sm text-muted-foreground">Starting city by city.</p>
+                <p className="mt-3 text-sm text-muted-foreground">{it ? "Una città alla volta." : "Starting city by city."}</p>
               </div>
             </div>
 
@@ -240,7 +284,7 @@ function LandingPage() {
               />
 
               <div className="mt-10 flex justify-center lg:mt-0 lg:absolute lg:right-0 lg:top-0 lg:origin-top-right lg:scale-[0.9]">
-                <OwnWayPhoneCarousel />
+                 <OwnWayPhoneCarousel locale={locale} />
               </div>
             </div>
 
@@ -251,10 +295,10 @@ function LandingPage() {
         <section className="border-t border-border/60 py-16 md:py-24">
           <div className="container-page">
             <p className="text-center text-xs uppercase tracking-[0.25em] text-accent">
-              How it works
+               {it ? "Come funziona" : "How it works"}
             </p>
             <h2 className="mx-auto mt-3 max-w-2xl text-center text-3xl md:text-4xl">
-              A more personal way to travel.
+               {it ? "Un modo più personale di viaggiare." : "A more personal way to travel."}
             </h2>
 
             <ol className="mt-12 grid gap-6 md:grid-cols-3">
@@ -266,10 +310,14 @@ function LandingPage() {
                   <div className="flex items-center gap-3">
                     <step.icon className="size-6 text-accent" strokeWidth={1.4} aria-hidden />
                     <span className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
-                      Step {i + 1}
+                       {it ? "Passaggio" : "Step"} {i + 1}
                     </span>
                   </div>
-                  <p className="mt-4 font-display text-xl leading-snug text-ink">{step.title}</p>
+                   <p className="mt-4 font-display text-xl leading-snug text-ink">
+                     {it
+                       ? ["Raccontaci del tuo viaggio", "Ti abbiniamo a qualcuno che conosce davvero il luogo", "Ricevi consigli e viaggia con più sicurezza"][i]
+                       : step.title}
+                   </p>
                 </li>
               ))}
             </ol>
@@ -279,7 +327,7 @@ function LandingPage() {
         {/* Proof card */}
         <section className="py-4 md:py-8">
           <div className="container-page">
-            <ProofCard />
+             <ProofCard locale={locale} />
           </div>
         </section>
 
@@ -287,29 +335,29 @@ function LandingPage() {
         <section className="mt-16 bg-secondary/50 py-20 md:mt-24 md:py-28">
           <div className="container-page grid gap-6 md:grid-cols-2">
             <div className="flex flex-col rounded-3xl border border-border bg-card p-8 shadow-card">
-              <p className="text-xs uppercase tracking-[0.25em] text-accent">For Travelers</p>
-              <h3 className="mt-3 font-display text-3xl">Planning a trip?</h3>
+               <p className="text-xs uppercase tracking-[0.25em] text-accent">{it ? "Per viaggiatori" : "For Travelers"}</p>
+               <h3 className="mt-3 font-display text-3xl">{it ? "Stai organizzando un viaggio?" : "Planning a trip?"}</h3>
               <p className="mt-3 text-muted-foreground">
-                Join the waitlist if you want advice that fits your way of traveling, not generic recommendations made for everyone.
+                 {it ? "Iscriviti alla lista d’attesa se cerchi consigli adatti al tuo modo di viaggiare, non raccomandazioni generiche pensate per tutti." : "Join the waitlist if you want advice that fits your way of traveling, not generic recommendations made for everyone."}
               </p>
               <Button className="mt-6 self-start rounded-full" asChild>
                 <Link to="/find-a-waymaker">
-                  Join as Traveler <ArrowRight className="ml-1.5 size-4" />
+                   {it ? "Partecipa come viaggiatore" : "Join as Traveler"} <ArrowRight className="ml-1.5 size-4" />
                 </Link>
               </Button>
             </div>
             <div className="flex flex-col rounded-3xl border border-border bg-card p-8 shadow-card">
-              <p className="text-xs uppercase tracking-[0.25em] text-accent">For WayMakers</p>
-              <h3 className="mt-3 font-display text-3xl">Know a place deeply?</h3>
+               <p className="text-xs uppercase tracking-[0.25em] text-accent">{it ? "Per WayMaker" : "For WayMakers"}</p>
+               <h3 className="mt-3 font-display text-3xl">{it ? "Conosci bene un luogo?" : "Know a place deeply?"}</h3>
               <p className="mt-3 text-muted-foreground">
-                Join the waitlist if you want to become one of the first WayMakers and help travelers experience places better.
+                 {it ? "Iscriviti alla lista d’attesa per diventare uno dei primi WayMaker e aiutare i viaggiatori a vivere meglio i luoghi che visitano." : "Join the waitlist if you want to become one of the first WayMakers and help travelers experience places better."}
               </p>
               <Button
                 className="mt-6 self-start rounded-full bg-accent text-accent-foreground hover:bg-accent/90"
                 asChild
               >
                 <Link to="/become-a-waymaker">
-                  Become a WayMaker <ArrowRight className="ml-1.5 size-4" />
+                   {it ? "Diventa WayMaker" : "Become a WayMaker"} <ArrowRight className="ml-1.5 size-4" />
                 </Link>
               </Button>
             </div>
@@ -317,10 +365,10 @@ function LandingPage() {
         </section>
 
         {/* FAQ */}
-        <FAQSection />
+         <FAQSection locale={locale} />
       </main>
 
-      <SiteFooter />
+       <SiteFooter locale={locale} />
     </div>
   );
 }

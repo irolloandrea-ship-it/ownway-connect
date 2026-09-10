@@ -29,6 +29,7 @@ export function JoinEarlyAccess({
   location = "hero_section",
   open: openProp,
   onOpenChange,
+  locale = "en",
 }: {
   children: React.ReactNode;
   referredBy?: string;
@@ -36,6 +37,7 @@ export function JoinEarlyAccess({
   location?: string;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  locale?: "it" | "en";
 }) {
   const submit = useServerFn(submitEarlyAccess);
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
@@ -53,6 +55,7 @@ export function JoinEarlyAccess({
 
   const emailId = useId();
   const consentId = useId();
+  const it = locale === "it";
 
   useEffect(() => {
     if (intendedRole) setRole(intendedRole);
@@ -77,9 +80,9 @@ export function JoinEarlyAccess({
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const next: typeof errors = {};
-    if (!role) next.role = "Choose Traveller or WayMaker to continue.";
-    if (!EMAIL_RE.test(email.trim())) next.email = "Enter a valid email address.";
-    if (!consent) next.consent = "Please tick this box to receive OwnWay updates.";
+    if (!role) next.role = it ? "Scegli Viaggiatore o WayMaker per continuare." : "Choose Traveller or WayMaker to continue.";
+    if (!EMAIL_RE.test(email.trim())) next.email = it ? "Inserisci un indirizzo email valido." : "Enter a valid email address.";
+    if (!consent) next.consent = it ? "Seleziona questa casella per ricevere gli aggiornamenti di OwnWay." : "Please tick this box to receive OwnWay updates.";
     setErrors(next);
     if (Object.keys(next).length > 0) return;
 
@@ -101,7 +104,7 @@ export function JoinEarlyAccess({
       trackAnalyticsEvent("waitlist_form_submitted", { location });
       setDone(true);
     } catch (err: any) {
-      setErrors({ email: err?.message ?? "Could not sign you up. Please try again." });
+      setErrors({ email: it ? "Non è stato possibile completare l’iscrizione. Riprova." : (err?.message ?? "Could not sign you up. Please try again.") });
     } finally {
       setSubmitting(false);
     }
@@ -133,37 +136,36 @@ export function JoinEarlyAccess({
               <Check className="h-6 w-6" />
             </div>
             <DialogTitle className="mt-6 font-display text-3xl text-ink">
-              You're on the list.
+              {it ? "Sei nella lista." : "You're on the list."}
             </DialogTitle>
             <DialogDescription className="mt-3 text-base text-muted-foreground">
-              We'll be in touch when early access opens.
+              {it ? "Ti contatteremo quando aprirà l’accesso anticipato." : "We'll be in touch when early access opens."}
             </DialogDescription>
             <Button
               className="mt-8 h-12 w-full rounded-full"
               onClick={() => reset(false)}
             >
-              Close
+              {it ? "Chiudi" : "Close"}
             </Button>
           </div>
         ) : (
           <form onSubmit={onSubmit} noValidate className="space-y-7">
             <div className="space-y-3">
               <DialogTitle className="font-display text-3xl text-ink sm:text-4xl">
-                Join OwnWay
+                {it ? "Unisciti a OwnWay" : "Join OwnWay"}
               </DialogTitle>
               <DialogDescription className="text-base leading-relaxed text-muted-foreground">
-                Whether you want to discover a place more deeply or share the place you
-                know best, you're in the right place.
+                {it ? "Che tu voglia scoprire un luogo più a fondo o condividere ciò che sai del posto che conosci meglio, sei nel posto giusto." : "Whether you want to discover a place more deeply or share the place you know best, you're in the right place."}
               </DialogDescription>
             </div>
 
             <fieldset className="space-y-2">
-              <legend className="text-sm font-medium text-foreground/80">I'm joining as</legend>
-              <div role="radiogroup" aria-label="Join as" className="grid gap-3 sm:grid-cols-2">
+              <legend className="text-sm font-medium text-foreground/80">{it ? "Voglio partecipare come" : "I'm joining as"}</legend>
+              <div role="radiogroup" aria-label={it ? "Partecipa come" : "Join as"} className="grid gap-3 sm:grid-cols-2">
                 {(
                   [
-                    ["explorer", "Planning a trip", "Get advice that fits your journey."],
-                    ["waymaker", "Know this city", "Help travellers experience it more deeply."],
+                    ["explorer", it ? "Sto organizzando un viaggio" : "Planning a trip", it ? "Ricevi consigli adatti al tuo viaggio." : "Get advice that fits your journey."],
+                    ["waymaker", it ? "Conosco bene un luogo" : "Know this city", it ? "Aiuta i viaggiatori a scoprirlo più a fondo." : "Help travellers experience it more deeply."],
                   ] as const
                 ).map(([value, label, hint]) => {
                   const selected = role === value;
@@ -200,7 +202,7 @@ export function JoinEarlyAccess({
             </fieldset>
 
             <div className="space-y-2">
-              <Label htmlFor={emailId}>Email address</Label>
+              <Label htmlFor={emailId}>{it ? "Indirizzo email" : "Email address"}</Label>
               <Input
                 id={emailId}
                 type="email"
@@ -240,8 +242,7 @@ export function JoinEarlyAccess({
                   htmlFor={consentId}
                   className="cursor-pointer text-sm font-normal leading-relaxed text-foreground/85"
                 >
-                  I agree to receive OwnWay early-access and launch updates. I can
-                  unsubscribe at any time.{" "}
+                  {it ? "Accetto di ricevere aggiornamenti sull’accesso anticipato e sul lancio di OwnWay. Posso annullare l’iscrizione in qualsiasi momento. " : "I agree to receive OwnWay early-access and launch updates. I can unsubscribe at any time. "}
                   <Link
                     to="/privacy"
                     className="text-accent underline-offset-2 hover:underline"
@@ -259,7 +260,7 @@ export function JoinEarlyAccess({
             </div>
 
             <Button type="submit" disabled={submitting} className="h-12 w-full rounded-full text-base">
-              {submitting ? "Saving…" : "Join early access"}
+              {submitting ? (it ? "Salvataggio…" : "Saving…") : (it ? "Richiedi l’accesso" : "Join early access")}
               {!submitting && <ArrowRight className="ml-1.5 size-4" />}
             </Button>
           </form>
