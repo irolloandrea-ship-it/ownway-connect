@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { openCookieSettings, getMeasurementId } from "@/lib/cookie-consent";
+
 
 export const Route = createFileRoute("/legal-notice")({
   head: () => ({
@@ -121,13 +121,12 @@ function LegalNoticePage() {
                   Cookie and Analytics section of the Privacy Policy
                 </Link>
                 . You can change your choice at any time:{" "}
-                <button
-                  type="button"
-                  onClick={openCookieSettings}
-                  className="text-accent hover:underline"
+                <a
+                  href="https://www.iubenda.com/privacy-policy/30604389/cookie-policy"
+                  className="iubenda-cs-preferences-link text-accent hover:underline"
                 >
                   Cookie settings
-                </button>
+                </a>
                 .
               </p>
             </section>

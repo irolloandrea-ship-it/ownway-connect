@@ -65,11 +65,6 @@ export function JoinEarlyAccess({
     captureReferralCode(referredBy);
   }, [referredBy]);
 
-  useEffect(() => {
-    if (open) {
-      
-    }
-  }, [open, location]);
 
   const selectRole = (next: Role) => {
     setRole(next);
