@@ -40,8 +40,6 @@ export function SiteFooter({ locale = "en" }: { locale?: "it" | "en" }) {
         <p>
           © {year} OwnWay. {it ? "Tutti i diritti riservati." : "All rights reserved."}
           <span className="mx-2 text-muted-foreground/50">·</span>
-           {it ? "Gestito da Andrea Irollo" : "Operated by Andrea Irollo"}
-          <span className="mx-2 text-muted-foreground/50">·</span>
            {it ? "Contatti:" : "Contact:"}{" "}
           <a href="mailto:theownwayapp@gmail.com" className="hover:text-foreground">
             theownwayapp@gmail.com
