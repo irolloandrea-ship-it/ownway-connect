@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { Button } from "@/components/ui/button";
-import { openCookieSettings, getMeasurementId } from "@/lib/cookie-consent";
+
+
 
 export const Route = createFileRoute("/cookie-policy")({
   head: () => ({
@@ -61,7 +61,7 @@ function Section({
 }
 
 function CookiePolicyPage() {
-  const hasAnalytics = getMeasurementId() !== null;
+  
 
   return (
     <div className="min-h-screen bg-background">
@@ -178,18 +178,14 @@ function CookiePolicyPage() {
               delete the GA cookies we can reach from this site. You can also
               delete cookies through your browser settings.
             </p>
-            {hasAnalytics && (
-              <p>
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="mt-2 rounded-full"
-                  onClick={openCookieSettings}
-                >
-                  Open cookie preferences
-                </Button>
-              </p>
-            )}
+            <p>
+              <a
+                href="https://www.iubenda.com/privacy-policy/30604389/cookie-policy"
+                className="iubenda-cs-preferences-link text-accent hover:underline"
+              >
+                Open cookie preferences
+              </a>
+            </p>
           </Section>
 
           <Section n={6} title="More information">

@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { submitEarlyAccess } from "@/lib/early-access.functions";
 import { trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
-import { CONSENT_POLICY_VERSION, trackAnalyticsEvent } from "@/lib/cookie-consent";
+import { CONSENT_POLICY_VERSION } from "@/lib/consent-policy";
 import { captureReferralCode, clearReferralCode, getStoredReferralCode } from "@/lib/referral-code";
 
 export function EmailCapture({
@@ -44,9 +44,6 @@ export function EmailCapture({
     captureReferralCode(referredBy);
   }, [referredBy]);
 
-  useEffect(() => {
-    trackAnalyticsEvent("waitlist_form_viewed", { location });
-  }, [location]);
 
   useEffect(() => {
     if (consent && consentError) setConsentError(false);
@@ -54,7 +51,6 @@ export function EmailCapture({
 
   const selectRole = (next: "explorer" | "waymaker") => {
     setRole(next);
-    trackAnalyticsEvent("interest_selected", { role: next, location });
   };
 
 
@@ -84,7 +80,6 @@ export function EmailCapture({
       void trackPrelaunchEvent("email_signup", {
         metadata: { role, already: res.already ?? false, location },
       });
-      trackAnalyticsEvent("waitlist_form_submitted", { role, location });
       navigate({
         to: "/waitlist/$code",
         params: { code: res.referral_code },
