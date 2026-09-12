@@ -165,29 +165,13 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const router = useRouter();
-
-  useEffect(() => {
-    // SPA page_view tracking. No-ops until analytics consent is granted;
-    // never sends query strings (may contain referral codes/emails).
-    let lastPath = typeof window !== "undefined" ? window.location.pathname : "";
-    const unsub = router.subscribe("onResolved", () => {
-      const path =
-        typeof window !== "undefined" ? window.location.pathname : "";
-      if (path && path !== lastPath) {
-        lastPath = path;
-        void import("@/lib/cookie-consent").then((m) => m.trackPageView(path));
-      }
-    });
-    return () => unsub();
-  }, [router]);
 
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
       <GtmEvents />
       <Toaster richColors position="top-center" />
-      <CookieConsent />
+
 
     </QueryClientProvider>
   );
