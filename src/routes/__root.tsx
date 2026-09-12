@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
 import { CookieConsent } from "@/components/CookieConsent";
+import { GtmEvents } from "@/components/GtmEvents";
 
 function NotFoundComponent() {
   return (
@@ -185,6 +186,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      <GtmEvents />
       <Toaster richColors position="top-center" />
       <CookieConsent />
 
