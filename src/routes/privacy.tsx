@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
-import { openCookieSettings, getMeasurementId } from "@/lib/cookie-consent";
+
 
 export const Route = createFileRoute("/privacy")({
   head: () => ({
@@ -64,7 +64,7 @@ function Section({
 }
 
 function PrivacyPage() {
-  const hasAnalytics = getMeasurementId() !== null;
+  
 
   return (
     <div className="min-h-screen bg-background">
@@ -330,20 +330,16 @@ function PrivacyPage() {
               be retained by Google for longer in accordance with Google’s
               applicable terms and settings.
             </p>
-            {hasAnalytics && (
-              <p>
-                You can change your analytics choice at any time:{" "}
-                <Button
-                  type="button"
-                  variant="link"
-                  className="h-auto p-0 text-accent"
-                  onClick={openCookieSettings}
-                >
-                  Open cookie settings
-                </Button>
-                .
-              </p>
-            )}
+            <p>
+              You can change your analytics choice at any time:{" "}
+              <a
+                href="https://www.iubenda.com/privacy-policy/30604389/cookie-policy"
+                className="iubenda-cs-preferences-link text-accent hover:underline"
+              >
+                Open cookie settings
+              </a>
+              .
+            </p>
           </Section>
 
           <Section n={10} title="Your rights">
