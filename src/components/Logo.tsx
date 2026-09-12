@@ -1,7 +1,7 @@
 type LogoProps = {
   size?: number;
   withWordmark?: boolean;
-  tagline?: boolean;
+  tagline?: boolean | string;
   className?: string;
 };
 
@@ -80,7 +80,7 @@ export function Logo({ size = 36, withWordmark = true, tagline = false, classNam
           </span>
           {tagline && (
             <span className="mt-1 text-[10px] uppercase tracking-[0.25em] text-gold">
-              travel your way
+              {typeof tagline === "string" ? tagline : "travel your way"}
             </span>
           )}
         </div>

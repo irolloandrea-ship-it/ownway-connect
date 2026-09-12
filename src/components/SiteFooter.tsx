@@ -13,7 +13,7 @@ export function SiteFooter({ locale = "en" }: { locale?: "it" | "en" }) {
     <footer className="mt-24 border-t border-border/60 bg-secondary/30">
       <div className="container-page flex flex-col items-start justify-between gap-6 py-12 md:flex-row md:items-center">
         <div className="flex flex-col gap-3">
-          <Logo size={28} tagline />
+          <Logo size={28} tagline={it ? "viaggia a modo tuo" : true} />
           <p className="max-w-sm text-sm text-muted-foreground">{it ? "Viaggia a modo tuo." : "Travel your way."}</p>
         </div>
         <div className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted-foreground">

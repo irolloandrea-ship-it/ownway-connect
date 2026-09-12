@@ -16,6 +16,7 @@ type Search = { ref?: string; role?: "explorer" | "waymaker" };
 type Locale = "it" | "en";
 
 const LANGUAGE_STORAGE_KEY = "ownway_language";
+const LANGUAGE_EVENT = "ownway:language-change";
 
 export const Route = createFileRoute("/")({
   validateSearch: (s: Record<string, unknown>): Search => ({
@@ -185,6 +186,7 @@ function LandingPage() {
     } catch {
       // The switch still works for the current visit.
     }
+    window.dispatchEvent(new CustomEvent(LANGUAGE_EVENT, { detail: next }));
   };
 
   useEffect(() => {
