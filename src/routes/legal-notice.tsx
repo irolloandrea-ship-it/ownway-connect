@@ -34,7 +34,7 @@ export const Route = createFileRoute("/legal-notice")({
 
 function LegalNoticePage() {
   const year = new Date().getFullYear();
-  const hasAnalytics = getMeasurementId() !== null;
+  
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
@@ -111,8 +111,7 @@ function LegalNoticePage() {
             </p>
           </section>
 
-          {hasAnalytics && (
-            <section className="mt-10 space-y-3 text-[15px] leading-relaxed text-foreground/85">
+          <section className="mt-10 space-y-3 text-[15px] leading-relaxed text-foreground/85">
               <h2 className="font-display text-2xl text-ink md:text-3xl">Cookies</h2>
               <p>
                 This website uses analytics cookies only after you accept them.
@@ -129,8 +128,7 @@ function LegalNoticePage() {
                 </a>
                 .
               </p>
-            </section>
-          )}
+          </section>
 
           <div className="mt-12 border-t border-border/60 pt-6">
             <Link
