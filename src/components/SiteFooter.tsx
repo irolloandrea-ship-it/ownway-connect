@@ -19,9 +19,9 @@ export function SiteFooter({ locale = "en" }: { locale?: "it" | "en" }) {
         <div className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted-foreground">
           <a href="mailto:theownwayapp@gmail.com" className="hover:text-foreground">{it ? "Contatti" : "Contact"}</a>
           <Link to="/" hash="how-it-works" className="hover:text-foreground">{it ? "Come funziona" : "How it works"}</Link>
-          <Link to="/privacy" className="hover:text-foreground">Privacy Policy</Link>
+          <a href="https://www.iubenda.com/privacy-policy/30604389" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Privacy Policy</a>
           <Link to="/legal-notice" className="hover:text-foreground">{it ? "Note legali" : "Legal Notice"}</Link>
-          <Link to="/cookie-policy" className="hover:text-foreground">Cookie Policy</Link>
+          <a href="https://www.iubenda.com/privacy-policy/30604389/cookie-policy" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Cookie Policy</a>
           {hasAnalytics && (
             <button
               type="button"
