@@ -67,14 +67,14 @@ export function JoinEarlyAccess({
 
   useEffect(() => {
     if (open) {
-      trackAnalyticsEvent("waitlist_form_viewed", { location });
+      
     }
   }, [open, location]);
 
   const selectRole = (next: Role) => {
     setRole(next);
     setErrors((e) => ({ ...e, role: undefined }));
-    trackAnalyticsEvent("interest_selected", { role: next, location });
+    
   };
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -101,7 +101,7 @@ export function JoinEarlyAccess({
       });
       clearReferralCode();
       void trackPrelaunchEvent("email_signup", { metadata: { location } });
-      trackAnalyticsEvent("waitlist_form_submitted", { location });
+      
       setDone(true);
     } catch (err: any) {
       setErrors({ email: it ? "Non è stato possibile completare l’iscrizione. Riprova." : (err?.message ?? "Could not sign you up. Please try again.") });

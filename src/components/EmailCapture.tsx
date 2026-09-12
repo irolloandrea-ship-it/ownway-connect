@@ -44,9 +44,6 @@ export function EmailCapture({
     captureReferralCode(referredBy);
   }, [referredBy]);
 
-  useEffect(() => {
-    trackAnalyticsEvent("waitlist_form_viewed", { location });
-  }, [location]);
 
   useEffect(() => {
     if (consent && consentError) setConsentError(false);
@@ -54,7 +51,6 @@ export function EmailCapture({
 
   const selectRole = (next: "explorer" | "waymaker") => {
     setRole(next);
-    trackAnalyticsEvent("interest_selected", { role: next, location });
   };
 
 
@@ -84,7 +80,6 @@ export function EmailCapture({
       void trackPrelaunchEvent("email_signup", {
         metadata: { role, already: res.already ?? false, location },
       });
-      trackAnalyticsEvent("waitlist_form_submitted", { role, location });
       navigate({
         to: "/waitlist/$code",
         params: { code: res.referral_code },
