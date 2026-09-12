@@ -326,13 +326,6 @@ function LandingPage() {
           </div>
         </section>
 
-        {/* Proof card */}
-        <section className="py-4 md:py-8">
-          <div className="container-page">
-             <ProofCard locale={locale} />
-          </div>
-        </section>
-
         {/* Traveler / WayMaker */}
         <section className="mt-16 bg-secondary/50 py-20 md:mt-24 md:py-28">
           <div className="container-page grid gap-6 md:grid-cols-2">
