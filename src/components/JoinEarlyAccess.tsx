@@ -14,7 +14,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { submitEarlyAccess } from "@/lib/early-access.functions";
-import { CONSENT_POLICY_VERSION, trackAnalyticsEvent } from "@/lib/cookie-consent";
+import { CONSENT_POLICY_VERSION } from "@/lib/consent-policy";
 import { captureReferralCode, clearReferralCode, getStoredReferralCode } from "@/lib/referral-code";
 import { trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
 

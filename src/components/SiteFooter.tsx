@@ -1,11 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Logo } from "./Logo";
 import { useIsAdmin } from "@/hooks/use-is-admin";
-import { openCookieSettings, getMeasurementId } from "@/lib/cookie-consent";
-
 export function SiteFooter({ locale = "en" }: { locale?: "it" | "en" }) {
   const isAdmin = useIsAdmin();
-  const hasAnalytics = getMeasurementId() !== null;
   const year = new Date().getFullYear();
   const it = locale === "it";
 
@@ -22,15 +19,12 @@ export function SiteFooter({ locale = "en" }: { locale?: "it" | "en" }) {
           <a href="https://www.iubenda.com/privacy-policy/30604389" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Privacy Policy</a>
           <Link to="/legal-notice" className="hover:text-foreground">{it ? "Note legali" : "Legal Notice"}</Link>
           <a href="https://www.iubenda.com/privacy-policy/30604389/cookie-policy" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Cookie Policy</a>
-          {hasAnalytics && (
-            <button
-              type="button"
-              onClick={openCookieSettings}
-              className="hover:text-foreground"
-            >
-              {it ? "Impostazioni cookie" : "Cookie settings"}
-            </button>
-          )}
+          <a
+            href="https://www.iubenda.com/privacy-policy/30604389/cookie-policy"
+            className="iubenda-cs-preferences-link hover:text-foreground"
+          >
+            {it ? "Impostazioni cookie" : "Cookie settings"}
+          </a>
           {isAdmin && (
             <Link to="/admin" className="text-gold hover:text-foreground">Admin</Link>
           )}

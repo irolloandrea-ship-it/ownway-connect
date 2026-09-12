@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { submitEarlyAccess } from "@/lib/early-access.functions";
 import { trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
-import { CONSENT_POLICY_VERSION, trackAnalyticsEvent } from "@/lib/cookie-consent";
+import { CONSENT_POLICY_VERSION } from "@/lib/consent-policy";
 import { captureReferralCode, clearReferralCode, getStoredReferralCode } from "@/lib/referral-code";
 
 export function EmailCapture({
