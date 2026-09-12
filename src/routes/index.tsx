@@ -7,7 +7,7 @@ import { ArrowRight, Plus, Minus, Compass, HeartHandshake, MessagesSquare } from
 import { captureSourceOnce, trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
 import { motion, AnimatePresence } from "framer-motion";
 import { OwnWayPhoneCarousel } from "@/components/ui/ownway-phone-carousel";
-import { ProofCard } from "@/components/ui/proof-card";
+
 import heroImage from "@/assets/hero-florence.jpg.asset.json";
 import { JoinEarlyAccess } from "@/components/JoinEarlyAccess";
 import { captureReferralCode } from "@/lib/referral-code";
