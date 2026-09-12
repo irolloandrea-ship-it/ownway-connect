@@ -101,18 +101,31 @@ function attach() {
       if (!form) return;
       push({ event: "form_submit", ...basePayload(form) });
 
-      // lead_form_complete: fire once a success/confirmation toast is visible
-      // (the waitlist flow shows a sonner success toast after submit).
-      const observer = new MutationObserver(() => {
-        const toast = document.querySelector(
-          "[data-sonner-toast][data-type='success']",
+      // lead_form_complete: fire once a success/confirmation message is visible
+      // (waitlist flow shows "Sei nella lista." in the modal; other flows show
+      // a sonner success toast).
+      const SUCCESS_PATTERN =
+        /sei nella lista|you'?re on the list|iscrizione completata|thank|grazie|success/i;
+      const hasSuccess = () => {
+        if (document.querySelector("[data-sonner-toast][data-type='success']"))
+          return true;
+        const dialog = document.querySelector(
+          "[role='dialog'], [role='alertdialog']",
         );
-        if (toast) {
+        return !!dialog && SUCCESS_PATTERN.test(dialog.textContent || "");
+      };
+      const observer = new MutationObserver(() => {
+        if (hasSuccess()) {
           observer.disconnect();
           push({ event: "lead_form_complete", ...basePayload(form) });
         }
       });
       observer.observe(document.body, { childList: true, subtree: true });
+      // Check once immediately (success may already be rendered).
+      if (hasSuccess()) {
+        observer.disconnect();
+        push({ event: "lead_form_complete", ...basePayload(form) });
+      }
       // Safety: stop observing after 15s if no success message appears.
       window.setTimeout(() => observer.disconnect(), 15000);
     },
