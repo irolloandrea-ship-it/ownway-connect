@@ -26,10 +26,18 @@ export function CookieConsent() {
   const [stored, setStored] = useState<StoredConsent | null>(null);
   const [prefsOpen, setPrefsOpen] = useState(false);
   const [pendingAnalytics, setPendingAnalytics] = useState(false);
+  const [locale, setLocale] = useState<"it" | "en">("it");
+  const it = locale === "it";
 
   // Hydrate: read stored choice and re-apply it (Consent Mode default is denied).
   useEffect(() => {
     setMounted(true);
+    try {
+      const language = window.localStorage.getItem("ownway_language");
+      if (language === "it" || language === "en") setLocale(language);
+    } catch {
+      // Italian remains the default.
+    }
     const current = readConsent();
     setStored(current);
     if (current) applyConsent(current.analytics);
@@ -45,11 +53,17 @@ export function CookieConsent() {
       setPendingAnalytics(current?.analytics === "granted");
       setPrefsOpen(true);
     };
+    const onLanguage = (event: Event) => {
+      const next = (event as CustomEvent<"it" | "en">).detail;
+      if (next === "it" || next === "en") setLocale(next);
+    };
     window.addEventListener(CONSENT_EVENT, onChange as EventListener);
     window.addEventListener(OPEN_COOKIE_SETTINGS_EVENT, onOpen);
+    window.addEventListener("ownway:language-change", onLanguage);
     return () => {
       window.removeEventListener(CONSENT_EVENT, onChange as EventListener);
       window.removeEventListener(OPEN_COOKIE_SETTINGS_EVENT, onOpen);
+      window.removeEventListener("ownway:language-change", onLanguage);
     };
   }, []);
 
@@ -68,19 +82,17 @@ export function CookieConsent() {
       {showBanner && (
         <div
           role="region"
-          aria-label="Cookie consent"
+          aria-label={it ? "Consenso cookie" : "Cookie consent"}
           className="fixed inset-x-0 bottom-0 z-50 border-t border-border/70 bg-card/95 shadow-card backdrop-blur"
         >
           <div className="container-page flex flex-col gap-4 py-4 md:flex-row md:items-center md:justify-between md:py-5">
             <p className="max-w-2xl text-sm text-foreground/85">
-              We use optional analytics cookies to understand how people use
-              OwnWay and improve the website. You can accept or reject analytics
-              at any time.{" "}
+               {it ? "Utilizziamo cookie analitici facoltativi per capire come viene usato OwnWay e migliorare il sito. Puoi accettarli o rifiutarli in qualsiasi momento. " : "We use optional analytics cookies to understand how people use OwnWay and improve the website. You can accept or reject analytics at any time. "}
               <Link
                 to="/privacy"
                 className="text-accent underline-offset-2 hover:underline"
               >
-                Read our Privacy Policy
+                 {it ? "Leggi la Privacy Policy" : "Read our Privacy Policy"}
               </Link>
               .
             </p>
@@ -94,7 +106,7 @@ export function CookieConsent() {
                   setPrefsOpen(true);
                 }}
               >
-                Manage preferences
+                 {it ? "Gestisci preferenze" : "Manage preferences"}
               </Button>
               <Button
                 type="button"
@@ -102,14 +114,14 @@ export function CookieConsent() {
                 className="rounded-full"
                 onClick={() => setConsent("denied")}
               >
-                Reject
+                 {it ? "Rifiuta" : "Reject"}
               </Button>
               <Button
                 type="button"
                 className="rounded-full"
                 onClick={() => setConsent("granted")}
               >
-                Accept analytics
+                 {it ? "Accetta analytics" : "Accept analytics"}
               </Button>
             </div>
           </div>
@@ -119,10 +131,9 @@ export function CookieConsent() {
       <Dialog open={prefsOpen} onOpenChange={setPrefsOpen}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle>Cookie preferences</DialogTitle>
+            <DialogTitle>{it ? "Preferenze cookie" : "Cookie preferences"}</DialogTitle>
             <DialogDescription>
-              Choose which optional cookies OwnWay may use. You can change this
-              at any time from the footer. Read our{" "}
+               {it ? "Scegli quali cookie facoltativi può utilizzare OwnWay. Puoi modificare la scelta in qualsiasi momento dal piè di pagina. Leggi la nostra " : "Choose which optional cookies OwnWay may use. You can change this at any time from the footer. Read our "}
               <Link
                 to="/cookie-policy"
                 className="text-accent underline-offset-2 hover:underline"
@@ -139,14 +150,13 @@ export function CookieConsent() {
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-sm font-medium text-foreground">
-                    Strictly necessary
+                     {it ? "Strettamente necessari" : "Strictly necessary"}
                   </p>
                   <p className="mt-1 text-xs text-muted-foreground">
-                    Required for the site to work (security, form submission).
-                    Always on.
+                     {it ? "Necessari per il funzionamento del sito, la sicurezza e l’invio dei moduli. Sempre attivi." : "Required for the site to work (security, form submission). Always on."}
                   </p>
                 </div>
-                <Switch checked disabled aria-label="Strictly necessary cookies (always on)" />
+                 <Switch checked disabled aria-label={it ? "Cookie strettamente necessari, sempre attivi" : "Strictly necessary cookies (always on)"} />
               </div>
             </div>
 
@@ -160,15 +170,14 @@ export function CookieConsent() {
                     Analytics (Google Analytics 4)
                   </label>
                   <p className="mt-1 text-xs text-muted-foreground">
-                    Helps us understand aggregate website use. No form values or
-                    email addresses are ever sent to Google Analytics.
+                     {it ? "Ci aiuta a comprendere l’uso aggregato del sito. I dati dei moduli e gli indirizzi email non vengono mai inviati a Google Analytics." : "Helps us understand aggregate website use. No form values or email addresses are ever sent to Google Analytics."}
                   </p>
                 </div>
                 <Switch
                   id="analytics-consent"
                   checked={pendingAnalytics}
                   onCheckedChange={setPendingAnalytics}
-                  aria-label="Enable analytics cookies"
+                   aria-label={it ? "Attiva i cookie analitici" : "Enable analytics cookies"}
                 />
               </div>
             </div>
@@ -184,10 +193,10 @@ export function CookieConsent() {
                 setPrefsOpen(false);
               }}
             >
-              Reject all
+               {it ? "Rifiuta tutti" : "Reject all"}
             </Button>
             <Button type="button" className="rounded-full" onClick={savePrefs}>
-              Save preferences
+               {it ? "Salva preferenze" : "Save preferences"}
             </Button>
           </DialogFooter>
         </DialogContent>
