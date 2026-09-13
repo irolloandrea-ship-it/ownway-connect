@@ -194,10 +194,7 @@ function LandingPage() {
           <div className="grid items-center gap-12 lg:grid-cols-[55fr_45fr] lg:gap-10">
             {/* Copy */}
             <div ref={heroFormRef} id="join" className="max-w-xl">
-              <p className="text-[11px] uppercase tracking-[0.26em] text-accent md:text-xs">
-                 {it ? "Per viaggiatori curiosi e persone locali" : "For curious travellers & locals"}
-              </p>
-              <h1 className="mt-4 text-[2.15rem] leading-[1.08] md:text-5xl lg:text-[3.4rem]">
+              <h1 className="text-[2.15rem] leading-[1.08] md:text-5xl lg:text-[3.4rem]">
                 {it
                   ? "Internet ti dà migliaia di consigli. OwnWay ti aiuta a trovare quello giusto per te."
                   : "Plan smarter and travel deeper with someone who knows the place."}
