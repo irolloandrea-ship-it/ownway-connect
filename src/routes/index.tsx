@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Plus, Minus, Compass, HeartHandshake, MessagesSquare } from "lucide-react";
 import { captureSourceOnce, trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
 import { motion, AnimatePresence } from "framer-motion";
-import { OwnWayPhoneCarousel } from "@/components/ui/ownway-phone-carousel";
+
 
 import heroImage from "@/assets/hero-lifestyle.jpg.asset.json";
 import { JoinEarlyAccess } from "@/components/JoinEarlyAccess";
@@ -250,9 +250,6 @@ function LandingPage() {
                 className="aspect-[4/3] w-full rounded-3xl object-cover object-[70%_center] shadow-card sm:aspect-[3/2] lg:absolute lg:inset-y-16 lg:left-0 lg:aspect-auto lg:h-[calc(100%-8rem)] lg:w-[62%] lg:object-[95%_center]"
               />
 
-              <div className="mt-10 flex justify-center lg:mt-0 lg:absolute lg:right-0 lg:top-0 lg:origin-top-right lg:scale-[0.9]">
-                 <OwnWayPhoneCarousel locale={locale} />
-              </div>
             </div>
 
           </div>
