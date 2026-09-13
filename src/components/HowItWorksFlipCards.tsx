@@ -1,5 +1,6 @@
 import { HeartHandshake, MessageCircle, Search, Send, Star } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import type React from "react";
 import { ConnectingScreen } from "@/components/ui/journey-screens/ConnectingScreen";
 import { ExploreScreen } from "@/components/ui/journey-screens/ExploreScreen";
 import { FLORENCE_WAYMAKERS } from "@/components/ui/journey-screens/data";
@@ -100,7 +101,7 @@ function PhoneMockup({ Screen, label }: { Screen: Step["Screen"]; label: string 
             style={{
               width: SCREEN_WIDTH,
               height: SCREEN_HEIGHT,
-              transform: "scale(calc((var(--phone-width, 248px) - 10px) / 390))",
+              transform: "scale(var(--phone-scale))",
             }}
           >
             <Screen />
@@ -122,7 +123,7 @@ export function HowItWorksFlipCards() {
 
         <ol className="mx-auto mt-14 grid max-w-6xl items-start gap-x-6 gap-y-20 md:grid-cols-3 lg:gap-x-8">
           {STEPS.map(({ label, title, icon: Icon, Screen }) => (
-            <li key={label} className="grid grid-rows-[9.5rem_auto] justify-items-center gap-10 [--phone-width:248px] sm:[--phone-width:270px] lg:[--phone-width:260px] xl:[--phone-width:280px]">
+            <li key={label} className="grid grid-rows-[9.5rem_auto] justify-items-center gap-10 [--phone-scale:0.6103] sm:[--phone-scale:0.6667] lg:[--phone-scale:0.641] xl:[--phone-scale:0.6923]">
               <div className="h-full w-full rounded-2xl border border-border/70 bg-card/90 p-6 shadow-card">
                 <div className="flex items-center gap-3">
                   <span className="grid size-9 shrink-0 place-items-center rounded-full border border-border bg-secondary/50 text-foreground">
