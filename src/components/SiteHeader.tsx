@@ -80,18 +80,10 @@ export function SiteHeader({ locale = "en", onLocaleChange }: { locale?: Locale;
 
         <div className="hidden items-center gap-3 md:flex">
           {onLocaleChange && <LanguageSwitch locale={locale} onChange={onLocaleChange} />}
-          <Link
-            to="/"
-            hash="join"
-            onClick={() =>
-              trackPrelaunchEvent("cta_click", {
-                button_text: copy.earlyAccess,
-                button_location: "navbar",
-              })
-            }
-          >
-            <Button size="sm" className="rounded-full">{copy.earlyAccess}</Button>
-          </Link>
+        </div>
+
+        <div className="flex items-center gap-2 md:hidden">
+          {onLocaleChange && <LanguageSwitch locale={locale} onChange={onLocaleChange} compact />}
         </div>
 
         {/* Mobile menu */}
