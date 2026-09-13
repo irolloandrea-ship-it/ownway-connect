@@ -4,7 +4,6 @@ import { Menu } from "lucide-react";
 import { Logo } from "./Logo";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
 
 const NAV: { to: "/" | "/find-a-waymaker" | "/become-a-waymaker"; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
