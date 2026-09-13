@@ -11,12 +11,9 @@ import { OwnWayPhoneCarousel } from "@/components/ui/ownway-phone-carousel";
 import heroImage from "@/assets/hero-florence.jpg.asset.json";
 import { JoinEarlyAccess } from "@/components/JoinEarlyAccess";
 import { captureReferralCode } from "@/lib/referral-code";
+import { useLocale, type Locale } from "@/lib/use-locale";
 
 type Search = { ref?: string; role?: "explorer" | "waymaker" };
-type Locale = "it" | "en";
-
-const LANGUAGE_STORAGE_KEY = "ownway_language";
-const LANGUAGE_EVENT = "ownway:language-change";
 
 export const Route = createFileRoute("/")({
   validateSearch: (s: Record<string, unknown>): Search => ({
@@ -160,34 +157,7 @@ function LandingPage() {
   const heroFormRef = useRef<HTMLDivElement>(null);
   const [intendedRole, setIntendedRole] = useState<"explorer" | "waymaker" | undefined>(search.role);
   const [joinOpen, setJoinOpen] = useState(false);
-  const [locale, setLocale] = useState<Locale>("it");
-  const it = locale === "it";
-
-  useEffect(() => {
-    try {
-      const stored = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
-      if (stored === "it" || stored === "en") setLocale(stored);
-    } catch {
-      // Italian remains the privacy-safe default when storage is unavailable.
-    }
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.lang = locale;
-    return () => {
-      document.documentElement.lang = "en";
-    };
-  }, [locale]);
-
-  const changeLocale = (next: Locale) => {
-    setLocale(next);
-    try {
-      window.localStorage.setItem(LANGUAGE_STORAGE_KEY, next);
-    } catch {
-      // The switch still works for the current visit.
-    }
-    window.dispatchEvent(new CustomEvent(LANGUAGE_EVENT, { detail: next }));
-  };
+  const { locale, changeLocale, it } = useLocale();
 
   useEffect(() => {
     captureReferralCode();
