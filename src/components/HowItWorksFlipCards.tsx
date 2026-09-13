@@ -1,279 +1,143 @@
-import * as React from "react";
-import { Compass, HeartHandshake, Map, type LucideIcon } from "lucide-react";
-type LucideIconType = LucideIcon;
+import { HeartHandshake, MessageCircle, Search, Send, Star } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import type React from "react";
+import isabellaPhoto from "@/assets/isabella-waymaker.jpg.asset.json";
+import { ConnectingScreen } from "@/components/ui/journey-screens/ConnectingScreen";
+import { ExploreScreen } from "@/components/ui/journey-screens/ExploreScreen";
+import { FLORENCE_WAYMAKERS } from "@/components/ui/journey-screens/data";
+import { APP } from "@/components/ui/journey-screens/palette";
+import { ScreenShell, TabBar } from "@/components/ui/journey-screens/shell";
 
-type Card = {
-  step: string;
-  frontTitle: string;
+const SCREEN_WIDTH = 390;
+const SCREEN_HEIGHT = 884;
+
+type Step = {
+  label: string;
+  title: string;
   icon: LucideIcon;
-  backTitle: string;
-  backBody: React.ReactNode;
+  Screen: () => React.JSX.Element;
 };
 
-const CARDS: Card[] = [
-  {
-    step: "STEP 01",
-    icon: Compass,
-    frontTitle: "Tell us how you travel",
-    backTitle: "Your trip starts with you",
-    backBody: (
-      <>
-        Share your destination, interests, budget, travel style and the kind of
-        experience you're looking for. The better we understand you, the better
-        the match.
-      </>
-    ),
-  },
-  {
-    step: "STEP 02",
-    icon: HeartHandshake,
-    frontTitle: "Meet your right WayMaker",
-    backTitle: "Personally curated by OwnWay",
-    backBody: (
-      <>
-        Every Traveler request is{" "}
-        <span className="font-medium text-accent">
-          personally reviewed by our team
-        </span>
-        . We carefully select a WayMaker who best matches your destination,
-        travel style and expectations. Because the best travel advice comes
-        from the right person — not just any person.
-      </>
-    ),
-  },
-  {
-    step: "STEP 03",
-    icon: Map,
-    frontTitle: "Find your OwnWay",
-    backTitle: "Advice made for your trip",
-    backBody: (
-      <>
-        Once your WayMaker accepts, connect directly and receive practical,
-        personal advice tailored to your journey — not generic recommendations.
-      </>
-    ),
-  },
-];
-
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = React.useState(false);
-  React.useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(mq.matches);
-    const onChange = (e: MediaQueryListEvent) => setReduced(e.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
-  return reduced;
-}
-
-function useIsTouch() {
-  const [touch, setTouch] = React.useState(false);
-  React.useEffect(() => {
-    const mq = window.matchMedia("(hover: none)");
-    setTouch(mq.matches);
-    const onChange = (e: MediaQueryListEvent) => setTouch(e.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
-  return touch;
-}
-
-function FlipCard({
-  card,
-  flipped,
-  onToggle,
-  onHoverFlip,
-  reducedMotion,
-  isTouch,
-  onboarding,
-}: {
-  card: Card;
-  flipped: boolean;
-  onToggle: () => void;
-  onHoverFlip: (v: boolean) => void;
-  reducedMotion: boolean;
-  isTouch: boolean;
-  onboarding: boolean;
-}) {
-  const Icon = card.icon;
-
-
-  const handleKey = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      onToggle();
-    }
-  };
+function AdviceScreen() {
+  const isabella = FLORENCE_WAYMAKERS[0];
 
   return (
-    <div
-      className="group relative [perspective:1200px]"
-      onMouseEnter={() => !isTouch && onHoverFlip(true)}
-      onMouseLeave={() => !isTouch && onHoverFlip(false)}
-    >
-      <button
-        type="button"
-        onClick={onToggle}
-        onKeyDown={handleKey}
-        aria-pressed={flipped}
-        aria-label={`${card.step}: ${card.frontTitle}. Activate to reveal details.`}
-        className={`relative block h-[380px] w-full rounded-3xl outline-none transition-[transform,box-shadow] duration-500 ease-out focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background group-hover:-translate-y-1 md:h-[400px] ${
-          onboarding ? "-translate-y-1.5 shadow-warm" : ""
-        }`}
-      >
-        <div
-          className={
-            reducedMotion
-              ? "relative h-full w-full"
-              : "relative h-full w-full transition-transform duration-[600ms] ease-in-out [transform-style:preserve-3d]"
-          }
-          style={
-            reducedMotion
-              ? undefined
-              : {
-                  transform: flipped
-                    ? "rotateY(180deg)"
-                    : onboarding
-                    ? "rotateY(10deg)"
-                    : "rotateY(0deg)",
-                }
-          }
-        >
-          {/* FRONT */}
+    <ScreenShell footer={<TabBar active="explore" />}>
+      <div className="space-y-4">
+        <div className="relative h-[290px] overflow-hidden rounded-3xl">
+          <img
+            src={isabellaPhoto.url}
+            alt="Isabella Rossi, WayMaker a Firenze"
+            className="h-full w-full object-cover"
+            loading="eager"
+            decoding="async"
+            draggable={false}
+          />
           <div
-            aria-hidden={flipped}
-            className={
-              reducedMotion
-                ? `absolute inset-0 flex flex-col items-center justify-between rounded-3xl border border-border/60 bg-card p-8 text-center shadow-card transition-[opacity,box-shadow,border-color] duration-300 group-hover:shadow-warm lg:justify-start lg:gap-6 lg:pt-10 lg:group-hover:border-accent/40 ${
-                    flipped ? "opacity-0 pointer-events-none" : "opacity-100"
-                  }`
-                : "absolute inset-0 flex flex-col items-center justify-between rounded-3xl border border-border/60 bg-card p-8 text-center shadow-card transition-[box-shadow,border-color] duration-300 [backface-visibility:hidden] group-hover:shadow-warm lg:justify-start lg:gap-6 lg:pt-10 lg:group-hover:border-accent/40"
-            }
+            className="absolute right-3 top-3 flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold"
+            style={{ background: APP.surface, color: APP.ink }}
           >
-            <p className="text-xs uppercase tracking-[0.28em] text-accent">
-              {card.step}
-            </p>
-            <div className="flex flex-1 items-center justify-center lg:flex-none">
-              <div
-                className="flex h-24 w-24 items-center justify-center rounded-full bg-accent/10 transition-transform duration-500 ease-out lg:h-20 lg:w-20 lg:bg-accent/[0.07]"
-                style={onboarding ? { transform: "scale(1.08)" } : undefined}
-              >
-                <Icon
-                  className="h-11 w-11 text-accent lg:h-9 lg:w-9"
-                  strokeWidth={1.4}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </div>
-            </div>
-            <div className="space-y-2 lg:mt-2">
-              <h3 className="font-display text-2xl leading-tight text-ink lg:text-[34px] lg:leading-[1.15]">
-                {card.frontTitle}
-              </h3>
-            </div>
-          </div>
-
-          {/* BACK */}
-          <div
-            aria-hidden={!flipped}
-            className={
-              reducedMotion
-                ? `absolute inset-0 flex flex-col items-center justify-center rounded-3xl border border-border/60 bg-card p-8 text-center shadow-warm transition-opacity duration-300 ${
-                    flipped ? "opacity-100" : "opacity-0 pointer-events-none"
-                  }`
-                : "absolute inset-0 flex flex-col items-center justify-center rounded-3xl border border-border/60 bg-card p-8 text-center shadow-warm [backface-visibility:hidden] [transform:rotateY(180deg)]"
-            }
-          >
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/10">
-              <Icon className="h-5 w-5 text-accent" strokeWidth={1.8} />
-            </div>
-            <h3 className="mt-4 font-display text-2xl leading-tight text-ink">
-              {card.backTitle}
-            </h3>
-            <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
-              {card.backBody}
-            </p>
+            <Star className="size-3.5 fill-current" style={{ color: APP.clay }} />
+            4.9 <span style={{ color: APP.inkFaint }}>(150+)</span>
           </div>
         </div>
-      </button>
+
+        <div>
+          <h2 className="font-display text-2xl font-bold" style={{ color: APP.green }}>
+            Isabella Rossi
+          </h2>
+          <p className="mt-1 text-xs font-semibold" style={{ color: APP.clay }}>
+            Esperta in Arte Rinascimentale e trattorie nascoste
+          </p>
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {["Storia dell’arte", "Cucina locale", "Luoghi segreti"].map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full px-3 py-1.5 text-[11px] font-semibold"
+              style={{ background: APP.clayTint, color: APP.clay }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <p
+          className="rounded-2xl p-4 text-xs italic leading-relaxed"
+          style={{ background: APP.surfaceMuted, color: APP.ink }}
+        >
+          “Ti mostro una Firenze autentica, fatta di storie, persone e luoghi che non troveresti sulle guide.”
+        </p>
+
+        <div
+          className="flex w-full items-center justify-center gap-2 rounded-2xl py-3.5 text-sm font-semibold"
+          style={{ background: APP.green, color: APP.bg }}
+        >
+          Scrivi a Isabella <Send className="size-4" aria-hidden />
+        </div>
+      </div>
+    </ScreenShell>
+  );
+}
+
+const STEPS: Step[] = [
+  { label: "PASSAGGIO 1", title: "Parti da quello che cerchi", icon: Search, Screen: ExploreScreen },
+  { label: "PASSAGGIO 2", title: "Troviamo la persona locale giusta", icon: HeartHandshake, Screen: ConnectingScreen },
+  { label: "PASSAGGIO 3", title: "Ricevi consigli su misura", icon: MessageCircle, Screen: AdviceScreen },
+];
+
+function PhoneMockup({ Screen, label }: { Screen: Step["Screen"]; label: string }) {
+  return (
+    <div className="relative mx-auto w-[248px] sm:w-[270px] lg:w-[260px] xl:w-[280px]" role="img" aria-label={label}>
+      <div className="absolute -left-[3px] top-[82px] h-8 w-[3px] rounded-l-sm bg-foreground/80" aria-hidden />
+      <div className="absolute -left-[3px] top-[130px] h-14 w-[3px] rounded-l-sm bg-foreground/80" aria-hidden />
+      <div className="absolute -right-[3px] top-[150px] h-20 w-[3px] rounded-r-sm bg-foreground/80" aria-hidden />
+
+      <div className="aspect-[390/884] overflow-hidden rounded-[2.9rem] border-[5px] border-foreground bg-foreground shadow-warm">
+        <div className="relative h-full w-full overflow-hidden rounded-[2.5rem] bg-background">
+          <div className="absolute left-1/2 top-2 z-20 h-6 w-24 -translate-x-1/2 rounded-full bg-foreground" aria-hidden />
+          <div
+            className="absolute left-0 top-0 origin-top-left"
+            style={{
+              width: SCREEN_WIDTH,
+              height: SCREEN_HEIGHT,
+              transform: "scale(var(--phone-scale))",
+            }}
+          >
+            <Screen />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
 export function HowItWorksFlipCards() {
-  const [openIndex, setOpenIndex] = React.useState<number | null>(null);
-  const [hoverIndex, setHoverIndex] = React.useState<number | null>(null);
-  const [onboardingIndex, setOnboardingIndex] = React.useState<number | null>(null);
-  const reducedMotion = usePrefersReducedMotion();
-  const isTouch = useIsTouch();
-  const sectionRef = React.useRef<HTMLElement | null>(null);
-  const hasPlayedRef = React.useRef(false);
-
-  React.useEffect(() => {
-    if (reducedMotion) return;
-    const el = sectionRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting && !hasPlayedRef.current) {
-            hasPlayedRef.current = true;
-            observer.disconnect();
-            const timeouts: ReturnType<typeof setTimeout>[] = [];
-            CARDS.forEach((_, i) => {
-              timeouts.push(
-                setTimeout(() => setOnboardingIndex(i), i * 200),
-              );
-              timeouts.push(
-                setTimeout(() => {
-                  setOnboardingIndex((cur) => (cur === i ? null : cur));
-                }, i * 200 + 250 + 500),
-              );
-            });
-          }
-        }
-      },
-      { threshold: 0.35 },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [reducedMotion]);
-
   return (
-    <section
-      ref={sectionRef}
-      id="how-it-works"
-      className="container-page border-t border-border/60 py-20 md:py-28"
-    >
-      <p className="text-center text-xs uppercase tracking-[0.25em] text-accent">
-        How OwnWay works
-      </p>
-      <h2 className="mx-auto mt-3 max-w-3xl text-center text-4xl md:text-5xl">
-        AI can give you answers. OwnWay connects you with people who have lived them.
-      </h2>
+    <section id="how-it-works" className="border-t border-border/60 py-20 md:py-28">
+      <div className="container-page">
+        <p className="text-center text-xs uppercase tracking-[0.25em] text-accent">COME FUNZIONA</p>
+        <h2 className="mx-auto mt-4 max-w-3xl text-center text-4xl leading-tight md:text-5xl">
+          Da ore di ricerca a 3 semplici passaggi.
+        </h2>
 
-      <div className="mx-auto mt-14 grid max-w-5xl gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
-        {CARDS.map((card, i) => {
-          const flipped = isTouch
-            ? openIndex === i
-            : hoverIndex === i || openIndex === i;
-          return (
-            <FlipCard
-              key={card.step}
-              card={card}
-              flipped={flipped}
-              reducedMotion={reducedMotion}
-              isTouch={isTouch}
-              onboarding={onboardingIndex === i && !flipped}
-              onToggle={() =>
-
-                setOpenIndex((prev) => (prev === i ? null : i))
-              }
-              onHoverFlip={(v) => setHoverIndex(v ? i : null)}
-            />
-          );
-        })}
+        <ol className="mx-auto mt-14 grid max-w-6xl items-start gap-x-6 gap-y-20 md:grid-cols-3 lg:gap-x-8">
+          {STEPS.map(({ label, title, icon: Icon, Screen }) => (
+            <li key={label} className="grid grid-rows-[9.5rem_auto] justify-items-center gap-10 [--phone-scale:0.6103] sm:[--phone-scale:0.6667] lg:[--phone-scale:0.641] xl:[--phone-scale:0.6923]">
+              <div className="h-full w-full rounded-2xl border border-border/70 bg-card/90 p-6 shadow-card">
+                <div className="flex items-center gap-3">
+                  <span className="grid size-9 shrink-0 place-items-center rounded-full border border-border bg-secondary/50 text-foreground">
+                    <Icon className="size-4" strokeWidth={1.6} aria-hidden />
+                  </span>
+                  <span className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">{label}</span>
+                </div>
+                <h3 className="mt-4 text-2xl leading-[1.15] text-foreground">{title}</h3>
+              </div>
+              <PhoneMockup Screen={Screen} label={`Schermata OwnWay: ${title}`} />
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );
