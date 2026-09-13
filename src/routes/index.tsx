@@ -233,7 +233,7 @@ function LandingPage() {
                       })
                     }
                   >
-                     {it ? "Richiedi l’accesso" : "Join early access"} <ArrowRight className="ml-1.5 size-4" />
+                {it ? "Provala gratis!" : "Try it free!"} <ArrowRight className="ml-1.5 size-4" />
                   </Button>
                 </JoinEarlyAccess>
               </div>
