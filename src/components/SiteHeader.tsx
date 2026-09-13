@@ -118,20 +118,6 @@ export function SiteHeader({ locale = "en", onLocaleChange }: { locale?: Locale;
                 </Link>
               ))}
             </nav>
-            <Link
-              to="/"
-              hash="join"
-              className="mt-6 block"
-              onClick={() => {
-                setMenuOpen(false);
-                trackPrelaunchEvent("cta_click", {
-                  button_text: copy.join,
-                  button_location: "mobile_menu",
-                });
-              }}
-            >
-              <Button className="h-12 w-full rounded-full text-base">{copy.join}</Button>
-            </Link>
           </SheetContent>
         </Sheet>
       </div>
