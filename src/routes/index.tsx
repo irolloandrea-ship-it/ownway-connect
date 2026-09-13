@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 
 import heroImage from "@/assets/hero-lifestyle.jpg.asset.json";
+import heroMobileImage from "@/assets/hero-mobile.png.asset.json";
 import { JoinEarlyAccess } from "@/components/JoinEarlyAccess";
 import { captureReferralCode } from "@/lib/referral-code";
 import { useLocale, type Locale } from "@/lib/use-locale";
