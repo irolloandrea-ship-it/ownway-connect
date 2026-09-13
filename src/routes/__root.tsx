@@ -134,6 +134,12 @@ function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
+        {/* Iubenda Privacy Controls and Cookie Solution */}
+        <script
+          type="text/javascript"
+          src="https://embeds.iubenda.com/widgets/700126fb-27b4-461a-9265-290e0dfe0c2f.js"
+        />
+        {/* End Iubenda Privacy Controls and Cookie Solution */}
         {/* Google Tag Manager */}
         <script dangerouslySetInnerHTML={{ __html: GTM_HEAD_SCRIPT }} />
         {/* End Google Tag Manager */}
