@@ -17,16 +17,12 @@ type Locale = "it" | "en";
 const COPY = {
   en: {
     nav: ["Home", "Find a WayMaker", "Become a WayMaker"],
-    earlyAccess: "Get early access",
-    join: "Join early access",
     menu: "Menu",
     openMenu: "Open menu",
     language: "Language",
   },
   it: {
     nav: ["Home", "Trova un WayMaker", "Diventa WayMaker"],
-    earlyAccess: "Accesso anticipato",
-    join: "Richiedi l’accesso",
     menu: "Menu",
     openMenu: "Apri il menu",
     language: "Lingua",
