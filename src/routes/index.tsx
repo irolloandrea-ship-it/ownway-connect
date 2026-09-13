@@ -269,8 +269,6 @@ function LandingPage() {
                      {it ? "Richiedi l’accesso" : "Join early access"} <ArrowRight className="ml-1.5 size-4" />
                   </Button>
                 </JoinEarlyAccess>
-
-                <p className="mt-3 text-sm text-muted-foreground">{it ? "Una città alla volta." : "Starting city by city."}</p>
               </div>
             </div>
 
