@@ -235,14 +235,17 @@ function LandingPage() {
 
             {/* Responsive crop from one shared image source */}
             <div className="relative lg:min-h-[650px]">
-              <img
-                src={heroImage.url}
-                alt="A local person in a sunlit Florentine street, smiling and looking to the left as if sharing a travel tip"
-                width={1600}
-                height={1104}
-                sizes="(min-width: 1024px) 42vw, 100vw"
-                className="aspect-[4/3] w-full rounded-3xl object-cover object-[65%_35%] shadow-card sm:aspect-[3/2] lg:absolute lg:inset-y-6 lg:right-0 lg:aspect-auto lg:h-[calc(100%-3rem)] lg:w-full lg:object-[62%_center]"
-              />
+              <picture>
+                <source media="(max-width: 767px)" srcSet={heroMobileImage.url} />
+                <img
+                  src={heroImage.url}
+                  alt="A local person in a sunlit Florentine street, smiling and looking to the left as if sharing a travel tip"
+                  width={1600}
+                  height={1104}
+                  sizes="(min-width: 1024px) 42vw, 100vw"
+                  className="aspect-[4/3] w-full rounded-3xl object-cover object-[70%_55%] shadow-card sm:aspect-[3/2] lg:absolute lg:inset-y-6 lg:right-0 lg:aspect-auto lg:h-[calc(100%-3rem)] lg:w-full lg:object-[62%_center]"
+                />
+              </picture>
 
             </div>
 
