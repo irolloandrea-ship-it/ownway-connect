@@ -1,7 +1,7 @@
 import { HeartHandshake, MessageCircle, Search, Send, Star } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type React from "react";
-import isabellaPhoto from "@/assets/isabella-waymaker.jpg.asset.json";
+import isabellaPhoto from "@/assets/isabella-waymaker-natural.jpg.asset.json";
 import { ConnectingScreen } from "@/components/ui/journey-screens/ConnectingScreen";
 import { ExploreScreen } from "@/components/ui/journey-screens/ExploreScreen";
 import { FLORENCE_WAYMAKERS } from "@/components/ui/journey-screens/data";
@@ -27,7 +27,7 @@ function AdviceScreen() {
         <div className="relative h-[290px] overflow-hidden rounded-3xl">
           <img
             src={isabellaPhoto.url}
-            alt="Isabella Rossi, WayMaker a Firenze"
+            alt="Isabella, WayMaker locale a Firenze"
             className="h-full w-full object-cover"
             loading="eager"
             decoding="async"
@@ -44,7 +44,7 @@ function AdviceScreen() {
 
         <div>
           <h2 className="font-display text-2xl font-bold" style={{ color: APP.green }}>
-            Isabella Rossi
+            Isabella
           </h2>
           <p className="mt-1 text-xs font-semibold" style={{ color: APP.clay }}>
             Esperta in Arte Rinascimentale e trattorie nascoste
