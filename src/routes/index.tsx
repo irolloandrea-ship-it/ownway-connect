@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Plus, Minus, Compass, HeartHandshake, MessagesSquare } from "lucide-react";
+import { ArrowRight, Plus, Minus } from "lucide-react";
 import { captureSourceOnce, trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -12,6 +12,7 @@ import heroImage from "@/assets/hero-lifestyle.jpg.asset.json";
 import { JoinEarlyAccess } from "@/components/JoinEarlyAccess";
 import { captureReferralCode } from "@/lib/referral-code";
 import { useLocale, type Locale } from "@/lib/use-locale";
+import { HowItWorksFlipCards } from "@/components/HowItWorksFlipCards";
 
 type Search = { ref?: string; role?: "explorer" | "waymaker" };
 
@@ -66,14 +67,6 @@ export const Route = createFileRoute("/")({
   }),
   component: LandingPage,
 });
-
-/* ---------------- How it works ---------------- */
-
-const STEPS = [
-  { icon: Compass, title: "Tell us about your trip" },
-  { icon: HeartHandshake, title: "We match you with someone who knows the place" },
-  { icon: MessagesSquare, title: "Chat, get advice, and travel with confidence" },
-];
 
 /* ---------------- FAQ ---------------- */
 
@@ -256,37 +249,7 @@ function LandingPage() {
         </section>
 
         {/* How it works */}
-        <section className="border-t border-border/60 py-16 md:py-24">
-          <div className="container-page">
-            <p className="text-center text-xs uppercase tracking-[0.25em] text-accent">
-               {it ? "Come funziona" : "How it works"}
-            </p>
-            <h2 className="mx-auto mt-3 max-w-2xl text-center text-3xl md:text-4xl">
-               {it ? "Un modo più personale di viaggiare." : "A more personal way to travel."}
-            </h2>
-
-            <ol className="mt-12 grid gap-6 md:grid-cols-3">
-              {STEPS.map((step, i) => (
-                <li
-                  key={step.title}
-                  className="rounded-3xl border border-border bg-card p-6 shadow-card"
-                >
-                  <div className="flex items-center gap-3">
-                    <step.icon className="size-6 text-accent" strokeWidth={1.4} aria-hidden />
-                    <span className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
-                       {it ? "Passaggio" : "Step"} {i + 1}
-                    </span>
-                  </div>
-                   <p className="mt-4 font-display text-xl leading-snug text-ink">
-                     {it
-                       ? ["Raccontaci del tuo viaggio", "Ti abbiniamo a qualcuno che conosce davvero il luogo", "Ricevi consigli e viaggia con più sicurezza"][i]
-                       : step.title}
-                   </p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
+        <HowItWorksFlipCards />
 
         {/* Traveler / WayMaker */}
         <section className="mt-16 bg-secondary/50 py-20 md:mt-24 md:py-28">
