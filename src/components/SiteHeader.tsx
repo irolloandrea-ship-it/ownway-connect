@@ -4,7 +4,6 @@ import { Menu } from "lucide-react";
 import { Logo } from "./Logo";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { trackPrelaunchEvent } from "@/lib/prelaunch-analytics";
 
 const NAV: { to: "/" | "/find-a-waymaker" | "/become-a-waymaker"; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
@@ -17,16 +16,12 @@ type Locale = "it" | "en";
 const COPY = {
   en: {
     nav: ["Home", "Find a WayMaker", "Become a WayMaker"],
-    earlyAccess: "Get early access",
-    join: "Join early access",
     menu: "Menu",
     openMenu: "Open menu",
     language: "Language",
   },
   it: {
     nav: ["Home", "Trova un WayMaker", "Diventa WayMaker"],
-    earlyAccess: "Accesso anticipato",
-    join: "Richiedi l’accesso",
     menu: "Menu",
     openMenu: "Apri il menu",
     language: "Lingua",
@@ -84,18 +79,10 @@ export function SiteHeader({ locale = "en", onLocaleChange }: { locale?: Locale;
 
         <div className="hidden items-center gap-3 md:flex">
           {onLocaleChange && <LanguageSwitch locale={locale} onChange={onLocaleChange} />}
-          <Link
-            to="/"
-            hash="join"
-            onClick={() =>
-              trackPrelaunchEvent("cta_click", {
-                button_text: copy.earlyAccess,
-                button_location: "navbar",
-              })
-            }
-          >
-            <Button size="sm" className="rounded-full">{copy.earlyAccess}</Button>
-          </Link>
+        </div>
+
+        <div className="flex items-center gap-2 md:hidden">
+          {onLocaleChange && <LanguageSwitch locale={locale} onChange={onLocaleChange} compact />}
         </div>
 
         {/* Mobile menu */}
@@ -130,20 +117,6 @@ export function SiteHeader({ locale = "en", onLocaleChange }: { locale?: Locale;
                 </Link>
               ))}
             </nav>
-            <Link
-              to="/"
-              hash="join"
-              className="mt-6 block"
-              onClick={() => {
-                setMenuOpen(false);
-                trackPrelaunchEvent("cta_click", {
-                  button_text: copy.join,
-                  button_location: "mobile_menu",
-                });
-              }}
-            >
-              <Button className="h-12 w-full rounded-full text-base">{copy.join}</Button>
-            </Link>
           </SheetContent>
         </Sheet>
       </div>
