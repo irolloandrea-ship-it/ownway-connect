@@ -8,7 +8,7 @@ import { captureSourceOnce, trackPrelaunchEvent } from "@/lib/prelaunch-analytic
 import { motion, AnimatePresence } from "framer-motion";
 import { OwnWayPhoneCarousel } from "@/components/ui/ownway-phone-carousel";
 
-import heroImage from "@/assets/hero-florence.jpg.asset.json";
+import heroImage from "@/assets/hero-lifestyle.jpg.asset.json";
 import { JoinEarlyAccess } from "@/components/JoinEarlyAccess";
 import { captureReferralCode } from "@/lib/referral-code";
 import { useLocale, type Locale } from "@/lib/use-locale";
@@ -243,9 +243,9 @@ function LandingPage() {
             <div className="relative lg:min-h-[720px]">
               <img
                 src={heroImage.url}
-                alt="A local and a traveller talking on a sunlit street in Florence, with the Duomo behind them"
-                width={1280}
-                height={1600}
+                alt="A local person in a sunlit Florentine street, looking up and to the left as if sharing a travel tip"
+                width={1792}
+                height={1024}
                 sizes="(min-width: 1024px) 45vw, 100vw"
                 className="aspect-[4/3] w-full rounded-3xl object-cover object-[70%_center] shadow-card sm:aspect-[3/2] lg:absolute lg:inset-y-16 lg:left-0 lg:aspect-auto lg:h-[calc(100%-8rem)] lg:w-[62%] lg:object-[95%_center]"
               />
