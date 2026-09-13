@@ -183,22 +183,22 @@ function LandingPage() {
 
       <main>
         {/* Hero */}
-        <section className="container-page pt-10 pb-16 md:pt-16 md:pb-24">
-          <div className="grid items-center gap-12 lg:grid-cols-[55fr_45fr] lg:gap-10">
+        <section className="container-page pt-8 pb-16 md:pt-14 md:pb-24">
+          <div className="grid items-center gap-8 md:gap-10 lg:grid-cols-[58fr_42fr] lg:gap-12">
             {/* Copy */}
             <div ref={heroFormRef} id="join" className="max-w-xl">
-              <h1 className="text-[2.15rem] leading-[1.08] md:text-5xl lg:text-[3.4rem]">
+              <h1 className="text-[2rem] leading-[1.06] md:text-5xl md:leading-[1.08] lg:text-[3.4rem]">
                 {it
                   ? "Internet ti dà migliaia di consigli. OwnWay ti aiuta a trovare quello giusto per te."
                   : "Plan smarter and travel deeper with someone who knows the place."}
               </h1>
-              <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
+              <p className="mt-4 text-base leading-relaxed text-muted-foreground md:mt-5 md:text-lg">
                 {it
                   ? "Per i viaggiatori che non vogliono affidarsi a liste e recensioni generiche, OwnWay trova la persona locale giusta da cui ricevere consigli adatti al proprio viaggio."
                   : "For travellers who don’t want to rely on generic lists and reviews, OwnWay finds the right local person to give advice tailored to their trip."}
               </p>
 
-              <div className="mt-8 flex flex-col items-start">
+              <div className="mt-6 flex flex-col items-start md:mt-8">
                 <JoinEarlyAccess
                   referredBy={search.ref}
                   intendedRole={intendedRole}
@@ -232,15 +232,15 @@ function LandingPage() {
               </div>
             </div>
 
-            {/* Visual composition: photo + the real app preview overlapping it on desktop */}
-            <div className="relative lg:min-h-[720px]">
+            {/* Responsive crop from one shared image source */}
+            <div className="relative lg:min-h-[650px]">
               <img
                 src={heroImage.url}
                 alt="A local person in a sunlit Florentine street, smiling and looking to the left as if sharing a travel tip"
                 width={1600}
                 height={1104}
-                sizes="(min-width: 1024px) 45vw, 100vw"
-                className="aspect-[4/3] w-full rounded-3xl object-cover object-[70%_center] shadow-card sm:aspect-[3/2] lg:absolute lg:inset-y-16 lg:left-0 lg:aspect-auto lg:h-[calc(100%-8rem)] lg:w-[62%] lg:object-[95%_center]"
+                sizes="(min-width: 1024px) 42vw, 100vw"
+                className="aspect-[4/3] w-full rounded-3xl object-cover object-[65%_35%] shadow-card sm:aspect-[3/2] lg:absolute lg:inset-y-6 lg:right-0 lg:aspect-auto lg:h-[calc(100%-3rem)] lg:w-full lg:object-[62%_center]"
               />
 
             </div>
