@@ -137,12 +137,14 @@ function RootShell({ children }: { children: ReactNode }) {
         {/* Iubenda Privacy Controls and Cookie Solution */}
         <script
           type="text/javascript"
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: "var _iub = _iub || {}; _iub.csConfiguration = _iub.csConfiguration || {}; _iub.csConfiguration.emitGtmEvents = true;",
           }}
         />
         <script
           type="text/javascript"
+          suppressHydrationWarning
           src="https://embeds.iubenda.com/widgets/700126fb-27b4-461a-9265-290e0dfe0c2f.js"
         />
         {/* End Iubenda Privacy Controls and Cookie Solution */}
