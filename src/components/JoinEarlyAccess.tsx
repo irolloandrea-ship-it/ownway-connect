@@ -238,13 +238,15 @@ export function JoinEarlyAccess({
                   className="cursor-pointer text-sm font-normal leading-relaxed text-foreground/85"
                 >
                   {it ? "Accetto di ricevere aggiornamenti sull’accesso anticipato e sul lancio di OwnWay. Posso annullare l’iscrizione in qualsiasi momento. " : "I agree to receive OwnWay early-access and launch updates. I can unsubscribe at any time. "}
-                  <Link
-                    to="/privacy"
+                  <a
+                    href="https://www.iubenda.com/privacy-policy/90957829"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-accent underline-offset-2 hover:underline"
                     onClick={(e) => e.stopPropagation()}
                   >
                     Privacy Policy
-                  </Link>
+                  </a>
                 </Label>
               </div>
               {errors.consent && (
