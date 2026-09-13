@@ -35,7 +35,7 @@ export const Route = createFileRoute("/")({
           "Trova la persona locale giusta da cui ricevere consigli adatti al tuo viaggio.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://ownway.app/" },
+      { property: "og:url", content: "https://www.ownway.app/" },
       { name: "twitter:card", content: "summary_large_image" },
       {
         property: "og:image",
@@ -48,7 +48,7 @@ export const Route = createFileRoute("/")({
           "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/027331ec-6db0-4c1e-83d4-7e761ebc4868/id-preview-935629ee--c56c8bb1-b9d6-440f-8629-c68678c7b174.lovable.app-1782563128145.png",
       },
     ],
-    links: [{ rel: "canonical", href: "https://ownway.app/" }],
+    links: [{ rel: "canonical", href: "https://www.ownway.app/" }],
     scripts: [
       {
         type: "application/ld+json",

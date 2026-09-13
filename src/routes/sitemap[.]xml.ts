@@ -1,48 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 
-const BASE_URL = "https://ownway.app";
-
-interface SitemapEntry {
-  path: string;
-  changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
-  priority?: string;
-}
-
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
-        // Only the public landing page is indexable. All other routes
-        // (admin, auth, trip/*, waitlist/*) are private or transactional
-        // and carry `robots: noindex`.
-        const entries: SitemapEntry[] = [
-          { path: "/", changefreq: "weekly", priority: "1.0" },
-          { path: "/find-a-waymaker", changefreq: "monthly", priority: "0.8" },
-          { path: "/become-a-waymaker", changefreq: "monthly", priority: "0.8" },
-          { path: "/privacy", changefreq: "yearly", priority: "0.3" },
-          { path: "/cookie-policy", changefreq: "yearly", priority: "0.3" },
-          { path: "/legal-notice", changefreq: "yearly", priority: "0.3" },
-        ];
-
-        const urls = entries.map((e) =>
-          [
-            `  <url>`,
-            `    <loc>${BASE_URL}${e.path}</loc>`,
-            e.changefreq ? `    <changefreq>${e.changefreq}</changefreq>` : null,
-            e.priority ? `    <priority>${e.priority}</priority>` : null,
-            `  </url>`,
-          ]
-            .filter(Boolean)
-            .join("\n"),
-        );
-
-        const xml = [
-          `<?xml version="1.0" encoding="UTF-8"?>`,
-          `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`,
-          ...urls,
-          `</urlset>`,
-        ].join("\n");
+        // Only the main landing page is indexable. All other public routes
+        // (find-a-waymaker, become-a-waymaker, privacy, cookie-policy,
+        // legal-notice) carry `robots: noindex, follow` and are excluded.
+        const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.ownway.app/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>`;
 
         return new Response(xml, {
           headers: {
