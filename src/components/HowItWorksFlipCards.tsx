@@ -28,7 +28,7 @@ function AdviceScreen() {
             src={isabella.image}
             alt="Isabella Rossi, WayMaker a Firenze"
             className="h-full w-full object-cover"
-            loading="lazy"
+            loading="eager"
             decoding="async"
             draggable={false}
           />
