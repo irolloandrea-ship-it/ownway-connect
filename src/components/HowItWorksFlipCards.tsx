@@ -1,6 +1,7 @@
 import { HeartHandshake, MessageCircle, Search, Send, Star } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type React from "react";
+import isabellaPhoto from "@/assets/isabella-waymaker.jpg.asset.json";
 import { ConnectingScreen } from "@/components/ui/journey-screens/ConnectingScreen";
 import { ExploreScreen } from "@/components/ui/journey-screens/ExploreScreen";
 import { FLORENCE_WAYMAKERS } from "@/components/ui/journey-screens/data";
@@ -25,7 +26,7 @@ function AdviceScreen() {
       <div className="space-y-4">
         <div className="relative h-[290px] overflow-hidden rounded-3xl">
           <img
-            src={isabella.image}
+            src={isabellaPhoto.url}
             alt="Isabella Rossi, WayMaker a Firenze"
             className="h-full w-full object-cover"
             loading="eager"
