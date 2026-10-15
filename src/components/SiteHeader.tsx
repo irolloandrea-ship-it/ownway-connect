@@ -48,7 +48,9 @@ export function SiteHeader({ locale = "en", onLocaleChange }: { locale?: Locale;
   return (
     <header className="sticky top-0 z-30 border-b border-border/60 bg-background/85 backdrop-blur">
       <div className="container-page flex h-16 items-center justify-between gap-3">
-        <Logo size={32} />
+        <Link to="/" className="flex items-center" aria-label="OwnWay — Home">
+          <Logo size={32} />
+        </Link>
 
         <div className="flex items-center gap-2 md:gap-3">
           {onLocaleChange && <LanguageSwitch locale={locale} onChange={onLocaleChange} />}
