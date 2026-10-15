@@ -9,100 +9,45 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as UnsubscribeRouteImport } from './routes/unsubscribe'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as McpRouteImport } from './routes/mcp'
-import { Route as LegalNoticeRouteImport } from './routes/legal-notice'
-import { Route as LeaveWaitlistRouteImport } from './routes/leave-waitlist'
-import { Route as FindAWaymakerRouteImport } from './routes/find-a-waymaker'
-import { Route as CookiePolicyRouteImport } from './routes/cookie-policy'
-import { Route as ConfirmEmailRouteImport } from './routes/confirm-email'
-import { Route as BecomeAWaymakerRouteImport } from './routes/become-a-waymaker'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as WaymakerApplyRouteImport } from './routes/waymaker.apply'
-import { Route as WaymakerIdRouteImport } from './routes/waymaker.$id'
-import { Route as WaitlistCodeRouteImport } from './routes/waitlist.$code'
-import { Route as TripNewRouteImport } from './routes/trip.new'
-import { Route as TripTokenRouteImport } from './routes/trip.$token'
-import { Route as EmailUnsubscribeRouteImport } from './routes/email/unsubscribe'
-import { Route as AdminPrelaunchAnalyticsRouteImport } from './routes/admin.prelaunch-analytics'
-import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as BecomeAWaymakerRouteImport } from './routes/become-a-waymaker'
+import { Route as ConfirmEmailRouteImport } from './routes/confirm-email'
+import { Route as CookiePolicyRouteImport } from './routes/cookie-policy'
+import { Route as FindAWaymakerRouteImport } from './routes/find-a-waymaker'
+import { Route as LeaveWaitlistRouteImport } from './routes/leave-waitlist'
+import { Route as LegalNoticeRouteImport } from './routes/legal-notice'
+import { Route as McpRouteImport } from './routes/mcp'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as UnsubscribeRouteImport } from './routes/unsubscribe'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
-import { Route as TripConfirmationTokenRouteImport } from './routes/trip.confirmation.$token'
-import { Route as TripTokenFeedbackRouteImport } from './routes/trip.$token.feedback'
-import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
-import { Route as ApiPublicBootstrapAdminRouteImport } from './routes/api/public/bootstrap-admin'
-import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as AdminPrelaunchAnalyticsRouteImport } from './routes/admin.prelaunch-analytics'
+import { Route as EmailUnsubscribeRouteImport } from './routes/email/unsubscribe'
+import { Route as TripTokenRouteImport } from './routes/trip.$token'
+import { Route as TripNewRouteImport } from './routes/trip.new'
+import { Route as WaitlistCodeRouteImport } from './routes/waitlist.$code'
+import { Route as WaymakerIdRouteImport } from './routes/waymaker.$id'
+import { Route as WaymakerApplyRouteImport } from './routes/waymaker.apply'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
-import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
-import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
-import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
-import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
-import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
+import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
+import { Route as ApiPublicBootstrapAdminRouteImport } from './routes/api/public/bootstrap-admin'
+import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
+import { Route as TripTokenFeedbackRouteImport } from './routes/trip.$token.feedback'
+import { Route as TripConfirmationTokenRouteImport } from './routes/trip.confirmation.$token'
 import { Route as ApiPublicHooksReferralNotificationsRouteImport } from './routes/api/public/hooks/referral-notifications'
+import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
+import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
+import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
+import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
+import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
 
-const UnsubscribeRoute = UnsubscribeRouteImport.update({
-  id: '/unsubscribe',
-  path: '/unsubscribe',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResetPasswordRoute = ResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const McpRoute = McpRouteImport.update({
-  id: '/mcp',
-  path: '/mcp',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LegalNoticeRoute = LegalNoticeRouteImport.update({
-  id: '/legal-notice',
-  path: '/legal-notice',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LeaveWaitlistRoute = LeaveWaitlistRouteImport.update({
-  id: '/leave-waitlist',
-  path: '/leave-waitlist',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FindAWaymakerRoute = FindAWaymakerRouteImport.update({
-  id: '/find-a-waymaker',
-  path: '/find-a-waymaker',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CookiePolicyRoute = CookiePolicyRouteImport.update({
-  id: '/cookie-policy',
-  path: '/cookie-policy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ConfirmEmailRoute = ConfirmEmailRouteImport.update({
-  id: '/confirm-email',
-  path: '/confirm-email',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BecomeAWaymakerRoute = BecomeAWaymakerRouteImport.update({
-  id: '/become-a-waymaker',
-  path: '/become-a-waymaker',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -110,29 +55,86 @@ const AdminRoute = AdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const WaymakerApplyRoute = WaymakerApplyRouteImport.update({
-  id: '/waymaker/apply',
-  path: '/waymaker/apply',
+const BecomeAWaymakerRoute = BecomeAWaymakerRouteImport.update({
+  id: '/become-a-waymaker',
+  path: '/become-a-waymaker',
   getParentRoute: () => rootRouteImport,
 } as any)
-const WaymakerIdRoute = WaymakerIdRouteImport.update({
-  id: '/waymaker/$id',
-  path: '/waymaker/$id',
+const ConfirmEmailRoute = ConfirmEmailRouteImport.update({
+  id: '/confirm-email',
+  path: '/confirm-email',
   getParentRoute: () => rootRouteImport,
 } as any)
-const WaitlistCodeRoute = WaitlistCodeRouteImport.update({
-  id: '/waitlist/$code',
-  path: '/waitlist/$code',
+const CookiePolicyRoute = CookiePolicyRouteImport.update({
+  id: '/cookie-policy',
+  path: '/cookie-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TripNewRoute = TripNewRouteImport.update({
-  id: '/trip/new',
-  path: '/trip/new',
+const FindAWaymakerRoute = FindAWaymakerRouteImport.update({
+  id: '/find-a-waymaker',
+  path: '/find-a-waymaker',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeaveWaitlistRoute = LeaveWaitlistRouteImport.update({
+  id: '/leave-waitlist',
+  path: '/leave-waitlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalNoticeRoute = LegalNoticeRouteImport.update({
+  id: '/legal-notice',
+  path: '/legal-notice',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UnsubscribeRoute = UnsubscribeRouteImport.update({
+  id: '/unsubscribe',
+  path: '/unsubscribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Char91DotmcpChar93ListToolsRoute =
+  Char91DotmcpChar93ListToolsRouteImport.update({
+    id: '/.mcp/list-tools',
+    path: '/.mcp/list-tools',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AdminPrelaunchAnalyticsRoute = AdminPrelaunchAnalyticsRouteImport.update({
+  id: '/prelaunch-analytics',
+  path: '/prelaunch-analytics',
+  getParentRoute: () => AdminRoute,
+} as any)
+const EmailUnsubscribeRoute = EmailUnsubscribeRouteImport.update({
+  id: '/email/unsubscribe',
+  path: '/email/unsubscribe',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TripTokenRoute = TripTokenRouteImport.update({
@@ -140,46 +142,29 @@ const TripTokenRoute = TripTokenRouteImport.update({
   path: '/trip/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EmailUnsubscribeRoute = EmailUnsubscribeRouteImport.update({
-  id: '/email/unsubscribe',
-  path: '/email/unsubscribe',
+const TripNewRoute = TripNewRouteImport.update({
+  id: '/trip/new',
+  path: '/trip/new',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminPrelaunchAnalyticsRoute = AdminPrelaunchAnalyticsRouteImport.update({
-  id: '/prelaunch-analytics',
-  path: '/prelaunch-analytics',
-  getParentRoute: () => AdminRoute,
-} as any)
-const Char91DotwellKnownChar93OauthProtectedResourceRoute =
-  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
-    id: '/.well-known/oauth-protected-resource',
-    path: '/.well-known/oauth-protected-resource',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const Char91DotmcpChar93ListToolsRoute =
-  Char91DotmcpChar93ListToolsRouteImport.update({
-    id: '/.mcp/list-tools',
-    path: '/.mcp/list-tools',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const TripConfirmationTokenRoute = TripConfirmationTokenRouteImport.update({
-  id: '/trip/confirmation/$token',
-  path: '/trip/confirmation/$token',
+const WaitlistCodeRoute = WaitlistCodeRouteImport.update({
+  id: '/waitlist/$code',
+  path: '/waitlist/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TripTokenFeedbackRoute = TripTokenFeedbackRouteImport.update({
-  id: '/feedback',
-  path: '/feedback',
-  getParentRoute: () => TripTokenRoute,
-} as any)
-const LovableEmailSuppressionRoute = LovableEmailSuppressionRouteImport.update({
-  id: '/lovable/email/suppression',
-  path: '/lovable/email/suppression',
+const WaymakerIdRoute = WaymakerIdRouteImport.update({
+  id: '/waymaker/$id',
+  path: '/waymaker/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicBootstrapAdminRoute = ApiPublicBootstrapAdminRouteImport.update({
-  id: '/api/public/bootstrap-admin',
-  path: '/api/public/bootstrap-admin',
+const WaymakerApplyRoute = WaymakerApplyRouteImport.update({
+  id: '/waymaker/apply',
+  path: '/waymaker/apply',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
+  id: '/.lovable/oauth/consent',
+  path: '/.lovable/oauth/consent',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Char91DotmcpChar93InvokeToolToolRoute =
@@ -188,15 +173,46 @@ const Char91DotmcpChar93InvokeToolToolRoute =
     path: '/.mcp/invoke-tool/$tool',
     getParentRoute: () => rootRouteImport,
   } as any)
-const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
-  id: '/.lovable/oauth/consent',
-  path: '/.lovable/oauth/consent',
+const ApiPublicBootstrapAdminRoute = ApiPublicBootstrapAdminRouteImport.update({
+  id: '/api/public/bootstrap-admin',
+  path: '/api/public/bootstrap-admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LovableEmailTransactionalSendRoute =
-  LovableEmailTransactionalSendRouteImport.update({
-    id: '/lovable/email/transactional/send',
-    path: '/lovable/email/transactional/send',
+const LovableEmailSuppressionRoute = LovableEmailSuppressionRouteImport.update({
+  id: '/lovable/email/suppression',
+  path: '/lovable/email/suppression',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TripTokenFeedbackRoute = TripTokenFeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
+  getParentRoute: () => TripTokenRoute,
+} as any)
+const TripConfirmationTokenRoute = TripConfirmationTokenRouteImport.update({
+  id: '/trip/confirmation/$token',
+  path: '/trip/confirmation/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicHooksReferralNotificationsRoute =
+  ApiPublicHooksReferralNotificationsRouteImport.update({
+    id: '/api/public/hooks/referral-notifications',
+    path: '/api/public/hooks/referral-notifications',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
+  id: '/lovable/email/auth/preview',
+  path: '/lovable/email/auth/preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LovableEmailAuthWebhookRoute = LovableEmailAuthWebhookRouteImport.update({
+  id: '/lovable/email/auth/webhook',
+  path: '/lovable/email/auth/webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LovableEmailQueueProcessRoute =
+  LovableEmailQueueProcessRouteImport.update({
+    id: '/lovable/email/queue/process',
+    path: '/lovable/email/queue/process',
     getParentRoute: () => rootRouteImport,
   } as any)
 const LovableEmailTransactionalPreviewRoute =
@@ -205,26 +221,10 @@ const LovableEmailTransactionalPreviewRoute =
     path: '/lovable/email/transactional/preview',
     getParentRoute: () => rootRouteImport,
   } as any)
-const LovableEmailQueueProcessRoute =
-  LovableEmailQueueProcessRouteImport.update({
-    id: '/lovable/email/queue/process',
-    path: '/lovable/email/queue/process',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const LovableEmailAuthWebhookRoute = LovableEmailAuthWebhookRouteImport.update({
-  id: '/lovable/email/auth/webhook',
-  path: '/lovable/email/auth/webhook',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
-  id: '/lovable/email/auth/preview',
-  path: '/lovable/email/auth/preview',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPublicHooksReferralNotificationsRoute =
-  ApiPublicHooksReferralNotificationsRouteImport.update({
-    id: '/api/public/hooks/referral-notifications',
-    path: '/api/public/hooks/referral-notifications',
+const LovableEmailTransactionalSendRoute =
+  LovableEmailTransactionalSendRouteImport.update({
+    id: '/lovable/email/transactional/send',
+    path: '/lovable/email/transactional/send',
     getParentRoute: () => rootRouteImport,
   } as any)
 
@@ -492,88 +492,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/unsubscribe': {
-      id: '/unsubscribe'
-      path: '/unsubscribe'
-      fullPath: '/unsubscribe'
-      preLoaderRoute: typeof UnsubscribeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reset-password': {
-      id: '/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof ResetPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/mcp': {
-      id: '/mcp'
-      path: '/mcp'
-      fullPath: '/mcp'
-      preLoaderRoute: typeof McpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/legal-notice': {
-      id: '/legal-notice'
-      path: '/legal-notice'
-      fullPath: '/legal-notice'
-      preLoaderRoute: typeof LegalNoticeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/leave-waitlist': {
-      id: '/leave-waitlist'
-      path: '/leave-waitlist'
-      fullPath: '/leave-waitlist'
-      preLoaderRoute: typeof LeaveWaitlistRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/find-a-waymaker': {
-      id: '/find-a-waymaker'
-      path: '/find-a-waymaker'
-      fullPath: '/find-a-waymaker'
-      preLoaderRoute: typeof FindAWaymakerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cookie-policy': {
-      id: '/cookie-policy'
-      path: '/cookie-policy'
-      fullPath: '/cookie-policy'
-      preLoaderRoute: typeof CookiePolicyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/confirm-email': {
-      id: '/confirm-email'
-      path: '/confirm-email'
-      fullPath: '/confirm-email'
-      preLoaderRoute: typeof ConfirmEmailRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/become-a-waymaker': {
-      id: '/become-a-waymaker'
-      path: '/become-a-waymaker'
-      fullPath: '/become-a-waymaker'
-      preLoaderRoute: typeof BecomeAWaymakerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -583,67 +506,88 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/waymaker/apply': {
-      id: '/waymaker/apply'
-      path: '/waymaker/apply'
-      fullPath: '/waymaker/apply'
-      preLoaderRoute: typeof WaymakerApplyRouteImport
+    '/become-a-waymaker': {
+      id: '/become-a-waymaker'
+      path: '/become-a-waymaker'
+      fullPath: '/become-a-waymaker'
+      preLoaderRoute: typeof BecomeAWaymakerRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/waymaker/$id': {
-      id: '/waymaker/$id'
-      path: '/waymaker/$id'
-      fullPath: '/waymaker/$id'
-      preLoaderRoute: typeof WaymakerIdRouteImport
+    '/confirm-email': {
+      id: '/confirm-email'
+      path: '/confirm-email'
+      fullPath: '/confirm-email'
+      preLoaderRoute: typeof ConfirmEmailRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/waitlist/$code': {
-      id: '/waitlist/$code'
-      path: '/waitlist/$code'
-      fullPath: '/waitlist/$code'
-      preLoaderRoute: typeof WaitlistCodeRouteImport
+    '/cookie-policy': {
+      id: '/cookie-policy'
+      path: '/cookie-policy'
+      fullPath: '/cookie-policy'
+      preLoaderRoute: typeof CookiePolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/trip/new': {
-      id: '/trip/new'
-      path: '/trip/new'
-      fullPath: '/trip/new'
-      preLoaderRoute: typeof TripNewRouteImport
+    '/find-a-waymaker': {
+      id: '/find-a-waymaker'
+      path: '/find-a-waymaker'
+      fullPath: '/find-a-waymaker'
+      preLoaderRoute: typeof FindAWaymakerRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/trip/$token': {
-      id: '/trip/$token'
-      path: '/trip/$token'
-      fullPath: '/trip/$token'
-      preLoaderRoute: typeof TripTokenRouteImport
+    '/leave-waitlist': {
+      id: '/leave-waitlist'
+      path: '/leave-waitlist'
+      fullPath: '/leave-waitlist'
+      preLoaderRoute: typeof LeaveWaitlistRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/email/unsubscribe': {
-      id: '/email/unsubscribe'
-      path: '/email/unsubscribe'
-      fullPath: '/email/unsubscribe'
-      preLoaderRoute: typeof EmailUnsubscribeRouteImport
+    '/legal-notice': {
+      id: '/legal-notice'
+      path: '/legal-notice'
+      fullPath: '/legal-notice'
+      preLoaderRoute: typeof LegalNoticeRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/prelaunch-analytics': {
-      id: '/admin/prelaunch-analytics'
-      path: '/prelaunch-analytics'
-      fullPath: '/admin/prelaunch-analytics'
-      preLoaderRoute: typeof AdminPrelaunchAnalyticsRouteImport
-      parentRoute: typeof AdminRoute
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/.well-known/oauth-protected-resource': {
-      id: '/.well-known/oauth-protected-resource'
-      path: '/.well-known/oauth-protected-resource'
-      fullPath: '/.well-known/oauth-protected-resource'
-      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/unsubscribe': {
+      id: '/unsubscribe'
+      path: '/unsubscribe'
+      fullPath: '/unsubscribe'
+      preLoaderRoute: typeof UnsubscribeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/.mcp/list-tools': {
@@ -653,39 +597,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/trip/confirmation/$token': {
-      id: '/trip/confirmation/$token'
-      path: '/trip/confirmation/$token'
-      fullPath: '/trip/confirmation/$token'
-      preLoaderRoute: typeof TripConfirmationTokenRouteImport
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/trip/$token/feedback': {
-      id: '/trip/$token/feedback'
-      path: '/feedback'
-      fullPath: '/trip/$token/feedback'
-      preLoaderRoute: typeof TripTokenFeedbackRouteImport
-      parentRoute: typeof TripTokenRoute
+    '/admin/prelaunch-analytics': {
+      id: '/admin/prelaunch-analytics'
+      path: '/prelaunch-analytics'
+      fullPath: '/admin/prelaunch-analytics'
+      preLoaderRoute: typeof AdminPrelaunchAnalyticsRouteImport
+      parentRoute: typeof AdminRoute
     }
-    '/lovable/email/suppression': {
-      id: '/lovable/email/suppression'
-      path: '/lovable/email/suppression'
-      fullPath: '/lovable/email/suppression'
-      preLoaderRoute: typeof LovableEmailSuppressionRouteImport
+    '/email/unsubscribe': {
+      id: '/email/unsubscribe'
+      path: '/email/unsubscribe'
+      fullPath: '/email/unsubscribe'
+      preLoaderRoute: typeof EmailUnsubscribeRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/bootstrap-admin': {
-      id: '/api/public/bootstrap-admin'
-      path: '/api/public/bootstrap-admin'
-      fullPath: '/api/public/bootstrap-admin'
-      preLoaderRoute: typeof ApiPublicBootstrapAdminRouteImport
+    '/trip/$token': {
+      id: '/trip/$token'
+      path: '/trip/$token'
+      fullPath: '/trip/$token'
+      preLoaderRoute: typeof TripTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/.mcp/invoke-tool/$tool': {
-      id: '/.mcp/invoke-tool/$tool'
-      path: '/.mcp/invoke-tool/$tool'
-      fullPath: '/.mcp/invoke-tool/$tool'
-      preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
+    '/trip/new': {
+      id: '/trip/new'
+      path: '/trip/new'
+      fullPath: '/trip/new'
+      preLoaderRoute: typeof TripNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/waitlist/$code': {
+      id: '/waitlist/$code'
+      path: '/waitlist/$code'
+      fullPath: '/waitlist/$code'
+      preLoaderRoute: typeof WaitlistCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/waymaker/$id': {
+      id: '/waymaker/$id'
+      path: '/waymaker/$id'
+      fullPath: '/waymaker/$id'
+      preLoaderRoute: typeof WaymakerIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/waymaker/apply': {
+      id: '/waymaker/apply'
+      path: '/waymaker/apply'
+      fullPath: '/waymaker/apply'
+      preLoaderRoute: typeof WaymakerApplyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/.lovable/oauth/consent': {
@@ -695,32 +660,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DotlovableOauthConsentRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/lovable/email/transactional/send': {
-      id: '/lovable/email/transactional/send'
-      path: '/lovable/email/transactional/send'
-      fullPath: '/lovable/email/transactional/send'
-      preLoaderRoute: typeof LovableEmailTransactionalSendRouteImport
+    '/.mcp/invoke-tool/$tool': {
+      id: '/.mcp/invoke-tool/$tool'
+      path: '/.mcp/invoke-tool/$tool'
+      fullPath: '/.mcp/invoke-tool/$tool'
+      preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/lovable/email/transactional/preview': {
-      id: '/lovable/email/transactional/preview'
-      path: '/lovable/email/transactional/preview'
-      fullPath: '/lovable/email/transactional/preview'
-      preLoaderRoute: typeof LovableEmailTransactionalPreviewRouteImport
+    '/api/public/bootstrap-admin': {
+      id: '/api/public/bootstrap-admin'
+      path: '/api/public/bootstrap-admin'
+      fullPath: '/api/public/bootstrap-admin'
+      preLoaderRoute: typeof ApiPublicBootstrapAdminRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/lovable/email/queue/process': {
-      id: '/lovable/email/queue/process'
-      path: '/lovable/email/queue/process'
-      fullPath: '/lovable/email/queue/process'
-      preLoaderRoute: typeof LovableEmailQueueProcessRouteImport
+    '/lovable/email/suppression': {
+      id: '/lovable/email/suppression'
+      path: '/lovable/email/suppression'
+      fullPath: '/lovable/email/suppression'
+      preLoaderRoute: typeof LovableEmailSuppressionRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/lovable/email/auth/webhook': {
-      id: '/lovable/email/auth/webhook'
-      path: '/lovable/email/auth/webhook'
-      fullPath: '/lovable/email/auth/webhook'
-      preLoaderRoute: typeof LovableEmailAuthWebhookRouteImport
+    '/trip/$token/feedback': {
+      id: '/trip/$token/feedback'
+      path: '/feedback'
+      fullPath: '/trip/$token/feedback'
+      preLoaderRoute: typeof TripTokenFeedbackRouteImport
+      parentRoute: typeof TripTokenRoute
+    }
+    '/trip/confirmation/$token': {
+      id: '/trip/confirmation/$token'
+      path: '/trip/confirmation/$token'
+      fullPath: '/trip/confirmation/$token'
+      preLoaderRoute: typeof TripConfirmationTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/hooks/referral-notifications': {
+      id: '/api/public/hooks/referral-notifications'
+      path: '/api/public/hooks/referral-notifications'
+      fullPath: '/api/public/hooks/referral-notifications'
+      preLoaderRoute: typeof ApiPublicHooksReferralNotificationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lovable/email/auth/preview': {
@@ -730,11 +709,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailAuthPreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/hooks/referral-notifications': {
-      id: '/api/public/hooks/referral-notifications'
-      path: '/api/public/hooks/referral-notifications'
-      fullPath: '/api/public/hooks/referral-notifications'
-      preLoaderRoute: typeof ApiPublicHooksReferralNotificationsRouteImport
+    '/lovable/email/auth/webhook': {
+      id: '/lovable/email/auth/webhook'
+      path: '/lovable/email/auth/webhook'
+      fullPath: '/lovable/email/auth/webhook'
+      preLoaderRoute: typeof LovableEmailAuthWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lovable/email/queue/process': {
+      id: '/lovable/email/queue/process'
+      path: '/lovable/email/queue/process'
+      fullPath: '/lovable/email/queue/process'
+      preLoaderRoute: typeof LovableEmailQueueProcessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lovable/email/transactional/preview': {
+      id: '/lovable/email/transactional/preview'
+      path: '/lovable/email/transactional/preview'
+      fullPath: '/lovable/email/transactional/preview'
+      preLoaderRoute: typeof LovableEmailTransactionalPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lovable/email/transactional/send': {
+      id: '/lovable/email/transactional/send'
+      path: '/lovable/email/transactional/send'
+      fullPath: '/lovable/email/transactional/send'
+      preLoaderRoute: typeof LovableEmailTransactionalSendRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
