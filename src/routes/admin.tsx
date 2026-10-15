@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -21,6 +21,12 @@ export const Route = createFileRoute("/admin")({
 });
 
 function AdminPage() {
+  const { pathname } = useLocation();
+  if (pathname.replace(/\/$/, "") !== "/admin") return <Outlet />;
+  return <AdminWaitlistPage />;
+}
+
+function AdminWaitlistPage() {
   const navigate = useNavigate();
   const [ready, setReady] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -63,6 +69,9 @@ function AdminPage() {
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-gold">Admin</p>
             <h1 className="mt-2 font-display text-4xl">Early access waitlist</h1>
+            <p className="mt-1 text-sm text-muted-foreground">
+              <Link to="/admin/prelaunch-analytics" className="underline">View pre-launch analytics →</Link>
+            </p>
           </div>
           <Button variant="ghost" onClick={signOut}><LogOut className="mr-1.5 size-4" /> Sign out</Button>
         </div>

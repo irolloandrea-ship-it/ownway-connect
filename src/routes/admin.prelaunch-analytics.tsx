@@ -93,11 +93,20 @@ function PrelaunchAnalyticsPage() {
 
 function Panel() {
   const fn = useServerFn(adminPrelaunchAnalytics);
-  const { data, isLoading, refetch, isFetching } = useQuery({
+  const { data, isLoading, isError, error, refetch, isFetching } = useQuery({
     queryKey: ["admin-prelaunch-analytics"],
     queryFn: () => fn(),
+    retry: 1,
   });
 
+  if (isError) {
+    return (
+      <div className="py-16 text-center">
+        <p className="text-muted-foreground">Could not load analytics: {(error as Error)?.message ?? "unknown error"}</p>
+        <Button variant="outline" className="mt-4 rounded-full" onClick={() => refetch()}>Retry</Button>
+      </div>
+    );
+  }
   if (isLoading || !data) {
     return <div className="py-16 text-center text-muted-foreground">Loading…</div>;
   }
