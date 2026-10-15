@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { Logo } from "./Logo";
 import { Button } from "@/components/ui/button";
 import { JoinEarlyAccess } from "@/components/JoinEarlyAccess";
