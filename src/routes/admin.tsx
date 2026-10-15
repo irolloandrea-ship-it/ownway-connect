@@ -21,6 +21,12 @@ export const Route = createFileRoute("/admin")({
 });
 
 function AdminPage() {
+  const { pathname } = useLocation();
+  if (pathname.replace(/\/$/, "") !== "/admin") return <Outlet />;
+  return <AdminWaitlistPage />;
+}
+
+function AdminWaitlistPage() {
   const navigate = useNavigate();
   const [ready, setReady] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
