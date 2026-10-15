@@ -1,54 +1,29 @@
-# Audit hero responsive: risultato e soluzione consigliata
+# Header CTA "Provala gratis!" + rimozione voci di navigazione
 
-## Stato attuale verificato
+Aggiungere un CTA sempre visibile nell'header che apre lo stesso popup di iscrizione già presente, e rimuovere dal header le voci "Find a WayMaker" e "Become a WayMaker" (desktop nav e menu mobile).
 
-- L’immagine hero è gestita direttamente in `src/routes/index.tsx` nella pagina principale.
-- Oggi viene importato un solo asset, `hero-lifestyle.jpg`, e renderizzato con un elemento `<img>`.
-- Lo stesso file viene adattato alle viewport tramite `object-fit: cover` e due ritagli: `65% 35%` su mobile e `62% center` da 1024 px.
-- Gli script di GTM e Iubenda sono installati separatamente nel contenitore generale del sito (`src/routes/__root.tsx`). Gli eventi GTM sono gestiti da un componente separato (`GtmEvents`).
+## Modifiche — `src/components/SiteHeader.tsx`
 
-## Fattibilità
+1. **Rimozione navigazione**
+   - Eliminare l'array `NAV` e il `<nav>` desktop con i link Home / Find a WayMaker / Become a WayMaker.
+   - Eliminare l'intero `Sheet` del menu mobile (burger + pannello): resterebbe vuoto, il toggle lingua è già fuori dal menu. Scomparirà l'icona hamburger su mobile.
 
-Sì, possiamo usare due immagini differenti:
+2. **Nuovo CTA nell'header (desktop e mobile)**
+   - Renderizzare `JoinEarlyAccess` (stesso componente del popup esistente) come wrapper del pulsante, così il popup è **identico** a quello dell'hero: stesse carte ruolo, email, consenso, validazioni, Privacy Policy Iubenda.
+   - Copia del pulsante: "Provala gratis!" (IT) / "Try it free!" (EN), stile `rounded-full`, dimensione compatta (`h-9`/`h-10`) per stare nell'header.
+   - Tracciamento coerente con l'hero: evento `cta_click` con `button_location: "header"` (nessuna modifica a GTM/GA4/Iubenda).
+   - Layout: logo a sinistra; a destra toggle lingua (IT/EN) + CTA. La lingua seguita è quella già passata dalle pagine tramite `locale`, quindi il CTA si traduce con il toggle.
 
-- una per desktop e tablet;
-- una dedicata esclusivamente agli smartphone.
+3. **Cleanup**
+   - Rimuovere gli import non più usati (`Link`, `Menu`, `Sheet*`, `activeProps`), mantenendo `Logo`, `Button`, `LanguageSwitch`.
 
-La soluzione consigliata è l’elemento semantico `<picture>` con un `<source media="(max-width: 767px)">` per l’immagine mobile e l’attuale `<img>` come fallback desktop/tablet.
+## Pagine interessate
 
-```text
-<picture>
-  <source media="(max-width: 767px)" srcSet="immagine-mobile" />
-  <img src="immagine-desktop-tablet" ... />
-</picture>
-```
+- Il header è condiviso: home, `/find-a-waymaker`, `/become-a-waymaker`. Il CTA e il popup funzionano su tutte e tre senza modifiche alle pagine (ogni pagina monta già `SiteHeader` con `locale`/`onLocaleChange`).
+- Nessuna modifica a: hero, footer, sezioni della landing, tracking/consenso, altre pagine.
 
-Il browser valuta la condizione prima di scaricare l’immagine e richiede soltanto la sorgente appropriata. È quindi preferibile a due elementi `<img>` nascosti con CSS, che possono causare il download di entrambi gli asset. Anche immagini CSS distinte sarebbero possibili, ma `<picture>` mantiene alt text, dimensioni e priorità di caricamento più chiari e accessibili.
+## Verifica
 
-## Breakpoint consigliato
-
-- **Mobile:** fino a `767px`, asset verticale dedicato.
-- **Tablet e desktop:** da `768px`, asset attuale o sua variante orizzontale.
-- Gli adattamenti di dimensione e ritaglio già presenti possono continuare a usare `md` a 768 px e `lg` a 1024 px.
-
-Questa separazione a 768 px è coerente con i breakpoint già usati nell’hero e permette a tablet di mantenere il visual più ampio, mentre gli smartphone ricevono il file verticale ottimizzato.
-
-## Caricamento e prestazioni
-
-- Conservare larghezza e altezza esplicite per evitare spostamenti del layout.
-- Fornire asset già dimensionati e compressi per il rispettivo formato.
-- Mantenere `sizes` sull’immagine desktop/tablet e aggiungerne uno appropriato alla sorgente mobile, se necessario.
-- Non usare due `<img>` con classi `hidden`/`block`.
-
-## Impatto su tracciamento e consenso
-
-Nessun impatto previsto. La futura modifica sarebbe limitata al markup e agli asset dell’immagine nella hero di `src/routes/index.tsx`. Non richiede modifiche a GTM, GA4, Meta Pixel, Iubenda, Consent Mode, `dataLayer`, eventi CTA o altri script.
-
-## Ambito di un’eventuale implementazione futura
-
-1. Aggiungere un solo asset mobile ottimizzato.
-2. Sostituire il solo `<img>` della hero con `<picture>` mantenendo testo, CTA, layout e alt text.
-3. Verificare che a 390 px venga richiesta soltanto l’immagine mobile e a 768/1024/desktop soltanto quella desktop.
-4. Controllare visivamente volto, crop e posizione dello sguardo nelle viewport principali.
-
-Nessuna modifica al sito è stata effettuata durante questo audit.
+- Build OK e nessun errore console.
+- Desktop (1280px) e mobile (390px): header mostra logo + lingua + "Provala gratis!", senza voci di nav né hamburger; clic sul CTA apre il popup identico a quello dell'hero; invio con email valida funziona; chiusura ripristina lo stato.
+- Su `/find-a-waymaker` e `/become-a-waymaker` il CTA dell'header apre lo stesso popup.
